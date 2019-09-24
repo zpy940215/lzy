@@ -1,0 +1,5 @@
+.Menu_bar{background: #243036;}
+.leftcon{background-color:#243036;}
+.Menu_bar .menulist ul li:hover{background-color: #1e2426}
+.Menu_bar .menulist ul li.active{background-color: #1e2426}
+.leftcon ul.sideBar li.active a{background-color: #1e2426}

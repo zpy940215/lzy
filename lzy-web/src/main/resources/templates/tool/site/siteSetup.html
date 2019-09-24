@@ -1,0 +1,283 @@
+<#include "/common/head.html">
+<link href="${base}/css/tool.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="treewrap dataModle fl">
+
+      <ul id="treeDemo" class="ztree"></ul> 
+      <div id="rMenu">
+        <ul>
+        <!--  <li id="m_add"  class="js_edit_TreeNode"><span class="editicon"></span>修改</li>        -->
+                <li id="m_del"  class="js_add_TreeNode"> <span class="addcolumnicon"></span>新建子栏目</li>
+        </ul>
+      </div>
+    </div> 
+    
+    <div class="data_table_wrap tablewrap fr">
+      	 <div class="data_table datatableheight "  style="margin-top:0px">
+      	 	 
+      	 	 <div class="tableBox" id="site-list-content">
+      	 	 </div>     
+     	 </div> 
+    </div>
+    <input type="hidden" id="nodeDate">  <input type="hidden" id="catid"> 
+    <!--站点列表-->
+    <script id="site-list" type="text/x-handlebars-template">
+         <div class="manaicon table-head">列表 </div>
+         <table style="width:100%" border="0" cellspacing="0"> 
+         <thead>
+			<tr class="title"> 
+                  <!--<td width="5%"><input type="checkbox" class="checkall js_check_all"></td>-->
+				  <td width="15%">站点ID</td> 
+				  <td width="20%">站点名称</td> 
+				  <td width="25%">域名</td> 
+				  <td width="15%">是否开启注册</td>
+				  <td width="15%">操作</td>	
+			 </tr> 
+         </thead>
+        	<tbody>
+            {{#if dataList}}
+				{{#each dataList}}
+					<tr>
+						<td>{{siteId}}</td>
+                        <td>{{name}}</td>
+                        <td>{{url}}</td>
+                        <td>
+                   {{#equal openReg "Y"}} 
+                                                是
+                       {{else}}
+                                              否
+                 {{/equal}}
+                        </td>
+            <td class="operate">
+                       <span><a href="javascript:;" class="js_consult_handle" dataId="{{id}}"siteId="{{siteId}}">编辑</a> |</span>
+                       <span class="del_minsu"><a href="javascript:void(0)" class="js_delete_row" dataId="{{id}}">删除</a>
+                            </span>
+            </td> 
+					</tr>
+				{{/each}}
+            {{else}}
+            <tr>
+                <td colspan="9">暂无数据</td>
+            </tr>
+            {{/if}}
+			</tbody>
+        </table>
+
+        <!--分页-->
+        <div class="bottom">
+            <div class="js_pageDiv">
+               
+            </div>
+        </div>
+    </script>
+    <!--栏目列表-->
+    <script id="category-list" type="text/x-handlebars-template">
+          <h3 class="manaicon table-head">列表</h3>
+          <table style="width:100%" border="0" cellspacing="0">
+              <thead>
+              <tr class="title">
+                  <td width="10%">栏目ID</td>
+                  <td width="20%">栏目名称</td>
+                  <td width="25%">链接</td>
+                  <td width="15%">是否显示</td>
+                  <!--<td width="15%">排序</td>-->
+                  <td width="15%">操作</td>
+              </tr>
+              </thead>
+              <tbody>
+              {{#if dataList}}
+              {{#each dataList}}
+              <tr>
+                  <td>{{id}}</td>
+                  <td>{{name}}</td>
+                  <td>{{url}}</td>
+                  <td>
+                      {{#equal openReg "Y"}}
+                      是
+                      {{else}}
+                      否
+                      {{/equal}}
+                  </td>
+                  <td class="operate">
+                      <span><a href="javascript:;" class="js_consult_handle_category" dataId="{{id}}"siteId="{{siteId}}" projectId="{{projectId}}" upId="{{upId}}">编辑</a> |</span>
+                      <span class="del_minsu"><a href="javascript:void(0)" class="js_delete_row_category" dataId="{{id}}" categoryId="{{categoryId}}">删除</a>
+                            </span>
+                  </td>
+              </tr>
+              {{/each}}
+              {{else}}
+              <tr>
+                  <td colspan="9">暂无数据</td>
+              </tr>
+              {{/if}}
+              </tbody>
+          </table>
+          <!--分页-->
+          <div class="bottom">
+              <div class="js_pageDiv">
+                 
+              </div>
+          </div>
+    </script>
+      <!--栏目编辑-->
+
+      </div>
+  </div>
+  
+ <!--添加,编辑站点弹窗-->
+<div class="popup js_popUpsiteadd" id="siteadd-save-content"> &nbsp; </div>
+<script id="siteadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+    <div class="popup_bt">操作站点<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+					<input id="id" type="hidden" value="{{siteVo.id}}">
+					<p class="formfill">
+						<label><span class="mark">*</span>站点名称：</label>
+						<input type="text"  id="js_site_name" value="{{siteVo.name}}" class="commtext"><span class="errortip js_errortip"> &nbsp; </span>
+						<p>
+					<p class="formfill" id="Reg">
+						<label><span class="mark">*</span>注册/登录：</label>
+                         <input type="radio"  name="isopen" id="openReg" value="Y" {{#equal siteVo.openReg "Y"}}checked="checked" {{/equal}}  /> 开启 &nbsp;
+                         <input type="radio"  name="isopen" id="iscloseReg"  value="N" {{#equal siteVo.openReg "N"}}checked="checked" {{/equal}}  /> 不开启&nbsp; <span class="errortip js_errortip"> </span>
+                     <p>
+					<p class="formfill">
+						<label>域名链接：</label>
+						<input id="url" type="text" class="commtext" value="{{siteVo.url}}">
+						<p>
+					<!--<p class="formfill">-->
+						<!--<label>大图尺寸：</label>-->
+						<!--<input id="bigSize" type="text" class="commtext" value="{{siteVo.bigSize}}"><span class="errortip js_errortip"> &nbsp; </span>-->
+						<!--<p>-->
+					<!--<p class="formfill">-->
+						<!--<label>中图尺寸：</label>-->
+						<!--<input id="smallSize" type="text" class="commtext" value="{{siteVo.smallSize}}"><span class="errortip js_errortip"> &nbsp; </span>-->
+						<!--<p>-->
+                   <!--<p class="formfill">-->
+						<!--<label>小图尺寸：</label>-->
+						<!--<input id="middleSize" type="text" class="commtext" value="{{siteVo.middleSize}}"><span class="errortip js_errortip"> &nbsp; </span>-->
+						<!--<p>-->
+					 <div class="formsubmit">
+                            <input type="button" value="取消" class="quit formbtn js_popUpClose">
+                            <input type="button" id="addcolumnbtn" value="保存" class="save formbtn js_popUpSubmit">
+                      </div>
+    </div>
+    </div>
+  </div>
+</script>
+<div class="popup js_popUpcolumnadd" id="columnadd-save-content"> &nbsp; </div>
+<script id="columnadd-save" type="text/x-handlebars-template">
+  <!--添加，编辑栏目-->
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+      <div class="popup_bt">编辑栏目<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+          <p class="formfill clear">
+           <!-- <label>
+             <span class="style1">*</span>上级栏目：</label>
+            <select  class="commtext"   value="">
+            <option>暂无</option>
+            <option>暂无</option>
+            </select> -->
+
+             <label ><span class="style1">*</span>栏目名称：</label>
+                     <input  id="name" name="columnname" type="text" class="commtext categoryName" value="{{categoryVo.name}}" >
+            <label for="columnname" class="error" style="float:right;margin-right:175px;"></label>
+            </p>
+
+          <p class="formfill" id="dType1">
+            <label>
+             <span class="style1">*</span>数据类型：
+             </label>
+              <select  class="commtext  categoryDatatype" name="datatype"  value="{{categoryVo.dataType}}" id="dType">
+                        <option value="article" {{#equal categoryVo.dataType "article"}}selected="selected" {{/equal}}>资讯</option>
+                        <option value="hotel" {{#equal categoryVo.dataType "hotel"}}selected="selected" {{/equal}}>酒店</option>
+                        <option value="scenic" {{#equal categoryVo.dataType "scenic"}}selected="selected" {{/equal}}>景区</option>
+                        <option value="spots" {{#equal categoryVo.dataType "spots"}}selected="selected" {{/equal}}>景点</option>
+                        <option value="subspots" {{#equal categoryVo.dataType "subspots"}}selected="selected" {{/equal}}>子景点</option>
+                        <option value="food" {{#equal categoryVo.dataType "food"}}selected="selected" {{/equal}}>美食</option>
+                        <option value="shop" {{#equal categoryVo.dataType "shop"}}selected="selected" {{/equal}}>购物</option>
+                        <option value="disport" {{#equal categoryVo.dataType "disport"}}selected="selected" {{/equal}}>娱乐</option>
+                        <option value="pic" {{#equal categoryVo.dataType "pic"}}selected="selected" {{/equal}}>图片</option>
+                        <option value="audio" {{#equal categoryVo.dataType "audio"}}selected="selected" {{/equal}}>语音</option>
+                        <option value="video" {{#equal categoryVo.dataType "video"}}selected="selected" {{/equal}}>视频</option>
+                        <option value="travelline" {{#equal categoryVo.dataType "travelline"}}selected="selected" {{/equal}}>路线</option>
+                        <option value="自定义" {{#equal categoryVo.dataType "自定义"}}selected="selected" {{/equal}}>自定义</option>
+             </select>
+           <label class="labelwidth">访问路径：</label>
+           <input  id="url1"  type="text" class="commtext categoryUrl" value="{{categoryVo.url}}" >
+          </p>
+
+          <p class="formfill">
+            <label>Meta标题：</label>
+               <input  id="metaSubject" name="sitename" type="text" class="commtext categoryMetaSubject" value="{{categoryVo.metaSubject}}">
+            <label class="labelwidth">meta关键字：</label>
+               <input  id="metaKeywords" type="text" class="commtext categoryMetaKeywords" value="{{categoryVo.metaKeywords}}">
+          </p>
+
+          <p class="formfill clear">
+            <label  class="fl">Meta描述：</label>
+              <textarea id="description"  class="textinput categoryDescription"  >{{categoryVo.description}}</textarea>
+          </p>
+
+        <p class="formfill categoryTarget" id="target">
+	<label><span  class="style1">*</span>打开方式：</label>
+    <input type="radio"  name="isunfold"   value="1" {{#equal categoryVo.targetType "1"}}checked="checked" {{/equal}}  /> 新窗口 &nbsp;
+    <input type="radio"  name="isunfold"   value="2" {{#equal categoryVo.targetType "2"}}checked="checked" {{/equal}}  /> 当前窗口&nbsp; <span class="js_errortip errortip"> </span>
+        <p>
+
+           <p class="formfill categoryComments" id="comments">
+	<label><span  class="style1">*</span>评论权限：</label>
+    <input type="radio"  name="iscomments" value="1" {{#equal categoryVo.commentPermission "1"}}checked="checked" {{/equal}}  /> 游客评论 &nbsp;
+    <input type="radio"  name="iscomments" value="2" {{#equal categoryVo.commentPermission "2"}}checked="checked" {{/equal}}  /> 登录评论&nbsp;
+    <input type="radio"  name="iscomments" value="3" {{#equal categoryVo.commentPermission "3"}}checked="checked" {{/equal}}  /> 关闭评论 &nbsp;
+    <input type="radio"  name="iscomments" value="4" {{#equal categoryVo.commentPermission "4"}}checked="checked" {{/equal}}  /> 购买评论&nbsp;<span class="js_errortip errortip"> </span>
+        <p>
+
+           <p class="formfill categoryOpenTheWay" id="OpenTheWay">
+	<label><span  class="style1">*</span>审核：</label>
+    <input type="radio"  name="audit"   value="Y" {{#equal categoryVo.articleAudit "Y"}}checked="checked" {{/equal}}  /> 需要审核 &nbsp;
+    <input type="radio"  name="audit"   value="N" {{#equal categoryVo.articleAudit "N"}}checked="checked" {{/equal}}  /> 无需审核&nbsp; <span class="js_errortip errortip"></span>
+        <p>
+
+        <p class="formfill categoryTerminal" id="terminal">
+			<label><span  class="style1">*</span>展示终端：</label>
+   			<input type="checkbox"  name="showClients" value="client_wap" {{#if categoryVo.showClients}}{{#has categoryVo.showClients "client_wap"}}checked="checked"{{/has}}{{/if}}/> wap &nbsp;
+    		<input type="checkbox"  name="showClients" value="client_web" {{#if categoryVo.showClients}}{{#has categoryVo.showClients "client_web"}}checked="checked"{{/has}}{{/if}}/> web&nbsp;
+    		<input type="checkbox"  name="showClients" value="client_yitiji" {{#if categoryVo.showClients}}{{#has categoryVo.showClients "client_yitiji"}}checked="checked"{{/has}}{{/if}}/> 一体机 &nbsp;
+    		<input type="checkbox"  name="showClients" value="client_weixin" {{#if categoryVo.showClients}}{{#has categoryVo.showClients "client_weixin"}}checked="checked"{{/has}}{{/if}}/> 微信&nbsp; <span class="js_errortip errortip"></span>
+      		<input type="checkbox"  name="showClients" value="client_pad" {{#if categoryVo.showClients}}{{#has categoryVo.showClients "client_pad"}}checked="checked"{{/has}}{{/if}}/> pad &nbsp;
+ 		 <p>
+
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose">
+               <input type="submit" value="保存" class="save formbtn js_popUpSubmit  js_popUpSubmitAddColumn" id="addColumn"   >
+          </div>
+      </div>
+    </div>
+  </div>
+</script>
+<div class="popup  js_continueaddcolumn" id="continueaddcolumn"></div>
+<script id="continueaddcolumn-save" type="text/x-handlebars-template">
+	<div class="popup_bg">&nbsp;</div>
+	<div class="popup_box continueaddcolumnbox">
+		<div class="popup_bt">提示<a class="popupclose js_popUpClose" href="javascript:void(0)">&nbsp;</a></div>
+		<div class="popupform">
+			<p class="formfill">保存成功<p>
+			<div class="formsubmit">
+				<input type="button" value="确定" class="quit formbtn js_popUpSure"/>
+				<input type="button" value="继续添加" class="save formbtn js_popUpcontinueadd"/>
+			</div>
+		</div>
+	</div>
+</script>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/site/siteSetUp'],function(head,siteSetUpList){
+	head.init('module006001001');
+	siteSetUpList.init();
+  });
+</script>       
+

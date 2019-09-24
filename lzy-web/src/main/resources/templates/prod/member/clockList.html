@@ -1,0 +1,222 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" type="text/css" href="${base}/css/clicklist.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search"> 
+			   <h3 class="manaicon search-head">查询</h3>
+			   <div class="search-bar clear">
+				   <label class="fl" style="margin-top:5px;">注册时间：</label>
+				   <div class="fl">
+					   <input class="datecheck js_register_startDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870576">
+					   至
+					   <input class="datecheck js_register_endDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870577">
+				   </div>
+				  <label>类型</label>
+				  				<select id="userType">
+				  						<option value="">请选择</option>
+				  						<option value="team">团队</option>
+				  						<option value="personal">游客</option>
+				  					</select>
+			   	  <select id="temaName" style="display:none">
+			   	  		  <option value="">请选择</option>
+			   	  		  <#if sourceList??>
+			   	  		  	<#list sourceList as source>
+						   	  <option value="${(source.sourceCode)!''}">${(source.name)!''}</option>		
+						   	 </#list>
+					   	  </#if>
+			   	  </select>
+			   	  <input name="keywords" placeholder="请输入公司名称"  type="text" class="search_input js_company" style="display:none"/>
+			      <label>昵称</label><input name="keywords" placeholder="请输入昵称"  type="text" class="search_input js_nick"/>
+			      <label>手机号</label><input name="keywords" placeholder="请输入手机号"  type="text" class="search_input js_tel"/>
+			      <input value="搜索" class="comBtn btn-small searchbtn js_search" type="button"/>
+			   </div>
+			</div>
+	    </div>
+        <div class=" tablewrap tablewrapwidth pt" >
+	        <div class="data_table datatableheight" id="member-list-content">
+	         	<h3 class="manaicon table-head">列表</h3>
+	         	<div class="tableBox">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+				         <thead>
+					           <tr class="title">
+								   
+								   <td width="5%">昵称</td>
+								   <td width="5%">类型</td>
+								   <td width="10%">公司名称</td>
+								   <td width="6%">手机号</td>
+								   <td width="4%">性别</td>
+								   <td width="8%">生日</td>
+								   <td width="8%">联系地址</td>
+								   <td width="8%">身份证</td>
+								   <td width="5%">积分</td>
+								   <td width="10%">注册时间</td>
+								   <td width="10%">最后登录时间</td>
+								   <td width="15%">积分明细</td>
+								   <td width="12%">操作</td>
+					          </tr> 
+				         </thead>
+				         <tbody id="user-list-content">
+				         </tbody>
+			        </table>
+		        </div>
+	        </div> 
+        </div>
+	  <!--分页-->
+	  <div class="bottom">
+<!-- 		  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn banchdel js_banch_delete" id="banchdeleterow"/></div>
+ -->		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+  </div>
+<script id="user-list" type="text/x-handlebars-template">
+		{{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			
+			<td>{{base64Decode nick}}</td>
+            <td>{{#equals sourceId "team"}}团队{{/equals}}{{#equals sourceId "personal"}}游客{{/equals}}</td>
+			<td>
+			
+				{{sourceName}}
+			
+			</td>
+			<td>{{mobile}}</td>
+			<td>{{#equals sex "male"}}男{{/equals}}{{#equals sex "female"}}女{{/equals}}</td>
+			<td>{{formatDate birthday "yyyy-MM-dd"}}</td>
+			<td>{{address}}</td>
+			<td>{{idcard}}</td>
+			<td>{{score}}</td>
+			<td>{{formatDate createDate "default"}}</td>
+			<td>{{formatDate loginDate "default"}}</td>
+			<td>
+				<span><a href="javascript:void(0)" class="js_in_detail" uid="{{uid}}">收入明细</a></span>
+				| <span><a href="javascript:void(0)" class="js_out_detail" uid="{{uid}}">兑换明细</a></span>
+			</td>
+			<td class="operate">
+				<span><a href="javascript:void(0)" class="js_clock_detail" uid="{{uid}}">打卡明细</a></span>
+			</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="5">暂无数据</td>
+		</tr>
+		{{/if}}
+</script>
+<!--明细弹窗-->
+<script id="clock-detail" type="text/x-handlebars-template">
+    {{#if logUserVos}}
+		{{#each logUserVos}}
+		<tr dataId="{{id}}">
+			<td>{{bizName}}</td>
+			<td>{{formatDate createDate "default"}}</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="2">暂无数据</td>
+		</tr>
+	{{/if}}
+</script>
+	<div class="open" id="daka_detail">
+		<div class="open_con">
+			<div class="data_table tableBox">
+				<table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+				           <tr class="title">
+							   <td width="12%">景点名称</td>
+							   <td width="10%">打卡时间</td>
+				          </tr> 
+			         </thead>
+			         <tbody id="clock-detail-content">
+			         </tbody>
+		        </table>
+			</div>
+			<p class="check_btn">确定</p>
+		</div>
+	</div>
+	
+<!-- 收入明细 -->
+<div class="open" id="inDetail">
+		<div class="open_con">
+			<div class="data_table tableBox">
+				<table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+				           <tr class="title">
+							   <td width="12%">景点名称</td>
+							   <td width="10%">时间</td>
+							   <td width="10%">积分</td>
+				          </tr> 
+			         </thead>
+			         <tbody id="in-detail-content">
+			         </tbody>
+		        </table>
+			</div>
+			<p class="check_btn">确定</p>
+		</div>
+	</div>
+<script id="in-detail" type="text/x-handlebars-template">
+    {{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			
+			<td>{{#equals operationType "forward"}}
+				分享
+			{{else}}
+				{{viewVo.name}}
+			{{/equals}}</td>
+			<td>{{formatDate createDate "default"}}</td>
+			<td>+{{score}}</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="3">暂无数据</td>
+		</tr>
+	{{/if}}
+</script>
+
+<!-- 支出明细 -->
+<div class="open" id="outDetail">
+		<div class="open_con">
+			<div class="data_table tableBox">
+				<table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+				           <tr class="title">
+							   <td width="12%">奖品名称</td>
+							   <td width="10%">时间</td>
+							   <td width="10%">积分</td>
+				          </tr> 
+			         </thead>
+			         <tbody id="out-detail-content">
+			         </tbody>
+		        </table>
+			</div>
+			<p class="check_btn">确定</p>
+		</div>
+	</div>
+<script id="out-detail" type="text/x-handlebars-template">
+    {{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			<td>{{subject}}</td>
+			<td>{{formatDate createDate "default"}}</td>
+			<td>-{{payFee}}</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="3">暂无数据</td>
+		</tr>
+	{{/if}}
+</script>
+         
+  <#include "/common/foot.html">                              
+	<script type="text/javascript">
+		require(['common/head','prod/member/clockList'],function(head,memberList){
+			head.init('module005004008');
+			memberList.init();
+		  });
+	</script>

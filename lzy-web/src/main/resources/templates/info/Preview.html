@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<title class="js_title">&nbsp;</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css" href="${(base)!''}/css/base.css">
+<link rel="stylesheet" type="text/css" href="${(base)!''}/css/news.css">
+<link rel="stylesheet" type="text/css" href="${(base)!''}/css/swiper.min.css">	
+<link rel="stylesheet" type="text/css" href="${(base)!''}/css/popup.css">
+</head> 
+<body >
+<div class="previewBox">
+	<div class="headbox">
+		<div class="head">
+			<span class="back js_backhome"><i class="icon backicon"></i></span>
+			<center class="js_title">&nbsp;</center>
+			<span class="sousou js_word"><i class="icon wordicon"></i></span>
+		</div>
+	</div>
+	<div class="ewmBox">
+		<p class="titcon">手机端预览请扫二维码<p>
+		<div class="ewmcon" id="qrcode"></div>
+		<div class="triangle_border_left">
+		    <span></span>
+		</div>
+	</div>
+	<div class="conbox js_conbox">
+		<div class="detailbox js_detail">
+			<!-- <div class="title">德清欧诗漫珍珠入选中国重要农业文化遗产名单~!!</div>
+			<div class="createinfo">
+				欧诗漫集团 2017-10-10
+			</div>
+			<div class="detailcon">
+				浙江欧诗漫集团有限公司组建于1994年，是以人类的健康美丽为己任，致力于珍珠养殖、珍珠深加工、技术研发和销售服务的珍珠产业化集团企业，产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。
+			</div> -->
+			
+		</div>
+		<input type="hidden" class="js_categoryIds"/>
+		<input type="hidden" class='js_imgurl'/>
+		<div class="commentbox js_commentList">
+			<div class="js_commentdata"></div>
+			<!-- <div class="commcon">
+				<div class="txcon"><img src="${(base)!''}/images/test_1.jpg"/></div>
+				<div class="comminfo">
+					<div class="commpeo">欧晓漫</div>
+					<div class="commintro">产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。</div>
+					<div class="commtime">
+						<span class="time">2017-10-10 12:00:00</span>
+						<span class="scorenum fr"><i class="icon scoreicon"></i>12134</span>
+					</div>
+				</div>
+			</div>
+			<div class="commcon">
+				<div class="txcon"><img src="${(base)!''}/images/test_1.jpg"/></div>
+				<div class="comminfo">
+					<div class="commpeo">欧晓漫</div>
+					<div class="commintro">产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。</div>
+					<div class="commtime">
+						<span class="time">2017-10-10 12:00:00</span>
+						<span class="scorenum fr"><i class="icon scoreicon"></i>12134</span>
+					</div>
+				</div>
+			</div>
+			<div class="commcon">
+				<div class="txcon"><img src="${(base)!''}/images/test_1.jpg"/></div>
+				<div class="comminfo">
+					<div class="commpeo">欧晓漫</div>
+					<div class="commintro">产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。</div>
+					<div class="commtime">
+						<span class="time">2017-10-10 12:00:00</span>
+						<span class="scorenum fr"><i class="icon scoreicon"></i>12134</span>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div class="sharebox">
+		<div class="liuyanarea fl"><i class="icon writeicon"></i><input class="liuyantext js_comment" placeholder="写评论"  /></div>
+		<span class="icon liuyanicon js_liuyan"><i class="num js_liuyannum">0</i></span>
+		<span class="icon scanicon"><i class="num js_scannum">0</i></span>
+		<span class="icon shareicon js_share"><i class="num js_sharenum">0</i></span>
+	</div>
+	<div class="bg"></div>
+	<div class="liuyanBox js_liuyanBox">
+		<textarea class="areabox js_area"></textarea>
+		<div class="commentbtnbox">
+			<button class="commentbtn bgcolor1 js_commentsubmit">提交评论</button>
+			<button class="commentbtn bgcolor2 js_Cancel ">取消评论</button>
+		</div>
+		
+	</div>
+	<div class="liuyanBox js_liuyanPop">
+		<textarea class="areabox js_lyarea"></textarea>
+		<div class="commentbtnbox">
+			<button class="commentbtn bgcolor1 js_lysubmit">提交留言</button>
+			<button class="commentbtn bgcolor2 js_lyCancel ">取消留言</button>
+		</div>
+	</div>
+	<div class="shareBox">
+		<h5 class="tit"><p>分享到</p></h5>
+		<div class="wrap js_wrap">
+			<div class="item" type="wechatTimeline">
+				<i class="icon friendsIcon"></i>
+				<p>朋友圈</p>
+			</div>
+			<div class="item" type="wechatSession">
+				<i class="icon wechatIcon"></i>
+				<p>微信好友</p>
+			</div>
+			<div class="item" type="qqSession">
+				<i class="icon QQicon"></i>
+				<p>QQ好友</p>
+			</div>
+			<div class="item" type='weibo'>
+				<i class="icon xinlangicon"></i>
+				<p>新浪微博</p>
+			</div>
+			<div class="item" type="qqQzone">
+				<i class="icon circleIcon"></i>
+				<p>QQ空间</p>
+			</div>
+		</div>
+		<div class="cancelBtn">取消</div>
+	</div>
+	<div class="wordbox">
+		<div class="wordboxbg"></div>
+		<ul class="js_wordchange">
+			<li dataid='smallword' class="smallword">小</li>
+			<li dataid='middleword' class="middleword">中</li>
+			<li dataid='bigword' class="bigword">大</li>
+		</ul>
+	</div>
+	<div class="commentpopup js_commentpopup">
+		<div class="popuptop clear">
+			<a href="javascript:;" class="icon close fl js_close"></a>评论
+		</div>
+		<div class="commentbox js_commentList">
+			<div class="js_commentdata"></div>
+			<!-- <div class="commcon">
+				<div class="txcon"><img src="${(base)!''}/images/test_1.jpg"/></div>
+				<div class="comminfo">
+					<div class="commpeo">欧晓漫</div>
+					<div class="commintro">产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。</div>
+					<div class="commtime">
+						<span class="time">2017-10-10 12:00:00</span>
+						<span class="scorenum fr"><i class="icon scoreicon"></i>12134</span>
+					</div>
+				</div>
+			</div>
+			<div class="commcon">
+				<div class="txcon"><img src="${(base)!''}/images/test_1.jpg"/></div>
+				<div class="comminfo">
+					<div class="commpeo">欧晓漫</div>
+					<div class="commintro">产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。</div>
+					<div class="commtime">
+						<span class="time">2017-10-10 12:00:00</span>
+						<span class="scorenum fr"><i class="icon scoreicon"></i>12134</span>
+					</div>
+				</div>
+			</div>
+			<div class="commcon">
+				<div class="txcon"><img src="${(base)!''}/images/test_1.jpg"/></div>
+				<div class="comminfo">
+					<div class="commpeo">欧晓漫</div>
+					<div class="commintro">产品涵盖：化妆品（现有近20个系列）、珍珠健康养颜品、珍珠饰品，被誉为“珍珠美学专家”。</div>
+					<div class="commtime">
+						<span class="time">2017-10-10 12:00:00</span>
+						<span class="scorenum fr"><i class="icon scoreicon"></i>12134</span>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="http://cdn.teemax.com.cn/common/js/lib/jquery-2.1.0.min.js" ></script>
+<script type="text/javascript" src="${(base)!''}/js/lib/jquery.qrcode.min.js" ></script>
+<script type="text/javascript" src="${(base)!''}/js/lib/base64.js" ></script>
+<script type="text/javascript" src="${(base)!''}/js/info/common.js" ></script>
+<script type="text/javascript" src="http://cdn.teemax.com.cn/common/js/plugin/jquery.cookie.min.js" ></script>
+<script type="text/javascript" src="${(base)!''}/js/info/Preview.js" ></script>

@@ -1,0 +1,20 @@
+.con_box{width: 100%;display: flex;}
+.con_box .bx_lf{width: 56.5%;background: #fff;border-radius: 4px;border: 1px solid #e8e8e8;padding-bottom: 20px;overflow-x: auto;}
+.con_box .bx_lf .bx_top{padding: 10px;}
+.con_box .bx_lf .bx_top input{width: 150px;height: 30px;margin-right: 10px;padding:0 5px ; }
+.con_box .bx_lf .bx_top select{height:30px;width:120px;border:1px solid #e8e8e8;background:#fff}
+.con_box .bx_lf .bx_top span{margin-right: 10px;}
+.con_box .bx_lf .bx_top button{width: 80px;height: 30px;line-height: 30px;border: none;background: #169BD5; margin-left: 10px;color: #fff;cursor: pointer;border-radius: 4px;}
+.con_box .bx_lf .bx_chat{min-width: 100%;height: 350px;}
+
+.con_box .bx_rig{width: 42%;background: #fff;margin-left: 1.5%;border-radius: 4px;border: 1px solid #e8e8e8;}
+.con_box .bx_rig .bx_message{}
+.con_box .bx_rig .bx_message h3{height: 35px;line-height: 35px;font-weight: normal;border-bottom: 1px solid #E8E8E8;padding: 0 20px;}
+.con_box .bx_rig .messagebox{height: 150px;padding: 10px 20px;margin-bottom: 30px;color: #666;position: relative;overflow: hidden;margin-top: 10px;}
+.con_box .bx_rig .messagebox ul li p{padding-bottom: 6px;}
+.con_box .bx_rig .messagebox ul li p:hover{cursor: move;}
+.pt3{padding-top: 75px; }
+
+/**/
+#trend2{display: none;}
+#trend3{display: none;}

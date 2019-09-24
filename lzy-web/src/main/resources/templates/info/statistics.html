@@ -1,0 +1,83 @@
+  <#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search"> 
+			   <h3 class="manaicon search-head">查询</h3>
+			   <div class="search-bar">
+			     <!--  <label>会员来源</label><select><option>请选择</option><option>APP</option><option>PC</option></select> -->
+			      <label>标题</label><input name="keywords"  type="text" class="search_input js_search_input"/>
+				   <label class="fl">时间范围：</label>
+				   <div class="fl">
+					   <input class="datecheck js_register_startDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870576">
+					   至
+					   <input class="datecheck js_register_endDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870577">
+				   </div>
+			      <input value="搜索" class="comBtn btn-small searchbtn js_search" type="button"/>
+			      <input value="导出excel" class="comBtn searchbtn js_excel_btn" type="button"/>
+			   </div>
+			</div>
+	    </div>
+        <div class=" tablewrap tablewrapwidth pt" >
+	        <div class="data_table datatableheight" id="member-list-content">
+	         	<h3 class="manaicon table-head">列表</h3>
+	         	<div class="tableBox">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+				         <thead>
+					          <tr class="title">
+								<td width="5%"><input type="checkbox" class="checkall js_check_all"></td>
+								<td width="10">文章编号</td>
+								<td width="15%">标题</td>
+								<td width="15%">所属栏目</td>
+								<td width="10%">转发量</td> 
+								<td width="10%">阅读量</td>
+								<td width="10%">点击量</td> 
+								<td width="15%">发布状态</td>
+								<td width="10%">创建时间</td> 
+					          </tr> 
+					          
+			    			
+				         </thead>
+				         <tbody id="user-list-content">
+				         </tbody>
+			        </table>
+		        </div>
+	        </div> 
+        </div>
+	  <!--分页-->
+	  <div class="bottom">
+		  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn banchdel js_banch_delete" id="banchdeleterow"/></div>
+		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+  </div>
+<script id="user-list" type="text/x-handlebars-template">
+		{{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			<td><input type="checkbox" class="checkbox js_check_row"/></td>
+			<td>{{articleId}}</td>
+			<td>{{subject}}</td>
+			<td>{{categoryname}}</td>
+			<td>{{articleExtVo.forwardNum}}</td>
+			<td>{{articleExtVo.readNum}}</td>
+			<td>{{articleExtVo.clickNum}}</td>
+			<td>{{#equals status 'open'}}已发布{{/equals}}{{#equals status 'close'}}未发布{{/equals}}</td> 
+			<td>操作</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="5">暂无数据</td>
+		</tr>
+		{{/if}}
+</script>
+         
+  <#include "/common/foot.html">                              
+	<script type="text/javascript">
+		require(['common/head','info/statistics'],function(head,articleHotListInit){
+			head.init('module003001002');
+			articleHotListInit.init();
+		  });
+	</script>

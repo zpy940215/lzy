@@ -1,0 +1,166 @@
+<#include "/common/head.html">
+<link rel="stylesheet"
+	href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+<!--右侧内容区-->
+<div class="rightcon clear">
+	<div class="treewrap dataModle fl">
+		<ul id="typetreeDemo" class="ztree"></ul>
+	</div>
+	<div class="data_table_wrap tablewrap pt fr">
+		<div class="searchwrap searchpositon">
+			<div class="search">
+				<h3 class="manaicon search-head">查询</h3>
+				<div class="search-bar">
+					<label>是否发布</label>
+					<select id="js_status"><option>请选择</option>
+						<option value="finish">已发布</option>
+						<option value="create">未发布</option>
+					</select> 
+					<!-- <label>是否无图</label>
+					<select>
+						<option>请选择</option>
+						<option>无图</option>
+					</select> -->
+					<label>地区选择</label>
+					<select id="areaId">
+						<option>请选择</option>
+						<#if areaVoList??>
+						  <#list areaVoList as areaVo>
+						     <option value=${(areaVo.code)!''}>${(areaVo.name)!''}</option>
+						  </#list>
+						</#if>
+					</select>
+					<label>名称</label><input name="keywords" placeholder="请输入名称关键词" type="text" class="search_input">
+				    <input value="查询" id="js_doSearch" class="comBtn btn-small" type="button" />
+				</div>
+			</div>
+		</div>
+		<div class="data_table datatableheight" >
+			<h3 class="manaicon table-head">列表<a class="addsceneryname btn-small comBtn js_addBtn" href="edit.html" >新增</a></h3>
+			<div class="tableBox" id="view-list-content">
+				&nbsp;
+			</div>	
+		</div>
+		<!--<div class="data_table datatableheight">-->
+		<script id="view-list" type="text/x-handlebars-template">
+         <table style="width:100%" border="0" cellspacing="0" > 
+         <thead>
+           <tr class="title" > 
+             <td width="5%"><input type="checkbox" class="checkall js_check_all"></td>
+             <!--<td width="10%">ID</td>--> 
+             <td width="20%">酒店名称</td> 
+             <td width="10%">发布状态</td> 
+             <td width="10%">价格</td> 
+             <!--<td width="10%">二维码</td>-->
+			 <td width="14%">排序</td>
+             <td width="25%">详细地址</td> 
+             <td width="10%">操作</td>
+          </tr> 
+         </thead>
+         <tbody id="sortable">
+			{{#if dataList}}
+         {{#each dataList}}
+          <tr class="ui-state-default" dIndex="{{@index}}" >
+            <td ><input type="checkbox" class="checkbox js_check_row"></td>
+          <input class="id" type="hidden" value={{id}}  pos={{pos}} viewid={{viewId}} status={{status}}/>
+            <td>{{name}}</td>
+            <td  class="publishstadus">{{#equals status 'finish'}}已发布{{/equals}}{{#equals status 'create'}}未发布{{/equals}}{{#equals status 'auditing'}}审核中{{/equals}}{{#equals status 'canclefinish'}}未发布{{/equals}}</td>
+            <td>{{price}}</td>
+            <!--<td><img src="{{qrcode}}" style="width:60px;height:60px;margin:5px auto;"></td>-->
+           <td ><input id="sortnum" type="text" class="tabletext jspos" value="{{pos}}"/></td>
+            <td >{{address}}</td>
+            <td class="operate"><span class="edit"><a href="edit.html?viewVo.viewId={{viewId}}&viewVo.type={{type}}" target="blank">编辑</a> |</span><span class="del_minsu"><a  class="js_view_delete" dataId="{{id}}" viewId="{{viewId}}" href="javascript:;" >删除</a></span></td>
+          </tr>
+         {{/each}}
+		{{else}}
+				<tr>
+					<td colspan="9">暂无数据</td>
+				</tr>
+  		{{/if}}
+         </tbody>
+        </table>
+     
+        </script>
+		<!--分页-->
+		<div class="bottom">
+			<div class="tableoperate ml2">
+				 <input type="button" value="删除" class="btn-small comBtn" id="banchdeleterow">
+           <!-- <input type="button" value="排序上升" class="btn-big comBtn sortUp">
+           <input type="button" value="排序下降" class="btn-big comBtn sortDown"> -->
+           <input type="button" value="保存排序" class="btn-big comBtn savesort">
+           <input type="button" value="发布" class="btn-small comBtn" id="publish">
+           <input type="button" value="取消发布" class="btn-big comBtn" id="cancelpublish">
+           </div>
+		   <div class="js_pageDiv">&nbsp;</div>
+		</div>
+	</div>
+</div>
+<!-- 
+      <div class="data_table datatableheight">
+         <h3 class="manaicon table-head">列表<a class="addsceneryname btn-small comBtn" href="add.html" target="_blank">新增</a></h3>
+         <table style="width:100%" border="0" cellspacing="0"> 
+         <thead>
+           <tr class="title"> 
+             <td><input type="checkbox" class="checkall"/></td>
+             <td width="10%">ID</td> 
+             <td width="15%">景区名称</td> 
+             <td width="10%">发布状态</td> 
+             <td width="10%">价格</td> 
+             <td width="10%">二维码</td>
+             <td width="15%">景点</td>
+             <td width="15%">详细地址</td> 
+             <td width="15%">操作</td>
+          </tr> 
+         </thead>
+         <tbody  id="sortable">
+          <tr class="ui-state-default">
+            <td><input type="checkbox" class="checkbox"/></td>
+            <td>54354</td>
+            <td>金银岛大酒店</td>
+            <td>已发布</td>
+            <td>700.00起</td>
+            <td><img src="../../images/ewm.png" style="width:60px;height:60px;margin:5px auto;"/></td>
+            <td><span class="style2">30</span></td>
+            <td>德清县武康镇北湖东街818号</td>
+            <td class="operate"><span class="edit"><a href="edit.html" target="_blank">编辑</a> |</span><span class="del_minsu"><a href="javascript:void(0)" class="deleterow">删除</a></span>|<span class="set-pwd"><a href="../../onlineshop/ticket/list.html" target="_blank">门票列表</a></span></td>
+          </tr>
+          <tr class="ui-state-default">
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>54355</td>
+            <td>金银岛大酒店</td>
+            <td>已发布</td>
+            <td>700.00起</td>
+            <td><img src="../../images/ewm.png" style="width:60px;height:60px;margin:5px auto;"/></td>
+            <td><span class="style2">30</span></td>
+            <td>德清县武康镇北湖东街818号</td>
+            <td class="operate"><span class="edit"><a href="edit.html" target="_blank">编辑</a> |</span><span class="del_minsu"><a href="javascript:void(0)" class="deleterow">删除</a></span>|<span class="set-pwd"><a href="../../onlineshop/ticket/list.html" target="_blank">门票列表</a></span></td>
+          </tr>
+         </tbody>
+        </table>
+      </div> 
+      分页
+       <div class="bottom">
+       	  <div class="tableoperate ml2"><input type="button" value="删除" class="btn-small comBtn" id="banchdeleterow"/><input type="button" value="排序上升" class="btn-big comBtn sortUp"/><input type="button" value="排序下降" class="btn-big comBtn sortDown"/><input type="button" value="发布" class="btn-small comBtn" onclick="publishscenery()"><input type="button" value="取消发布" class="btn-big comBtn" id="cancelpublish"/></div>
+	      <div class="pageDiv">
+				<span class="disabled">&lt;上一页</span>
+				<span class="pageCur">1</span>
+				<span class="disabled">下一页&gt;</span>
+				<span class="pageTotal">共1页</span>
+				<span class="countYe">
+				           到第<input type="text" value="1" maxlength="1">页
+				  <a href="javascript:;" class="turnDown">确定</a>
+				  <span></span>
+				</span>
+	       </div>
+	   </div>
+    </div>           
+  </div> -->
+<#include "/common/foot.html">
+<script type="text/javascript">
+	require([ 'common/head', 'tourdata/hotel/list' ],
+			function(head, hotelList) {
+				head.init('module002001005');
+				hotelList.initHotel("${(rootAreaid)!'3301'}");
+			});
+</script>

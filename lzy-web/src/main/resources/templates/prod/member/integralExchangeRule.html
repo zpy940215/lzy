@@ -1,0 +1,109 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" type="text/css" href="${base}/css/rule.css"/>
+<style>
+	.setwidth{width: 30px;}
+</style>
+  <!--右侧内容区-->
+   <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search"> 
+			   <h3 class="manaicon search-head">积分金额兑换规则：</h3>
+			   <div class="search-bar">
+			     <span>* </span>每
+			     	<input type="hidden" id="ruleId" value="${ruleId!''}">
+				    <input type="text" id="ruleName" class="setwidth"  value="${(ruleName)!''}">积分可以抵
+				    <input type="text" id="ruleVal" class="setwidth"  value="${(ruleVal)!''}">元
+			       <input value="保存" class="comBtn btn-small searchbtn js_search" id="ruleeditsubmit" type="button"/>
+			   </div>
+
+			</div>
+	    </div>
+        <div class=" tablewrap tablewrapwidth pt" >
+	        <div class="data_table datatableheight" id="member-list-content">
+	         	<h3 class="manaicon table-head">订单积分消费规则<a class="addrule btn-big comBtn fr js_rule_add" href="javascript:void(0)">添加规则</a></h3>
+	         	<div class="tableBox">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+				         <thead>
+					           <tr class="title">
+								   <td width="5%"><input type="checkbox" class="checkall js_check_all"/></td>
+								   <td width="20%">id</td>
+								   <td width="25%">消费额度</td>
+								   <td width="25%">可用积分</td>
+								   <td width="25%">操作</td>
+					          </tr> 
+				         </thead>
+				         <tbody id="rule-list-content">
+				         </tbody>
+			        </table>
+		        </div>
+	        </div> 
+        </div>
+	  <!--分页-->
+	  <div class="bottom">
+		  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn banchdel js_banch_delete" id="banchdeleterow"/></div>
+		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+  </div>
+<div class="popup js_popUpruleadd" id="ruleadd-save-content"> &nbsp; </div>
+<div class="popup js_positionadd" id="positionadd-save-content"> &nbsp; </div>
+<script id="consume-rule-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">{{popUp.titleName}}<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form action="" method="post" >
+			<input id="editId" type="hidden" value="{{editId}}">
+		  <p class="formfill">
+				<label><span class="style1">*</span>消费额度：</label>
+				<input name="genrename" type="text" class="commtext" id="name" value="{{name}}">
+            	<span class="errortip js_errortip js_errortip1"></span>
+          </p>
+          <p class="formfill">
+				<label><span class="style1">*</span>可用积分：</label>
+				<input name="genrename" type="text" class="commtext" id="val" value="{{val}}">
+            	<span class="errortip js_errortip js_errortip2"></span>
+          </p>
+		  
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="rulesubmit"></div>
+        </form>
+      </div>
+    </div>
+</script> 
+<script id="rule-list" type="text/x-handlebars-template">
+		{{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			<td><input type="checkbox" class="checkbox js_check_row"/></td>
+			<td>{{id}}</td>
+			<td>{{name}}</td>
+			<td>{{val}}</td>
+			<td>
+				<span class="js_del"><a href="javascript:void(0)" class="js_delete_row" name="{{name}}" val="{{val}}" dataId="{{id}}">删除</a></span>|
+				<span class="js_del"><a href="javascript:void(0)" class="js_edit_row" name="{{name}}" val="{{val}}" dataId="{{id}}">编辑</a></span>
+			</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="5">暂无数据</td>
+		</tr>
+		{{/if}}
+</script>  
+  </div>
+   
+
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/member/integralExchangeRule','common/area'],function(head,integralExchangeRule){
+	head.init('module005004007');
+	integralExchangeRule.init();
+  });
+</script>

@@ -1,0 +1,49 @@
+<#include "/common/head.html">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/diyUpload/css/diyUpload.css">
+<link rel="stylesheet"
+	href="${base}/js/plugin/date/css/smoothness/jquery.ui.css"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/date/css/css.css" />
+<link rel="stylesheet"
+	href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<!--右侧内容区-->
+<div class="rightcon pt clear">
+	<div class="editbt">
+		<span class="js_editbt"></span>菜单配置
+		
+	</div>
+	<div>&nbsp;
+	
+	<div class="popup_bg"></div>
+	    
+		       
+		         <p class="formfill"><label class="fl">菜单配置：</label><textarea style="width:600px; height:400px" id="menutext">${(resultStr)!''}</textarea></p>   
+		        
+		      
+	    </div>
+	
+	</div>
+	
+	<div class="page">
+		<div class="editsubmit">
+			<input type="button" value="保存" class="save btn-small comBtn " id="wxmenuupdate"/><input
+				type="button" value="返回" class="btn-small comBtn btn-grey" id="cancle" />
+		</div>
+	</div>
+</div>
+
+<#include "/common/foot.html">
+<script type="text/javascript">
+	require([ 'common/head', 'weixin/menu/list'], function(head,wxmenuList) {
+		head.init('module002001001');
+		wxmenuList.init();
+	});
+</script>
+

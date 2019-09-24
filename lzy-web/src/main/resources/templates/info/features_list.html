@@ -1,0 +1,83 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+
+ <link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/specialtygente.css" rel="stylesheet" type="text/css"> 
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" href="${base}/js/plugin/ztree/jquery.ztree.core.js" type="text/css"></script>
+<script type="text/javascript" href="${base}/js/plugin/ztree/jquery.ztree.excheck.js" type="text/css"></script>
+<script type="text/javascript" href="${base}/js/plugin/ztree/jquery.ztree.exedit.js" type="text/css"></script>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+			<div class="search-bar">
+				<label>栏目</label><select id="category"></select>
+				<label>是否推荐</label><select id="isrecommend"><option value="">请选择</option><option value="Y">是</option><option value="N">否</option></select>
+				<label>是否发布</label><select id="ispush"><option value="">请选择</option><option value="open">已发布</option><option value="close">未发布</option></select>
+				<span style="display:inline-block;"><label>标题关键词</label><input name="keywords" placeholder="请输入标题关键词" type="text" class="search_input">
+				<input value="搜索" class="comBtn btn-small searchbtn"  id="do_search" type="button"/> </span>
+			</div>
+      </div>
+    </div>
+    
+    <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+         	<h3 class="manaicon table-head">列表<a href='features_edit.html' class="addsceneryname btn-small comBtn" >新增</a></h3></h3>
+         <!-- 列表模板 -->
+         <table style="width:100%" border="0" cellspacing="0" > 
+         <thead>
+           	<tr class="title"> 
+				<td width="25%">标题</td>
+				<td width="10%">是否推荐</td>
+				<td width="15%">发布状态</td>
+				<td width="5%">排序</td>
+				<td width="10%">操作</td> 
+			</tr> 
+         </thead>
+         <tbody id="article-list-content">
+         </tbody>
+        </table>
+      	</div>
+    </div> 
+  </div>
+  
+  	<!--分页-->
+		<div class="bottom"> 		   
+			<div class="js_pageDiv"> &nbsp; </div>
+		</div>
+	</div>
+	</div>
+	
+	<!-- 列表模板 -->
+		 <script id="article-list" type="text/x-handlebars-template">
+		 {{#if dataList}}
+         {{#each dataList}}
+		  <tr class="ui-state-default" pos="{{pos}}" aId="{{id}}" dIndex="{{@index}}" >
+            <td >{{subject}}</td>
+			<td>
+				{{#ifCond  	 projectId '1711291355167896354'}} 
+				{{else}}
+					<input class="js_Recommend" type="radio" {{#equals isRecommend 'Y'}}checked{{/equals}}  dataId="{{id}}" name="commend_{{specialId}}">是&nbsp;&nbsp;&nbsp;<input type="radio" class="js_NoRecommend"  dataId="{{id}}" {{#equals isRecommend 'N'}}checked{{/equals}} name="commend_{{specialId}}">否
+				{{/ifCond  }}
+			</td>
+ 			<td>{{#equals status 'open'}}已发布{{/equals}}{{#equals status 'close'}}未发布{{/equals}}</td> 
+			<td ><input   value="{{pos}}" specialId="{{specialId}}" pos="{{pos}}" vitulId="{{id}}"  type="text" class="jspos tabletext"/></td>
+            <td class="operate"><span class="edit"><a href="features_edit.html?specialVo.specialId={{specialId}}" target="blank">编辑</a> |</span><span><a class="info_row_delete" dataId="{{id}}" href="javascript:;" >删除</a> |</span><span class="edit_row"><a class="js_link" specialId="{{specialId}}" categoryIds="{{categoryIds}}" href="features_asscd.html?specialId={{specialId}}&categoryId={{categoryIds}}" target="blank" >关联</a> </span></td>
+          </tr>
+         {{/each}}
+		{{else}}
+			<tr>
+				<td colspan="9">暂无数据</td>
+			</tr>	
+		{{/if}}
+        </script>
+	
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+	require(['common/head','info/featuresList'],function(head,typeList){
+		head.init('module003001003');
+		typeList.init();
+	  });
+</script>

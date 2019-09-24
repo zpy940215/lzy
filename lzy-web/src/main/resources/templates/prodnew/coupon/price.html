@@ -1,0 +1,127 @@
+<#include "/common/head.html">
+<link href="${base}/css/base.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/timepicker/jquery-clockpicker.min.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+    <div class="editbt">
+      	<span class="js_editbt"> </span>电子券/
+        <span class="style2 " >价格设置：${(prodVo.name)!''}</span>
+    </div>
+    <div class=" tablewrap pt ">
+          <div class="search searchpositon">
+            <h3 class="manaicon search-head">查询
+                <input type="hidden" value="${(prodVo.id)!''}" id="prodId"/>
+            	<input  class="datecheck js_price_startTime" value="" type="text" placeholder="年/月/日"/>至
+            	<input  class="datecheck js_price_endTime" value="" type="text" placeholder="年/月/日"/>
+            	<input value="搜索" class="comBtn btn-small searchbtn js_price_searchBtn" type="button"/>
+            </h3>
+            <div class="search-bar search-price">
+	            <div class="fl">
+	            	<label>使用日期：</label>
+		          	<input  class="datecheck js_priceSet_startTime" value="" type="text" placeholder="年/月/日"/>至
+		          	<input  class="datecheck js_priceSet_endTime" value="" type="text" placeholder="年/月/日"/>
+		         </div>  
+		         <p class="type"><label>时间类型：</label>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="all" checked="checked">每日</span>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="workDay">工作日票</span>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="weekend">双休日票</span>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="intervalDay">区间票</span>
+	            </p>
+		         <p class="type">
+		         <label>是否可退：</label>
+		            <span class="formradio"><input type="radio" name="isRefound" value="Y" checked="checked">是</span>
+		            <span class="formradio"><input type="radio" name="isRefound" value="N">否</span>
+	           	<label>使用类型：</label>
+		            <span class="formradio"><input type="radio" name="useType" value="food" checked="checked">餐饮</span>
+		            <span class="formradio"><input type="radio" name="useType" value="hotel">住宿</span>
+	            </p>         	
+	          	<div class="fl"><label>原价:</label>
+		            <input  class="datecheck price js_price_origin" value="" type="text" placeholder="原价"/>
+	            </div>
+	            <div class="fl"><label>销售价:</label>
+		            <input  class="datecheck price js_price_sale" value="" type="text" placeholder="销售价"/>
+	            </div>
+	            <div class="fl"><label>结算价:</label>
+		            <input  class="datecheck price js_price_net" value="" type="text" placeholder="结算价"/>
+	            </div>
+	            <div class="fl"><label>总库存/天:</label>
+		            <input  class="datecheck price js_price_totalNum" value="" type="text" placeholder="总库存"/>
+	            </div>
+	            <div class=""><label>剩余库存:</label>
+		            <input  class="datecheck price js_price_freeNum" value="" type="text" placeholder="剩余库存"/>
+	            </div>
+	            <div class="fl"><label>说明：</label>
+		            <input  class="datecheck desc js_price_param3Value" value="" type="text" placeholder="说明"/>
+	            </div>
+                <input value="新增" class="comBtn btn-small searchbtn js_priceSet_set" type="button"/>
+            </div>
+          </div>
+          <div class="data_table datatableheight" id="prodPrice-list-content">
+          	
+          </div>
+     </div>
+    <!--分页-->
+    <div class="bottom">
+		<div class="js_pageDiv">&nbsp;</div>
+	</div>
+    
+    <script id="prodPrice-list" type="text/x-handlebars-template">
+         <h3 class="manaicon table-head">列表</h3>
+          		<div class="formformat">
+				    <div class="routetable">
+				      <table width="100%" border="0" cellspacing="0" id="prodPrice_num">
+				        <thead>
+				          <tr class="title">
+				            <td width="10%">开始时间</td>
+				            <td width="10%">结束时间</td>
+				            <td width="5%">门市价/元</td>
+				            <td width="5%">销售价/元</td>
+                            <td width="10%">结算价</td>
+				            <td width="10%">是否可退</td>
+							<td width="10%">使用类型</td>
+				            <td width="10%">总库存/天</td>
+				            <td width="5%">剩余库存</td>
+                            <td width="10%">说明</td>
+				            <td width="10%">操作</td>
+				          </tr>
+				        </thead>
+				        {{#each dataList}}
+				                <tbody>
+				                  <tr>
+				                    <td><input type="text" class="pricetext beginTime_{{id}}" readonly value="{{formatDate beginTime "yyyy-MM-dd"}}"></td>
+				                    <td><input type="text" class="pricetext endTime_{{id}}" readonly value="{{formatDate endTime "yyyy-MM-dd"}}"></td>
+				                    <td><input type="text" class="pricetext oldPrice_{{id}}" value="{{price}}"></td>
+				                    <td><input type="text" class="pricetext price_{{id}}" value="{{discountPrice}}"></td>
+									<td><input type="text" class="pricetext net_price_{{id}}" value="{{netPrice}}"></td>
+									<td><select class="js_refound_{{id}}">
+									<option value="Y">是</option>
+									<option value="N">否</option>
+									</select></td>
+									<td><select class="js_use_type_{{id}}">
+									<option value="food">餐饮</option>
+									<option value="hotel">住宿</option>
+									</select></td>
+				                    <td><input type="text" class="pricetext totalNum_{{id}}" value="{{totalNum}}"></td>
+				                    <td><input type="text" class="pricetext freeNum_{{id}}" value="{{freeNum}}"></td>
+                                    <td><input type="text" class="pricetext param3Value_{{id}}" value="{{param3Value}}"></td>
+				                    <td><a class="js_price_changebtn" prodPriceId="{{id}}" href="javascript:void(0)">更新</a></td>
+				                  </tr>
+				                </tbody>
+			               {{/each}}
+				      </table>
+				    </div>
+				</div>
+
+    </script>
+    
+    
+ <#include "/common/foot.html">
+<script type="text/javascript">
+require(['common/head','prodnew/coupon/price'],function(head,ticketPrice){
+	head.init('module007001003');
+	ticketPrice.init();
+  });
+</script> 

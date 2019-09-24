@@ -1,0 +1,342 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        
+        <input type="hidden" id="isAirPay" value="${(isAirPay)!''}">
+        
+        <div class="search-bar">
+        	<div class="searchcon clear">
+         	<label class="fl">下单时间：</label>
+         	<div class="fl">
+         		<input  class="datecheck js_order_startDate" value=""  readonly type="text" placeholder="年/月/日"/>
+         		至
+         		<input  class="datecheck js_order_endDate" value=""  readonly type="text" placeholder="年/月/日"/>
+         	</div>
+        	</div>
+        	<div class="searchcon">
+        		 <label>查询：</label><input autocomplete="off" name="keywords" placeholder="请输入订单号" type="text" class="search_input js_value_keywords"/>
+        		 <label>产品名称：</label>
+        		 <select class="js_ticket_type">
+    				<option value="">请选择</option>
+    			</select>
+        		 <input value="搜索" class="comBtn btn-small searchbtn js_select_btn" type="button"/> 
+        		 <input value="导出excel" class="comBtn searchbtn js_excel_btn" type="button"/>
+        		 <input value="导出产品销售表" class="comBtn searchbtn js_excel_prod_btn" type="button"/>
+        	</div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt ptop" id="order-list-content">
+      <!--订单列表-->
+    </div>
+    <div class="bottom">
+			<div class="js_pageDiv">&nbsp;</div>
+	</div>
+    
+	<!-- 订单列表 -->
+	<script id="order-list" type="text/x-handlebars-template">
+	<div class="data_table datatableheight">
+    <h3 class="manaicon table-head">订单项列表</h3>
+    <div class="tableBox">
+        <table style="width:100%" border="0" cellspacing="0"> 
+	         <thead>
+	           <tr class="title"> 
+	             <td width="19%">订单号</td>
+				 <td width="16%">产品名称</td>
+				 <td width="10%">单价</td>
+				 <td width="10%">数量</td>
+				 <td width="10%">总价</td>
+	             <td width="15%">下单时间</td>
+			     <td width="10%">订单状态</td>
+	             <td width="10%">操作</td> 
+	          </tr> 
+	         </thead>
+	         <tbody id="sortable">
+                {{#if dataList}}
+                  {{#each dataList}}
+	          	<tr class="ui-state-default">
+		            <td>{{orderNo}}</td>
+					<td>{{prodName}}</td>
+					<td>{{discountPrice}}</td>
+					<td>{{prodNum}}</td>
+					<td>{{totalPrice}}</td>
+					<td>{{formatDate createDate 'default'}}</td>
+					<td>{{ticketOrderStatus orderStatus}}</td>
+		            <td class="operate"><span><a class="js_detail_order" orderNo={{orderNo}} href="javascript:void(0)">查看</a></span>
+					</td>
+	          	</tr>
+                  {{/each}}
+                 {{/if}}
+	         </tbody>
+       </table>
+    </div>
+ </div> 
+    </script>	
+    
+    <!-- 订单详情 商城 -->
+    <div class="popup js_popUpShangchengDetail" id="shangcehng-detail-content"> &nbsp; </div>
+	<script id="order-detail-shangcheng" type="text/x-handlebars-template">
+     <div class="popup_bg"></div>
+     <div class="popup_box orderdetail">
+      <div class="popup_bt">商城订单详情<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+			<div class="tablebox">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody><tr class="title"><td colspan="4">订单信息</td></tr>
+                        <tr>
+                            <td width="15%">订单名称</td>
+                            <td width="35%">{{subject}}</td>
+                            <td width="15%">订单号</td>
+                            <td width="35%">{{orderNo}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">收货人信息</td></tr>
+                        <tr>
+                            <td width="15%">收货人</td>
+                            <td width="35%">{{orderPersonVo.name}}</td>
+                            <td width="15%">收货人电话</td>
+                            <td width="35%">{{orderPersonVo.mobile}}</td>
+						</tr>
+						<tr>
+							<td width="15%">收货地址</td>
+                            <td colspan="3" width="35%">{{deliveryAddress userAddressVo.countryId userAddressVo.provinceId userAddressVo.cityId userAddressVo.address}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">订单明细</td></tr>
+						{{#each orderItemVoList}}
+						<tr>
+                            <td width="15%">商品名称</td>
+                            <td width="35%">{{prodVo.name}}</td>
+                            <td width="15%">数量</td>
+                            <td width="35%">{{prodNum}}</td>
+						</tr>
+						<tr>
+							<td width="15%">原价</td>
+                            <td width="35%">{{prize}}</td>
+							<td width="15%">优惠价</td>
+                            <td width="35%">{{discountPrice}}</td>
+                        </tr>
+						{{/each}}
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">订单小计</td></tr>
+						<tr>
+                            <td width="15%">商品总价</td>
+                            <td width="35%">{{totalPrice}}</td>
+                            <td width="15%">优惠价</td>
+                            <td width="35%">0</td>
+						</tr>
+						<tr>
+							<td width="15%">邮费</td>
+                            <td width="35%">{{subtract totalFee totalPrice}}</td>
+							<td width="15%">订单总价</td>
+                            <td width="35%">{{totalFee}}</td>
+                        </tr>
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">时间</td></tr>
+						<tr>
+                            <td width="15%">创建时间</td>
+                            <td width="35%">{{formatTime orderTime.create}}</td>
+                            <td width="15%">付款时间</td>
+                            <td width="35%">{{formatTime orderTime.pay}}</td>
+						</tr>
+						<tr>
+							<td width="15%">发货时间</td>
+                            <td colspan="3" width="35%">{{formatTime orderTime.delivered}}</td>
+                        </tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+			</div>
+      </div>
+    </div>
+	</script>
+	
+	<!-- 订单详情 票务 -->
+    <div class="popup js_popUpPiaoWuDetail" id="piaowu-detail-content" > &nbsp; </div>
+	<script id="order-detail-piaowu" type="text/x-handlebars-template">
+     <div class="popup_bg"></div>
+     <div class="popup_box orderdetail">
+      <div class="popup_bt">门票订单详情<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+		<div class="tablebox">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody><tr class="title"><td colspan="4">订单信息(<span style="color: red">{{ticketOrderStatus status}}</span>)</td></tr>
+                        <tr>
+                            <td width="15%">订单名称</td>
+                            <td width="35%">{{subject}}</td>
+                            <td width="15%">订单号</td>
+                            <td width="35%">{{orderNo}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">预定人信息</td></tr>
+                        <tr>
+                            <td width="15%">预定人</td>
+                            <td width="35%">{{orderPersonVo.name}}</td>
+                            <td width="15%">预定人电话</td>
+                            <td width="35%">{{orderPersonVo.mobile}}</td>
+						</tr>
+						<tr>
+							<td width="15%">身份证</td>
+                            <td colspan="3" width="35%">{{orderPersonVo.idcard}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">订单明细</td></tr>
+						<tr class="title"><td colspan="2" width="33%">商品名称</td><td width="33%">价格</td><td width="33%">状态</td></tr>
+						{{#each orderItemVoList}}
+						{{#each orderItemDetailVos}}
+						<tr>
+                            <td colspan="2" width="33%">{{../prodName}}</td>
+                            <td width="33%">{{totalPrice}}</td>
+                            <td width="33%">{{ticketOrderStatus status}}</td>
+						</tr>
+						{{/each}}
+						{{/each}}
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">订单小计</td></tr>
+						<tr>
+                            <td width="15%">商品总价</td>
+                            <td width="35%">{{totalPrice}}</td>
+                            <td width="15%">优惠价</td>
+                            <td width="35%">0</td>
+						</tr>
+						<tr>
+							<td width="15%">订单总价</td>
+                            <td colspan="3" width="35%">{{totalFee}}</td>
+                        </tr>
+						<tr>
+							<td width="15%">第三方同步编号</td>
+                            <td colspan="3" width="35%">{{sourceOrderNo}}</td>
+                        </tr>
+						</tbody>
+						{{#if orderPayVo.payType}}
+						<tbody><tr class="title"><td colspan="4">支付</td></tr>
+						<tr>
+                            <td width="15%">支付方式</td>
+                            <td width="35%">{{payType orderPayVo.payType}}</td>
+                            <td width="15%">第三方流水号</td>
+                            <td width="35%">{{orderPayVo.transactionNo}}</td>
+						</tr>
+						</tbody>
+						{{/if}}
+						<tbody><tr class="title"><td colspan="4">时间</td></tr>
+						<tr>
+                            <td width="15%">创建时间</td>
+                            <td width="35%">{{formatTime orderTime.create}}</td>
+                            <td width="15%">付款时间</td>
+                            <td width="35%">{{formatTime orderTime.pay}}</td>
+						</tr>
+						<tr>
+							<td width="15%">游玩时间</td>
+                            <td colspan="3" width="35%">{{formatTime occDate}}</td>
+                        </tr>
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">订单日志</td></tr>
+						<tr>
+                            <td colspan="3">日志描述</td>
+                            <td width="20%">日志时间</td>
+						</tr>
+						{{#each orderStepVos}}
+						<tr>
+							<td colspan="3">{{description}}</td>
+                            <td width="20%">{{formatTime createDate}}</td>
+                        </tr>
+						{{/each}}
+						</tbody>
+					</table>
+                </div>
+            </div>
+		<div class="cancle">
+			{{#equal status 'create'}}<input type="button" value="取消" orderNo="{{orderNo}}" clientType="{{clientType}}" class="quit formbtn js_Cancel_order">{{/equal}}
+			<#if isSyncAgent?? && isSyncAgent=="Y">
+				<#if isAirPay?? && isAirPay=="Y">
+					{{#equal status 'pay'}}<input type="button" value="退款" orderNo="{{orderNo}}" clientType="{{clientType}}" class="quit formbtn js_agent_refund">{{/equal}}
+				<#else>	
+	           	 	{{#equal status 'pay'}}<input type="button" value="取消" orderNo="{{orderNo}}"  class="quit formbtn js_agent_apply">{{/equal}}
+		  	   		{{#equal status 'refunding'}}<input type="button" value="退款" orderNo="{{orderNo}}" clientType="{{clientType}}" class="quit formbtn js_agent_refund">{{/equal}}
+				</#if>
+			</#if>
+		</div>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+			</div>
+      </div>
+    </div>
+	</script>
+	
+	<!-- 订单详情 酒店 -->
+    <div class="popup js_popUpJiuDianDetail" id="jiudian-detail-content"> &nbsp; </div>
+	<script id="order-detail-jiudian" type="text/x-handlebars-template">
+     <div class="popup_bg"></div>
+     <div class="popup_box orderdetail">
+      <div class="popup_bt">酒店订单详情<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+			<div class="tablebox">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody><tr class="title"><td colspan="4">订单信息</td></tr>
+                        <tr>
+                            <td width="15%">订单名称</td>
+                            <td width="35%">{{subject}}</td>
+                            <td width="15%">订单号</td>
+                            <td width="35%">{{orderNo}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">房间预定信息</td></tr>
+                        <tr>
+                            <td width="15%">预定人</td>
+                            <td width="35%">{{orderPersonVo.name}}</td>
+                            <td width="15%">预定人电话</td>
+                            <td width="35%">{{orderPersonVo.mobile}}</td>
+						</tr>
+						<tr>
+                            <td width="15%">入住开始日期</td>
+                            <td width="35%">{{formatTime startDate}}</td>
+                            <td width="15%">入住结束日期</td>
+                            <td width="35%">{{formatTime endDate}}</td>
+						</tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">订单小计</td></tr>
+						<tr>
+                            <td width="15%">商品总价</td>
+                            <td width="35%">{{totalPrice}}</td>
+                            <td width="15%">优惠价</td>
+                            <td width="35%">0</td>
+						</tr>
+						<tr>
+							<td width="15%">订单总价</td>
+                            <td colspan="3" width="35%">{{totalFee}}</td>
+                        </tr>
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">时间</td></tr>
+						<tr>
+                            <td width="15%">创建时间</td>
+                            <td colspan="3" width="35%">{{formatTime orderTime.create}}</td>
+						</tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+			</div>
+        </form>
+      </div>
+    </div>
+	</script>
+	
+  </div>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/order/ticketItemList'],function(head,orderList){
+	head.init('module005003004');
+	orderList.init();
+  });
+</script>
+

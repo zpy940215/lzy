@@ -1,0 +1,49 @@
+<#include "/common/head.html">
+<link href="${base}/css/style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+<link href="${base}/css/tool.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear">
+    <p class="clear"><a class="js_area_add  comBtn btn-big fr" href="javascript:;" >添加地区</a></p>
+    <div class="pms-tabletree">
+      <p class="pms-tabletreetit">地区列表</p>
+        <#list areaVoList as areaVo>
+            <ul>
+                <div>
+                    <input type="hidden" value="${areaVo.code}" id="countryId" />
+                    <a href="javascript:;" data-key-id="${areaVo.code}" class="for-ajax-link djk-folder">
+                        <span class="glyphicon glyphicon-folder-close">&nbsp;</span>${areaVo.name}
+                    </a>
+                    <a href="javascript:;" data-area-id="${areaVo.code}" data-area-name="${areaVo.name}" class="for-ajax-link djk-add pull-right djk-modals-open">
+                        <span class="glyphicon glyphicon-plus">&nbsp;</span>添加子栏目
+                    </a>
+                </div>
+            </ul>
+        </#list>
+    </div>
+  </div>
+ <!--添加地区-->
+<div class="popup js_popUpareaadd" id="areaadd-save-content"> &nbsp; </div>
+<script id="areaadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">添加地区<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addsiteform" name="addsiteform" method="post" >
+          <p class="formfill"><label><span class="style1">*</span>上级地区：</label><select class="commtext" name="prevarea"><option>请选择</option><option>景区</option><option>美食</option><option>景点</option></select>
+          <span class="errortip"></span>
+          </p>
+          <p class="formfill"><label>地区名称：</label><input name="sitename" type="text" class="commtext "></p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addarea"></div>
+        </form>
+      </div>
+    </div>
+</script>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/site/areaList'],function(head,areaList){
+	head.init('module006001002');
+	areaList.init();
+  });
+</script>  

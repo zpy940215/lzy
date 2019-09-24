@@ -1,0 +1,75 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+
+ <link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/specialtygente.css" rel="stylesheet" type="text/css"> 
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+          <label>查询条件</label><input name="keywords" placeholder="请输入分类名称" type="text" class="search_input">
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button"> 
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+         <div class="data_table datatableheight">
+         <h3 class="manaicon table-head">列表<a class="addgenre btn-big comBtn fr js_genre_add" href="javascript:void(0)">添加分类</a></h3>
+         <div class="tableBox" style="margin-top:10px;">	
+         	<div class="tabletitle">
+	           <span style='width:22%'>分类</span>
+	           <span style='width:22%'>名称</span>
+	           <span style='width:22%;float: right;'>操作</span>
+        	</div>
+            <div class="pms-tabletree js_pms-tabletree">
+            </div>
+         </div>  
+      </div>
+    </div> 
+  </div>
+<div class="popup js_popUpgenreadd" id="genreadd-save-content"> &nbsp; </div>
+<script id="genreadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">{{popUp.titleName}}<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form action="" method="post" >
+          <p class="formfill"><label><span class="style1">*</span>上级分类：</label>
+              <select class="commtext js_commtext" name="prevgenre">
+                  <option value="_0" class="lvl_1">顶级模块</option>
+                  {{#each typeList}}
+                    {{#equals typeId ../popUp.upId}}
+                        <option value="{{typeId}}_{{lvl}}" selected="selected">{{nbsp}}{{description}}</option>
+                    {{else}}
+                        <option value="{{typeId}}_{{lvl}}" class="lvl_{{lvl}}">{{nbsp}}{{description}}</option>
+                    {{/equals}}
+                  {{/each}}
+              </select>
+            <span class="errortip"></span>
+          </p>
+          <p class="formfill">
+				<label><span class="style1">*</span>分类名称：</label>
+				<input name="genrename" type="text" class="commtext" id="name" value="{{name}}">
+            	<span class="errortip js_errortip"></span>
+          </p>
+
+		  <p class="formfill">
+				<label><span class="style1">*</span>分类描述：</label>
+				<input name="genrename" type="text" class="commtext" id="description" value="{{description}}">
+            	<span class="errortip js_errortip"></span>
+          </p>
+
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="genresubmit"></div>
+        </form>
+      </div>
+    </div>
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+	require(['common/head','tourdata/typemanage/list'],function(head,typeList){
+		head.init('module002001010');
+		typeList.init();
+	  });
+</script>

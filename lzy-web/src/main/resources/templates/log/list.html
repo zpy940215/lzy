@@ -1,0 +1,109 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+      <div class="search-bar">
+        	
+          	
+          	<div class="searchcon clear">
+	          	<label class="fl">时间：</label>
+	          	
+	          	<div class="fl">
+	          		<input  class="datecheck js_order_startDate" value=""  readonly type="text" placeholder="年/月/日"/>
+	          		至
+	          		<input  class="datecheck js_order_endDate" value=""  readonly type="text" placeholder="年/月/日"/>
+	          	</div>
+          	</div>
+          	
+          	<div class="searchcon">
+          		 <label>查询：</label><input autocomplete="off" name="keywords" placeholder="交易单号" type="text" class="search_input js_value_keywords"/>
+          		 <input value="搜索" class="comBtn btn-small searchbtn js_select_btn" type="button"/> 
+          		 <input value="导出excel" class="comBtn searchbtn js_excel_btn" type="button"/>
+          	</div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt ptop">
+      <!--订单列表-->
+      <div class="data_table datatableheight">
+    <h3 class="manaicon table-head">列表</h3>
+    <span class="js_totalPrice"></span>
+    	<span class="js_totalPriceIn"></span>
+    	<span class="js_totalPriceOut"></span>
+    <div class="tableBox" id="order-list-content"></div></div>
+    </div>
+    <div class="bottom">
+			<div class="js_pageDiv">&nbsp;</div>
+	</div>
+   
+	 
+	
+	
+	<!-- 订单列表 -->
+	<script id="order-list" type="text/x-handlebars-template">
+	
+        <table style="width:100%" border="0" cellspacing="0"> 
+	         <thead>
+	           <tr class="title"> 
+	            <td width="15%">日期</td>
+				<td width="15%">业务类型</td>
+				<td width="10%">支付类型</td>
+				<td width="10%">有效收入</td>
+				<td width="10%">收入</td>
+				<td width="10%">支出</td>
+				
+	          </tr> 
+	         </thead>
+	         <tbody id="sortable">
+                {{#if dataList}}
+                  {{#each dataList}}
+	          	<tr class="ui-state-default">
+		            <td>
+		            	{{formatDate day "default"}}
+					</td>
+					<td>
+		            	{{#equal type 'sell'}}零售{{/equal}}
+		            </td>
+					<td>
+		            	{{#equal payType 'weixinmini'}}小程序{{/equal}}
+						{{#equal payType 'weixin'}}微信{{/equal}}
+						{{#equal payType 'alipay'}}支付宝{{/equal}}
+					</td>
+					<td>
+						{{price}}
+					</td>
+					<td>
+		            	{{priceIn}}
+						
+					</td>
+                    <td>
+		            	{{priceOut}}
+						
+		            </td>
+					
+										
+	          	</tr>
+	          	
+	          	
+                  {{/each}}
+                 {{/if}}
+	         </tbody>
+       </table>
+     
+    </script>	
+    
+    
+	
+  </div>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','log/list'],function(head,orderList){
+	head.init('module005007001');
+	orderList.init();
+  });
+</script>
+

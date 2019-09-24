@@ -1,0 +1,87 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+   <input value="${userVo.uid!''}" type="hidden" id="uid">
+  <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search"> 
+			   <h3 class="manaicon search-head">查询</h3>
+			   <div class="search-bar">
+			       <label class="fl">编号${userVo.uid}日积分统计</label>
+			       <label class="fl">昵称：${userVo.nick!''}</label>
+			       <label class="fl">性别：${userVo.sex!''}</label>
+				   <label class="fl">时间：</label>
+				   <div class="fl">
+					   <input class="datecheck js_register_startDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870576">
+					   至
+					   <input class="datecheck js_register_endDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870577">
+				   </div>
+			      <input value="搜索" class="comBtn btn-small searchbtn js_search" type="button"/>
+			   </div>
+			</div>
+	    </div>
+        <div class=" tablewrap tablewrapwidth pt" >
+	        <div class="data_table datatableheight" id="member-list-content">
+	         	<h3 class="manaicon table-head">列表</h3>
+	         	<div class="tableBox">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+				         <thead>
+					           <tr class="title">
+								   <td width="5%"><input type="checkbox" class="checkall js_check_all"/></td>
+								   <td width="12.5%">编号</td>
+								  <!--  <td width="7.5%">uid</td> -->
+								   <td width="12.5%">部门id</td>
+								   <td width="15%">转发量</td>
+								  
+								   <td width="15%">阅读量</td>
+								
+								   <td width="15%">点击量</td>
+								 
+								   <td width="12.5%">获取积分</td>
+								   <td width="12.5%">&nbsp;&nbsp;&nbsp;时间</td>
+					          </tr> 
+				         </thead>
+				         <tbody id="user-list-content">
+				         </tbody>
+			        </table>
+		        </div>
+	        </div> 
+        </div>
+	  <!--分页-->
+	  <div class="bottom">
+		  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn banchdel js_banch_delete" id="banchdeleterow"/></div>
+		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+  </div>
+<script id="user-list" type="text/x-handlebars-template">
+		{{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			<td><input type="checkbox" class="checkbox js_check_row"/></td>
+			<td>{{id}}</td>
+			<td>{{deptId}}</td>
+			<td>{{forwardNum}}</td>
+	
+			<td>{{readNum}}</td>
+
+			<td>{{clickNum}}</td>
+		
+			<td>{{score}}</td>
+			<td>{{formatDate createDate "yyyy-MM-dd"}}</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="5">暂无数据</td>
+		</tr>
+		{{/if}}
+</script>
+         
+  <#include "/common/foot.html">                              
+	<script type="text/javascript">
+		require(['common/head','prod/member/personStatDayList'],function(head,memberList){
+			head.init('module005004002');
+			memberList.init();
+		  });
+	</script>

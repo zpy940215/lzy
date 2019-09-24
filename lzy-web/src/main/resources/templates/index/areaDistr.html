@@ -1,0 +1,63 @@
+<#include "/common/head.html">
+<link href="${base}/css/count.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon">
+    <p class="commbt">地区分布</p>
+    <div class="interviewcon">
+      <p class="statisticnum">有效统计：<span class="style1">728次<span></p>
+      <div class="data_table">
+      	<div class="tableBox" >
+	       <table style="width:100%" cellspacing="0"> 
+	       <thead>
+	         <tr class="title"> 
+	           <td width="15%">国家</td> 
+	           <td width="15%">省</td> 
+	           <td width="15%">市</td> 
+	           <td width="15%">县/区</td> 
+	           <td width="15%">次数</td>
+	           <td width="25%">百分比</td>
+	        </tr> 
+	       </thead>
+	       <tbody>
+	        <tr>
+	          <td>中国</td>
+	          <td>浙江</td>
+	          <td>杭州</td>
+	          <td>江干区</td>
+	          <td><span class="style2">20</span></td>
+	          <td><div class="mark"><span class="markwidth"><span class="markbg" style="width:50%"></span></span> 50%</div></td>
+	        </tr>
+	        <tr>
+	          <td>中国</td>
+	          <td>浙江</td>
+	          <td>杭州</td>
+	          <td>江干区</td>
+	          <td><span class="style2">20</span></td>
+	          <td><div class="mark"><span class="markwidth"><span class="markbg" style="width:50%"></span></span> 50%</div></td>
+	        </tr>
+	       </tbody>
+	       </table>
+	     </div>
+      </div> 
+      <!--分页-->
+      <div class="bottom">
+	      <div class="pageDiv">
+				<span class="disabled">&lt;上一页</span>
+				<span class="pageCur">1</span>
+				<span class="disabled">下一页&gt;</span>
+				<span class="pageTotal">共1页</span>
+				<span class="countYe">
+					        到第<input type="text" value="1" maxlength="1"/>页
+					  <a href="javascript:;" class="turnDown">确定</a>
+					  <span> </span>
+				</span>
+	      </div> 
+      </div>   
+    </div>
+  </div>
+<#include "/common/foot.html">      
+<script type="text/javascript">
+	require(['common/head'],function(head){
+		head.init('module001001005');
+	});
+</script>

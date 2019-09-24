@@ -1,0 +1,179 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+		  <input id="selectAreaId" type="hidden">
+		  <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+	        <div class="search-bar">
+	          <label>选择时间</label>
+		        	<input  class="datecheck js_start_Date" value=""  readonly type="text" placeholder="年/月/日"> 至
+		        	<input  class="datecheck js_end_Date" value=""  readonly type="text" placeholder="年/月/日">
+	          <input value="搜索" class="comBtn btn-small searchbtn" type="button"> 
+	        </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+		<div class="data_table datatableheight" >
+	         <h3 class="tab-head">
+	         	<span class="tabBtn active fl" typeid="sales">销售汇总</span>
+	         	<span class="tabBtn fl" typeid="salesChannel">渠道销售汇总</span>
+	         	<i class="icon iconDownload"></i>
+	         </h3>  
+			<div class="tableBox" id="native-list-content">
+		         <div class="js-sales">
+		         <table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+			           <tr class="title"> 
+			             <td width="12%">日期</td>
+			             <td width="8%">总订单量</td>
+			             <td width="8%">创建单</td> 
+			             <td width="8%">已支付订单</td> 
+			             <td width="8%">已售数量</td>
+			             <td width="8%">已支付金额</td>
+						 <td width="8%">退单数</td>
+			             <td width="8%">退单张数</td>
+			             <td width="8%">退单金额</td>
+			             <td width="8%">完成单数</td>
+			             <td width="8%">完成张数</td>
+			             <td width="8%">完成金额</td>
+			          </tr> 
+			          <tr class="ui-state-default"> 
+			             <td colspan="12" width="20%">暂无记录</td>
+			          </tr>
+			         </thead>
+			     </table>
+		         </div>
+		        <div class="js-salesChannel" style="display: none;">
+			        <table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+			           <tr class="title"> 
+			             <td width="20%">渠道名称</td>
+			             <td width="10%">总订单量</td>
+			             <td width="10%">创建单</td> 
+			             <td width="10%">已支付订单</td> 
+			             <td width="10%">已售数量</td>
+			             <td width="10%">已支付金额</td>
+			          </tr> 
+			          <tr class="ui-state-default"> 
+			             <td colspan="6" width="20%">暂无记录</td>
+			          </tr>
+			         </thead>
+			        </table>
+		        </div>
+		      </div> 			
+	    	</div>
+    	</div>
+    	<!--分页-->
+    	<!-- <div class="bottom ">
+	     <div class="js_pageDiv"><div class="pageDiv"><span class="disabled">上一页</span><span class="pageCur">1</span><span class="disabled">下一页</span><span class="pageTotal">第1页,</span><span class="pageTotal">共1条记录</span></div></div>
+	 </div> -->
+    </div> 
+    
+    <!-- 渠道汇总 -->
+	<script id="sales-order-list" type="text/x-handlebars-template">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+			           <tr class="title"> 
+			             <td width="12%">日期</td>
+			             <td width="8%">总订单量</td>
+			             <td width="8%">创建单</td> 
+			             <td width="8%">已支付订单</td> 
+			             <td width="8%">已售数量</td>
+			             <td width="8%">已支付金额</td>
+						 <td width="8%">退单数</td>
+			             <td width="8%">退单张数</td>
+			             <td width="8%">退单金额</td>
+			             <td width="8%">完成单数</td>
+			             <td width="8%">完成张数</td>
+			             <td width="8%">完成金额</td>
+			          </tr> 
+			         </thead>
+			         <tbody id="sortable">
+					{{#if orderSourceVoList}}
+						{{#each orderSourceVoList}}
+			          		<tr class="ui-state-default">
+			            	<td>{{formatTime startDate}}</td>
+			            	<td>{{totalOrderNum}}</td>
+			            	<td>{{createOrderNum}}</td>
+			            	<td>{{payOrderNum}}</td>
+			            	<td>{{payProdNum}}</td>
+			            	<td>{{totalPayMoney}}</td>
+							<td>{{orderRefundNum}}</td>
+							<td>{{refundNum}}</td>
+							<td>{{refundMoney}}</td>
+							<td>{{orderFinishNum}}</td>
+							<td>{{finishNum}}</td>
+							<td>{{finishMoney}}</td>
+			          		</tr>
+						{{/each}}
+					{{/if}}
+			          		<tr class="ui-state-default">
+			            	<td>合计</td>
+			            	<td>{{orderSourceVo.totalOrderNum}}</td>
+			            	<td>{{orderSourceVo.createOrderNum}}</td>
+			            	<td>{{orderSourceVo.payOrderNum}}</td>
+			            	<td>{{orderSourceVo.payProdNum}}</td>
+			            	<td>{{orderSourceVo.totalPayMoney}}</td>
+							<td>{{orderSourceVo.orderRefundNum}}</td>
+							<td>{{orderSourceVo.refundNum}}</td>
+							<td>{{orderSourceVo.refundMoney}}</td>
+							<td>{{orderSourceVo.orderFinishNum}}</td>
+							<td>{{orderSourceVo.finishNum}}</td>
+							<td>{{orderSourceVo.finishMoney}}</td>
+			          		</tr>
+			         </tbody>
+			        </table>
+	</script>
+	
+	<!-- 渠道销售汇总 -->
+	<script id="salesChannel-order-list" type="text/x-handlebars-template">
+			        <table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+			           <tr class="title"> 
+			             <td width="20%">渠道名称</td>
+			             <td width="10%">总订单量</td>
+			             <td width="10%">创建单</td> 
+			             <td width="10%">已支付订单</td> 
+			             <td width="10%">已售数量</td>
+			             <td width="10%">已支付金额</td>
+			          </tr> 
+			         </thead>
+			         <tbody id="sortable">
+					{{#if orderSourceVoList}}
+						{{#each orderSourceVoList}}
+			          		<tr class="ui-state-default">
+			            	<td>{{sourceName}}</td>
+			            	<td>{{totalOrderNum}}</td>
+			            	<td>{{createOrderNum}}</td>
+			            	<td>{{payOrderNum}}</td>
+			            	<td>{{payProdNum}}</td>
+			            	<td>{{totalPayMoney}}</td>
+			          		</tr>
+						{{/each}}
+					{{/if}}
+			          		<tr class="ui-state-default">
+			            	<td>合计</td>
+			            	<td>{{orderSourceVo.totalOrderNum}}</td>
+			            	<td>{{orderSourceVo.createOrderNum}}</td>
+			            	<td>{{orderSourceVo.payOrderNum}}</td>
+			            	<td>{{orderSourceVo.payProdNum}}</td>
+			            	<td>{{orderSourceVo.totalPayMoney}}</td>
+			          		</tr>
+			         </tbody>
+			        </table>
+	</script>
+    
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/charts/jdlist'],function(head,ticktSales){
+	head.init('module005006002');
+	ticktSales.init();
+  });
+</script>
+

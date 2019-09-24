@@ -1,0 +1,206 @@
+<#include "/common/head.html">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/diyUpload/css/diyUpload.css">
+<link rel="stylesheet"
+	href="${base}/js/plugin/date/css/smoothness/jquery.ui.css"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/date/css/css.css" />
+<link rel="stylesheet"
+	href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<!--右侧内容区-->
+<div class="rightcon pt clear">
+	<div class="editbt">
+		<span class="js_editbt"></span>/
+		<#if viewVo.viewId??>
+			<span class="style2 " >编辑<span class="js_editbt"></span></span>
+			<#else>
+				<span class="style2">添加<span class="js_editbt"></span></span>
+		</#if>
+	</div>
+	<div class="editbox pb editboxheight">
+		<div class="editboxbt ">
+			<span class="editboxbtline active" dataattr="basicinfo">基本信息</span> 
+			<span class="editboxbtline" dataattr="sceneryinfo">上传图片</span>
+		</div>
+		<div class="editboxcon" id="basicinfo">
+			<form action="">
+				<input id="id" type="hidden" name="viewVo.id"
+					value="${(viewVo.id)!''}" />
+				 <input id="viewid" type="hidden"
+					name="viewVo.viewId" value="${(viewVo.viewId)!''}" />
+				<input id="upviewid" type="hidden"
+					name="viewVo.upViewId" value="${(viewVo.upViewId)!''}" />
+				<input id="areaId"
+					type="hidden" name="viewVo.areaId" value="${(viewVo.areaId)!''}" />
+				<div class="formformat">
+					<label><span class="style1">*</span>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label><input type="text"
+						class="formoinputtext" id="viewname" value="${(viewVo.name)!''}"
+						name="sceneryname" />
+						<span class="errortip js_errortip"></span>
+				</div>
+				<div class="formformat">
+					<label><span class="style1">*</span>打卡范围：</label><input type="text" id="distance" value="${(viewVo.distance)!''}"
+						class="formoinputtext" />
+						<span class="errortip js_errortip"></span>
+				</div>
+				<div class="formformat">
+					<label><span class="style1">*</span>打卡时间：</label><input id="opentime" class="formoinputtext"
+						type="text" value="${(viewVo.openingTime)!''}" />
+						<span class="errortip js_errortip"></span>
+				</div>
+				<div class="formformat">
+					<label><span class="style1">*</span>详细地址：</label>
+					<input type="text" id="address"	name="viewVo.address"  value="${(viewVo.address)!''}" class="formoinputtext" />
+					<span class="errortip js_errortip"></span>
+					<input type="button" value="查询" id="searchArea" class="comBtn btn-small btn-grey" style="height: 35px;" />
+					<span class="errortip js_errortip_geocoder"> </span>
+				</div>
+
+				<div class="formformat clear">
+					<label class="fl"><span class="style1">*</span>地图坐标：</label>
+					<div class="mapbox fl">
+						<div class="map_zb">
+							<span>经度: <input class="wd" type="text" value="${(viewVo.longitude?string('#.######'))!''}" id="lng" name="viewVo.longitude" /><span class="errortip js_errortip"> </span></span> 
+							<span>纬度: <input class="jd" type="text" value="${(viewVo.latitude?string('#.######'))!''}" id="lat" name="viewVo.latitude" /><span class="errortip js_errortip"> </span></span>
+							
+							<input type="text" value="18" class="js_map_dengji" style="display: none;" />
+						</div>
+						<div id="custom_places" class="maps"> </div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!--景点图片-->
+		<div class="editboxcon scenerypicbox" id="sceneryinfo">
+			<form action="">
+				<input type="hidden" value="${(viewVo.icon)!''}" class="js_viewIcon" />
+				<div class="formformat  picmaterialcon docs-pictures clear js_pic"
+					id="sortable">
+					<div class="picupload fl js_picupload"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="page">
+		<div class="editsubmit">
+			<input type="button" value="保存" class="save btn-small comBtn "
+				id="basicscenicsave" /><input type="button" value="返回" id="cancle"
+				class="btn-small comBtn btn-grey" />
+		</div>
+	</div>
+
+</div>
+<!--选择图片弹窗-->
+<div class="popup js_popUpuploadpic" id="uploadpic-save-content">&nbsp;</div>
+<script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+    <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+      <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+        <div class="picuploadbox" id="localupload">
+          <div class="parentFileBox">
+            <ul class="fileBoxUl" >
+              <li class="diyUploadHover "><div id="uploadpic"></div></li>
+            </ul> 
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+        </div>
+        
+        <div class="picuploadbox clear" id="materialupload"  style="display:none">
+          <form  action="" method="post" id="uploadmaterialform">
+			<div class="materialbox clear" id="material-content">
+
+            </div>
+            <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+		  </form>
+        </div>
+      </div>
+    </div>
+</script>
+
+<script id="radio_itemcon" type="text/x-handlebars-template">
+	<div class="inputItem js_radio_items">
+    	<div class="formformat">
+			<label>文件标识：</label>
+                <select class="formselect js_file_ext">
+					 <option value="Chinese">中文</option>
+					 <option value="English">英文</option>
+					 <option value="Japanese">日文</option>
+					 <option value="Korean">韩文</option>
+				</select>
+		</div>
+		<div class="formformat js_radio_type"><label>展现形式：</label>
+           	<span class="formradio"><input type="radio" name="displayform_{{num}}" checked="checked" class="js_radio_select" value="outlink" data-index="1">外链</span>
+          	<span class="formradio"><input type="radio" name="displayform_{{num}}" class="js_radio_select" value="inlink" data-index="2">本地上传</span>
+	    </div>
+	    <div class="formformat js_radio_item js_radio_item1" style="display:block;">
+			<label>文件地址：</label><input class="formoinputtext js_file_path" type="text" name="filepath" value=""/>
+		</div>
+	    <div class="formformat clear js_radio_item js_radio_item2" style="display:none;">
+			<label class="fl">选择文件：</label>
+			<div class="parentFileBox fl">
+					            <ul class="fileBoxUl audioBox " >
+					              	<li class="diyUploadHover uploadbtn">
+					              	<div id="audioupload" class="uploadpic"></div>
+					              	<input type="hidden" class="audioUrl" value=""/>
+									<input type="hidden" class="sourceId" value=""/>
+									</li>
+					              	
+					            </ul> 
+				          	</div>
+			<input type="button" class="audiouploadbtn js_audiouploadsave" value="上传" />
+	    </div>
+		<div class="formformat">
+			<label>文件名称：</label><input class="formoinputtext js_file_name" type="text" name="filename"  value=""/>
+		</div>
+		<div class="formformat">
+	        <div class="formformat clear"><label class="fl">语音解说：</label><textarea class="commarea js_description" ></textarea></div>
+		</div>
+		<div class="clear routeadd">
+			<a class="addnewroute  fr js_radio_itemdel" href="javascript:void(0)">删除</a>
+		</div>
+	</div>
+</script>
+<script id="material-save" type="text/x-handlebars-template">
+    <div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+    <ul class="materiallist clear">
+      {{#if dataList}}
+      {{#each dataList}}
+      <li>
+        <span class="materiapic"><img src="{{filePath}}"/></span>
+        <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+      </li>
+      {{/each}}
+      {{else}}
+      <div>暂无数据</div>
+      {{/if}}
+    </ul>
+    <!--分页-->
+    <div class="js_pageDiv">
+      <div class="pageDiv">&nbsp;</div>
+    </div>
+  </script>
+
+<#include "/common/foot.html">
+<script type="text/javascript">
+	require([ 'common/head', 'tourdata/dakaSpots/edit', 'area' ,'common/map'], function(head,editList, area,map) {
+		head.init('module002001011');
+		area.init("${(rootAreaid)!'3301'}");
+		var viewVoDescription = "${(viewVo.description)!''}";
+		var viewVoContent = "${(viewVo.content)!''}";
+		var viewVoAttention = "${(viewVo.attention)!''}";
+		var picList = "${(viewVo.viewPicString)!''}";
+		var mapset = '${(mapset)!''}';
+		var tags = "${(viewVo.tags)!''}";
+		editList.init(viewVoDescription, viewVoContent, viewVoAttention,picList,tags);
+		map.init(mapset);
+	});
+</script>
+

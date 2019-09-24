@@ -1,0 +1,241 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet"
+	href="${base}/js/plugin/date/css/smoothness/jquery.ui.css"
+	type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="${base}/js/plugin/date/css/css.css" />
+	<link href="${base}/css/tool.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="treewrap dataModle fl treeCon">
+    		<ul class="treeCon">
+    				<li>
+    					<p class="tit"><i class="iCon tree_parent"></i><a  href="questionnaire.html">全部问卷</a></p>
+    				<ul id="question_name_show">
+					<!-- <li><i class="icon tree_child"></i><a href="question.html">问卷1</a></li>
+					<li><i class="icon tree_child"></i><a href="question.html">问卷2</a></li>
+					<li><i class="icon tree_child"></i><a href="question.html">问卷3</a></li> -->
+					<script id="questionnaire-name-list" type="text/x-handlebars-template">
+     					{{#if dataList}}
+         					{{#each dataList}}
+								<li><i class="iCon tree_child"></i><a class="active" href="question.html?questionVo.Id={{id}}" id={{id}} pos={{pos}} status={{status}}>{{name}}</a></li>
+         					{{/each}}
+						{{else}}
+								
+  						{{/if}}
+ 					</script>
+					</ul>
+    				</li>
+    		</ul>
+    </div>  
+    
+    <div class="data_table_wrap tablewrap pt fr">
+      <div class="searchwrap searchpositon">
+       <div class="search"> 
+        <div class="search-bar" >
+        		<span>问卷标题：</span>${(questionVo.name)!''} &nbsp;&nbsp;
+        		<span>时间：</span>${(DateUtil.dateToString(questionVo.startDate,'yyyy-MM-dd'))!''} 至 ${(DateUtil.dateToString(questionVo.endDate,'yyyy-MM-dd'))!''}&nbsp;&nbsp;
+        		<span>参与人数：</span>${(questionVo.totalPerson)!'0'}人&nbsp;&nbsp;
+        		<span>排序：${(questionVo.pos)!''}</span>
+        		</br></br>
+        		<span>描述：${(questionVo.description)!''}</span>
+        </div>
+        </div>
+      </div>
+      <input type="hidden" id="questionId" value="${(questionVo.id)!''}">
+      <div class="data_table datatableheight">
+         <h3 class="manaicon table-head">列表<a class="btn-big comBtn js_add_question fr" href="javascript:;">添加问题</a></h3>
+         <table style="width:100%" border="0" cellspacing="0"> 
+		         <thead>
+		           <tr class="title"> 
+		           		 <td width="5%">选项</td>
+			             <td width="5%">序号</td> 
+			             <td width="15%">问题名称</td> 
+			             <td width="15%">问题描述</td> 
+			             <td colspan="2" width="20%">问题类型</td> 
+			              <td width="10%">排序</td> 
+			             <td width="10%">添加时间</td> 
+			             <td width="20%">操作</td>
+		          </tr> 
+		         </thead>
+		         <tbody id="question_show">
+				 <#if questionItemVo??>
+				 
+					<#list questionItemVo.dataList as ItemVo>
+					<#assign var = 0 > 
+					<tr class="question_bt">
+						<td><input type="checkbox" class="checkbox js_check_row" class="js_check_row" id="${(ItemVo.id)!''}" pos="${(ItemVo.pos)!''}" status="${(ItemVo.status)!''}">
+						<td><strong>${ItemVo_index+1}</strong></td>
+						<td><strong>${(ItemVo.name)!''}</strong></td>
+						<td>${(ItemVo.description)!''}</td>
+						<td>
+						<#if (ItemVo.questionType)??>
+							<#if ItemVo.questionType == 'single'>
+							单选
+							<#elseif ItemVo.questionType == 'singleExt'>
+							单选(带内容)
+							<#elseif ItemVo.questionType == 'content'>
+							内容
+							<#else>
+							多选
+							</#if>
+						</#if></td>
+						<td></td>
+						<td><input type="text" id="sortnum" class="tabletext" value="${(ItemVo.pos)!'0'}"/></td>
+						<td>${(DateUtil.dateToString(ItemVo.createDate,'yyyy-MM-dd'))!''}</td>
+						<td class="operate">
+							<#if (ItemVo.questionType)??>
+								<#if ItemVo.questionType == 'singleExt'>
+									<span class="querylogs"><a class="js_query_logs" href="javascript:;"  itemId="${(ItemVo.itemId)!''}">查看反馈</a> |</span>
+									<span class="edit"><a class="js_edit_question" href="javascript:;"  itemId="${(ItemVo.itemId)!''}">编辑</a> |</span>
+					        		<span class="del_minsu"><a href="javascript:void(0)" class="js_delete_row" id="${(ItemVo.id)!''}" itemId="${(ItemVo.itemId)!''}">删除</a></span>
+								<#elseif ItemVo.questionType == 'content'>
+									<span class="query"><a class="js_query_logs" href="javascript:;"  itemId="${(ItemVo.itemId)!''}">查看反馈</a> |</span>
+									<span class="edit"><a class="js_edit_question" href="javascript:;"  itemId="${(ItemVo.itemId)!''}">编辑</a> |</span>
+					        		<span class="del_minsu"><a href="javascript:void(0)" class="js_delete_row" id="${(ItemVo.id)!''}" itemId="${(ItemVo.itemId)!''}">删除</a></span>
+								<#else>
+									<span class="edit"><a class="js_edit_question" href="javascript:;"  itemId="${(ItemVo.itemId)!''}">编辑</a> |</span>
+					        		<span class="del_minsu"><a href="javascript:void(0)" class="js_delete_row" id="${(ItemVo.id)!''}" itemId="${(ItemVo.itemId)!''}">删除</a></span>
+								</#if>
+							</#if>
+					    	
+					    </td>
+				     </tr>
+				     <#if ItemVo.questionType??>
+				     	<#if ItemVo.questionType=="single"||ItemVo.questionType=="Multiselect">
+							<#if ItemVo.questionOptionVoList??>
+							<#list ItemVo.questionOptionVoList as optionVo>
+							<tr class="question_con">
+						            <td></td>
+						            <td></td>
+						            <td>${(optionVo.name)!''}</td>
+						            <td></td>
+						            <td>${(optionVo.totalPerson/ItemVo.totalPerson*100)!'0'}%</td>
+						            <td><span class="bar"><span class="barpercent bgcolor1" barwidth="80"></span></span>${(optionVo.totalPerson)!'0'}人</td>
+						            <td><input type="text" class="tabletext"/ value="${(optionVo.pos)!''}"></td>
+						            <td>${(DateUtil.dateToString(optionVo.createDate,'yyyy-MM-dd'))!''}</td>
+						            <td class="operate"></td>
+					         </tr>
+					         </#list>
+					      	</#if>
+						</#if>
+					</#if>
+         			</#list>
+				<#else>
+					<tr>
+						<td colspan="8">暂无数据</td>
+					</tr>
+				
+		       </#if>
+		       </tbody>
+        </table>
+      </div> 
+      </div> 
+      <!--分页-->
+      <div class="bottom">
+        <div class="tableoperate ml2">
+      		<input type="button" value="导入问题" class="btn-big comBtn " id="import">
+      		<input type="button" value="导出列表" class="btn-big comBtn " id="export">
+      		<input type="button" value="保存排序" class="btn-big comBtn savesort" id="save">
+        </div>
+       	<div class="js_pageDiv">&nbsp;</div>
+  
+        <!-- <div class="Pagination">
+          <a href="javascript:void(0);" class="PagePrev"><</a>
+          <span style="display: none;" class="Ellipsis"><b>...</b></span>
+          <div class="pagesnum">
+              <a class="PageCur" href="javascript:;">1</a>
+              <a class="" href="javascript:;">2</a>
+              <a class="" href="javascript:;">3</a>
+              <a class="" href="javascript:;">4</a>
+              <a class="" href="javascript:;">5</a>
+              <a style="display: none;" href="javascript:;">6</a>
+              <a style="display: none;" href="javascript:;">7</a>
+              <a style="display: none;" href="javascript:;">8</a>
+          </div>
+          <span style="display: inline;" class="Ellipsis"><b>...</b></span>
+          <a href="javascript:;" class="PageNext">></a>
+          <span class="totlepage">每页<b>15</b>条，共<b>20</b>条</span>
+        </div> -->
+        <!-- <div class="clear"></div> -->
+      </div>          
+              
+  </div>
+  <!--添加问题弹窗-->
+  <div class="popup js_question_popup" id="addquestion">&nbsp;  </div>
+  <script id="addquestion-save" type="text/x-handlebars-template">
+		  <div class="popup_bg"></div>
+		    <div class="popup_box questionbox">
+		      <div class="popup_bt"><span>添加问题</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+		      <div class="popupform">
+		        <form id="addsiteform" name="addsiteform" method="post" >
+					<input type="hidden" value="{{id}}" id="id" name="questionItemVo.id">
+					<input type="hidden" value="{{itemId}}" id="itemId" name="questionItemVo.itemId">
+					<input type="hidden" value="{{questionId}}" id="questionId" name="questionItemVo.questionId">
+		          <p class="formfill"><label>问题名称：</label><input name="questionItemVo.name" id="ItemName" value="{{name}}" type="text" class="commtext name" placeholder="请输入问题名称"><span class="errortip js_errortip"> &nbsp; </span></p>
+		          <p class="formfill">
+		          		<label>问题类型：</label><span class="radiostyle"><input type="radio" name="questionItemVo.questionType" value="single" {{#equal questionType "single"}}checked="checked" {{/equal}}/>单选</span>
+						<span class="radiostyle"><input type="radio" name="questionItemVo.questionType" value="singleExt" {{#equal questionType "singleExt"}}checked="checked" {{/equal}}/>单选(带内容)</span>
+		          		<span class="radiostyle"><input type="radio" name="questionItemVo.questionType" value="Multiselect" {{#equal questionType "Multiselect"}}checked="checked" {{/equal}}/>多选</span>
+						<span class="radiostyle"><input type="radio" name="questionItemVo.questionType" value="content" {{#equal questionType "content"}}checked="checked" {{/equal}}/>内容</span>
+		          </p>
+		          <p class="formfill" id="optionName">
+		          		<label>问题选项：</label><input name="questionOptionVo.name"  type="text" class="commtext" placeholder="请输入选项"/>
+		          		<a class="style2 js_add_questype" href="javascript:;" >添加</a><br/>
+		          </p>
+				  <p class="formfill clear" id="description">
+		          		<label class="fl">问题描述：</label><textarea class="questionarea" name="questionItemVo.description" id="description">{{description}}</textarea>
+		          </p>
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn" id="editRloe"></div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+	</script>
+	<!--查看反馈弹窗-->
+  <div class="popup js_question_logs" id="querylogs">&nbsp;  </div>
+  <script id="question-log" type="text/x-handlebars-template">
+		  <div class="popup_bg"></div>
+		    <div class="popup_box questionbox">
+		      <div class="popup_bt"><span>反馈</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+		      <div class="popupform">
+		        	 <p class="formfill"><label>问题名称：</label><span>{{name}}</span><span class="errortip js_errortip"> &nbsp; </span></p>
+					{{#if questionLogVos}}
+						{{#each questionLogVos}}
+							<p class="formfill"><label>{{addOne @index}}、</label><span>{{agent}}</span><span class="errortip js_errortip"> &nbsp; </span></p>
+						{{/each}}
+					{{else}}
+						<p class="formfill"><label></label><span>暂无数据</span><span class="errortip js_errortip"> &nbsp; </span></p>
+					{{/if}}
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"></div>
+		      </div>
+		    </div>
+		  </div>
+	</script>
+	<!--导入问题弹窗-->
+  <div class="popup js_question_import" id="importQuestion">&nbsp;  </div>
+  <script id="addquestion-import" type="text/x-handlebars-template">
+		  <div class="popup_bg"></div>
+		    <div class="popup_box questionbox">
+		      <div class="popup_bt"><span>导入问题</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+		      <div class="popupform">
+		        <form id="upfileform" name="upfileform" method="post" enctype="multipart/form-data">
+					<input type="hidden" value="{{questionId}}" id="questionId" name="questionItemVo.questionId">
+					<input type="file"  id="upfile" name="file">
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"><input type="button" value="导入" class="save formbtn" id="importRloe"></div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+	</script>
+
+<#include "/common/foot.html">
+<script type="text/javascript">
+require(['common/head','tool/feedback/question' ], function(head,question) {
+		head.init('module006002004');
+		question.init();
+	});
+</script>

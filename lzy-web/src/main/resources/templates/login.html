@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta charset="utf-8" />
+		<title>线上游客服务中心登录</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+		<meta content="" name="description" />
+		<meta content="" name="author" />
+		<meta name="MobileOptimized" content="320" />
+		<link href="css/base.css" rel="stylesheet" type="text/css" />
+		<link href="css/login.css" rel="stylesheet" type="text/css" />
+	</head>
+	<!-- END HEAD -->
+	<!-- BEGIN BODY -->
+	<body>
+		<div class="boxlayout">
+			<div class="loginbox">
+				<p class="loginboxtit">
+					线上游客服务中心登录
+				</p>
+				<form action="">
+					<p class="formbox">
+						<input type="text" id="account" class="forminput user_icon">
+					</p>
+					<p class="formbox">
+						<input type="password" id="passwd" class="forminput pwd_icon ">
+						<span class="rememberpwd">
+							<input type="checkbox" id="rememberPwd" value="y">记住密码
+						</span>
+						<span class="errortip">
+						</span>
+					</p>
+					<p class="formbox">
+						<input type="button" value="登陆" class="loginbtn" id="login_btn">
+					</p>
+				</form>
+			</div>
+			<!-- <div class="footer">
+				杭州天迈网络有限公司—旅游APP,智慧旅游专业解决方案提供商！ 浙ICP备11028337号-4
+			</div> -->
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="${(base)!''}/js/require.js"></script>
+<script type="text/javascript" src="${(base)!''}/js/require-config.js"></script>
+<script type="text/javascript">
+	    require(['login/login'],function(login){
+	    	login.init();
+	    });
+</script>

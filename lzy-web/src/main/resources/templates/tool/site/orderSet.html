@@ -1,0 +1,74 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+    <div class="editbt">网站设置</div>
+    <div class="editbox">
+      <div class="editboxbt ">
+        <span class="editboxbtline active" dataattr="basicinfo">商场设置</span>
+      </div>
+      <form action="" >
+      <div class="editboxcon mb" id="basicinfo">
+          <input id="selectAreaId" type="hidden">
+          <div class="formformat">
+              <label><span class="style1">*</span>自动同步：</label>
+              <select id="isAutoSync" class="formselect areaselect">
+              	<option value="Y">是</option>
+              	<option value="N">否</option>
+              </select>
+              <span class="errortip js_errortip"> &nbsp; </span>
+          </div>
+          <div class="formformat clear  showhid">
+          	<div class="clear_float">
+	            <label><span class="style1">*</span>同步时间：</label>
+	            <input id="syncTime" class="formoinputtext" type="text">分钟同步一次
+            </div>
+          </div>
+          <div class="formformat clear">
+          	<div class="clear_float">
+	            <label><span class="style1">*</span>显示条件：</label>
+	            <input name="orderShow" type="checkbox" value="showOrderStatus">订单状态
+	            <input name="orderShow" type="checkbox" value="showCheckStatus">检票状态
+	            <input name="orderShow" type="checkbox" value="showClientStatus">终端状态
+	            <input name="orderShow" type="checkbox" value="showPayType">支付类型
+            </div>
+          </div>
+     	  <div class="formformat">
+              <label><span class="style1">*</span>库存模式：</label>
+              <select id="isStock" class="formselect areaselect">
+              	<option value="Y">启用</option>
+              	<option value="N">禁用</option>
+              </select>
+              <span class="errortip js_errortip"> &nbsp; </span>
+          </div>
+          <div class="formformat clear">
+              <label><span class="style1">*</span>需要邮费：</label>
+              <select id="isNeedPostage" class="formselect areaselect">
+              	<option value="N">否</option>
+              	<option value="Y">是</option>
+              </select>
+          </div>
+      </div>
+       </form>
+    </div>
+      <div class="page">
+        <div class="editsubmit">
+        <input type="button" value="保存" class="save btn-big comBtn js_save_config"/>
+        </div>
+      </div>
+  </div>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/site/orderSet'],function(head,orderSet){
+	head.init('module006009001');
+	orderSet.init( );
+  });
+</script>       
+

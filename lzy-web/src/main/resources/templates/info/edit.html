@@ -1,0 +1,274 @@
+<#include "/common/head.html">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+   
+  <div class="rightcon pt clear" >
+   	 <div class="editbt">
+		 <span class="js_editbt"></span>/
+		 <#if articleVo.articleId??>
+			 <span class="style2 " >编辑<span class="js_editbt"></span></span>
+			 <#else>
+				 <span class="style2">添加<span class="js_editbt"></span></span>
+		 </#if>
+   	 </div>
+   	 <div class="editbox pb">
+     	 <div class="editboxbt">
+	     	 <span class="editboxbtline active " dataattr="basicInfo">基本信息
+	     	 </span><span class="editboxbtline" dataattr="junkInfo">回收站</span>
+     	 </div>
+     	 <div>
+     	 <div class="editboxcon" id="basicInfo">
+         <form action="" id="articleform">
+             <input type="hidden" name="articleVo.icon" id="picUrl" value="${(articleVo.icon)!''}">
+             <input id="js_subjectId" value="${(articleVo.id)!''}" type="hidden"/>
+             <input id="js_articleId" value="${(articleVo.articleId)!''}" type="hidden"/>
+             <input id="js_articleExtVoId" value="${(articleExtVo.id)!''}" type="hidden" />
+         	 <div class="formformat"><label><span class="style1">*</span>标题名称：</label><input type="text" class="formoinputtext" id="js_articleVoSubject" name="articleVo.subject" value="${(articleVo.subject)!''}">
+                <span class="errortip js_errortip"> &nbsp; </span>
+             </div>
+			<div class="formformat clear">
+				 <label class="fl"><span class="style1">*</span>选择站点：</label>
+					 <div class="columnsetbox">
+					 	<#if siteList??>
+							<#list siteList as site>
+								<span class="markcheck">
+									<input type="radio" name="siteList" class="sitecheck"  value="${(site.siteId)!''}" 
+									<#if
+								articleVo.siteId?? && articleVo.siteId==site.siteId> checked="checked" </#if> />${(site.name)!''}
+								</span>
+							</#list>
+						</#if>
+						<span class="errortip js_errortip js_tip_site"> &nbsp; </span>
+					</div>
+				</div>
+         	 	<#if categorylist?? && ( categorylist.size() > 0)>
+				<div class="formformat clear js_catagorylist" >
+				 <label class="fl"><span class="style1">*</span>选择栏目：</label>
+					 <div class="columnsetbox" id="columnsetbox">
+						<#list categorylist as category>
+							<span class="markcheck">
+								<input type="radio" class="js_category" name="categoryidList" siteIdval="${(category.siteId)!''}" value="${(category.categoryId)!''}" 
+								<#if articleVo.categoryIds?? && articleVo.categoryIds=category.categoryId> checked="checked" </#if> />${(category.name)!''}
+							</span>
+						</#list>
+						<span class="errortip js_errortip js_tip_cat"> &nbsp; </span>
+					</div>
+				</div>
+				<#else>
+					<div class="formformat clear js_catagorylist" style="display:none" >
+				    <label class="fl"><span class="style1">*</span>选择栏目：</label>
+					 <div class="columnsetbox" id="columnsetbox">
+					</div>
+				</div>
+				</#if>
+
+         	 <div class="formformat">
+         		 <label>是否发布：</label><select class="formselect" id="ispublish">
+         	  		<option value="open"
+         	  		<#if
+							articleVo.status?? && articleVo.status=="open">selected="selected"</#if>>发布</option>
+         	  		<option value="close"
+         	  		<#if
+							articleVo.status?? && articleVo.status=="close">selected="selected"</#if>>不发布</option>
+         	  	</select></div>
+          	 <div class="formformat">
+          	 	<label>是否推荐：</label><select class="formselect" id="isrecommend" >
+          	 		<option value="N"
+                    <#if articleVo.isRecommend?? && articleVo.isRecommend=="N">selected="selected"</#if>>否</option> 
+                    <option value="Y"
+                     <#if articleVo.isRecommend?? && articleVo.isRecommend=="Y">selected="selected"</#if>>是
+                    </option>
+                 </select> 
+             </div>
+             <div class="formformat">
+             <input type="hidden" class="js_pub_hidden" value="<#if articleVo.publishDate??>${articleVo.publishDate?string('yyyy-MM-dd')}</#if>"/>
+          	 	<label>发布时间：</label>
+          	 	<input class="formoinputtext js_start_Date js_pub_date" type="text" value=""/>
+             </div>
+             <div class="formformat recommend_date" style="display:none;">
+          	 	<label>起止日期：</label>
+          	 	<input  class="formoinputtext js_start_Date js_common_start_date" readonly
+          	 	<#if articleVo.recommBeginDate??&& articleVo.isRecommend == "Y">
+          	 	value="${articleVo.recommBeginDate?string('yyyy-MM-dd')}"
+          	 	</#if> type="text"/>
+          	 	至
+	          	<input  class="formoinputtext js_end_Date js_common_end_date" readonly
+	          	<#if articleVo.recommEndDate??&& articleVo.isRecommend == "Y" >
+	          	value="${articleVo.recommEndDate?string('yyyy-MM-dd')}"
+          	 	</#if> type="text"/>
+             </div>
+          		<div class="formformat clear">
+          		<label class=" fl"><span class="style1">*</span>选择标签：</label>
+				<div class=" fl js_tagLable">
+					<#if tagsGroupVos?? && ( tagsGroupVos.size() > 0)> 
+	          				<#list tagsGroupVos as tagsGroupVo>
+	          					<div class="iteminfo clear">
+	          					 	<span>${(tagsGroupVo.groupName)!''}：</span>
+									<#list tagsGroupVo.tagsDataVos as tag> 
+										<span class="markcheck">
+										<input type="checkbox" name="articleVo.tags" value="${(tag.tagsId)!''}"/>${(tag.tagsName)!''}</span> 
+									</#list>
+								</div>
+							</#list>
+					</#if>
+				</div>
+           		 <label for="mark" class="error"></label>
+          		</div>
+         	
+         	<div class="formformat"><label>阅读量：</label><input type="text" class="formoinputtext" id="viewNum" value="${(articleVo.viewNum)!'0'}"/></div>
+          	<div class="formformat"><label>真实阅读量：</label><input type="text" readonly="readonly" class="formoinputtext" id="realViewNum" value="${(articleVo.realViewNum)!'0'}"/>(不可修改)</div>
+          	<div class="formformat"><label><#if AppUtil.getProjectId()?? && AppUtil.getProjectId()=='1809191039222386483'>来源<#else>页面标题</#if>：</label><input type="text" class="formoinputtext" id="title" value="${(articleVo.title)!''}"/></div>
+          	<div class="formformat"><label>关键字：</label><input type="text" class="formoinputtext" id="keyword" value="${(articleVo.keyword)!''}"/></div>
+          	<div class="formformat"><label>作者：</label><input type="text" class="formoinputtext" id="author" value="${(articleVo.author)!''}"/></div>
+          	<div class="formformat"><label>来源：</label><input type="text" class="formoinputtext" id="source" value="${(articleVo.source)!''}"/></div>
+          	
+          	
+          	<div class="formformat"><label>展现形式：</label>
+          	<#if articleVo.showType??>
+          	<span class="formradio"><input type="radio" name="displayform" <#if articleVo.showType=="custom">checked="true"</#if> value="custom" data-index="tab1"/>自定义</span>
+          	<span class="formradio"><input type="radio" name="displayform" <#if articleVo.showType=="zip">checked="true"</#if>  value="zip" data-index="tab2">本地上传</span>
+          	<span class="formradio"><input type="radio" name="displayform" <#if articleVo.showType=="outlink">checked="true"</#if> value="outlink" data-index="tab3"/>外链</span>
+            <#else>
+           	<span class="formradio"><input type="radio" name="displayform" checked="true" value="custom" data-index="tab1"/>自定义</span>
+          	<span class="formradio"><input type="radio" name="displayform" value="zip" data-index="tab2">本地上传</span>
+          	<span class="formradio"><input type="radio" name="displayform"  value="outlink" data-index="tab3"/>外链</span>
+          	</#if>
+          	</div>
+          
+          	<div class="formtabbox" id="tab1">
+            <div class="formformat Ueditorbox  clear"><label class="fl">概述内容：</label><div class="ueditor" id="js_articleVodescription" type="text/plain" value="${(articleVo.description)!''}"></div></div>
+
+            <div class="formformat Ueditorbox clear"><label class="fl">详情内容：</label><div class="ueditor" id="js_articleExtVoContent"  type="text/plain"  value="${(articleExtVo.content)!''}"></div></div>
+
+             	<div class="formformat   clear">
+	                <label class="fl" >上传图片：</label>
+	                <input type="hidden" value="${(articleVo.icon)!''}" class="js_viewIcon" />
+	                <div class="picmaterialcon picuploadbox1 docs-pictures  fl" id="custom_pic">
+	                 	
+	                 	  
+	                 	 <div class="picupload basicupload fl js_picupload custom_picupload"></div>
+	                </div>
+              	</div>
+       	  	</div>
+         	<div class="formtabbox" id="tab2" style="display:none">
+               <div class="formformat"><label>上传Zip包：</label><span id="zipName">${(zipName)!''}</span><input id="wxCert" multiple="multiple" name="wxCert" class="zipfile" type="file"/></div>
+         	</div>
+        	<div class="formtabbox" id="tab3" style="display:none">
+                <div class="formformat   clear">
+                		<div class="formformat "><label>外链地址：</label><input type="text" class="formoinputtext" id="outlinkval" value="${(articleVo.url)!''}"/></div>
+					<div class="formformat Ueditorbox  clear"><label class="fl">概述内容：</label><div class="ueditor" id="js_articleVoOutLinkDescription" type="text/plain" value="${(articleVo.description)!''}"></div></div>
+					<div class="formformat Ueditorbox clear"><label class="fl">详情内容：</label><div class="ueditor" id="js_articleExtVoOutLinkContent"  type="text/plain"  value="${(articleExtVo.content)!''}"></div></div>
+					<label class="fl" >上传图片：</label>
+	                <div class="picmaterialcon picuploadbox1 docs-pictures  fl" id="outlink_pic">
+	                 	  
+	                 	 <div class="picupload linkupload fl js_picupload outlink_picupload"></div>
+	                </div>
+              	</div>
+
+            </div>
+           <div class="page">
+           	 <div class="editsubmit">
+           	 <input type="button" value="保存" class="save btn-small comBtn articlesave" id="basicinfosave"/>
+           	 <input type="button" value="保存并预览" class="save btn-big comBtn articlesave" id="saveAndPreview"/>
+           	 <input type="button" value="返回" class="btn-small comBtn btn-grey" onclick="window.location.href='list.html'"/>
+           	 </div>
+           </div>
+        </form>
+        </div>
+        <!-- 回收站 -->
+		<div class="editboxcon" id="junkInfo" style="display:none;">
+			<div class="editboxcona js_deletedPicContent">
+			</div>	
+		</div>
+		</div>
+		</div>
+		</div>
+      </div>
+    </div>
+  </div>
+  <!--选择图片弹窗-->
+  <div class="popup js_popUpuploadpic" id="uploadpic-save-content"> &nbsp; </div>
+  <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+    <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+  	    <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+        <div class="picuploadbox" id="localupload">
+          <div class="parentFileBox">
+            <ul class="fileBoxUl" >
+              <li class="diyUploadHover "><div id="uploadpic"></div></li>
+            </ul> 	
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+        </div>
+        <div class="picuploadbox clear" id="materialupload"  style="display:none">
+          <form  action="" method="post" id="uploadmaterialform">
+			<div class="materialbox clear" id="material-content">
+
+
+            </div>
+            <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+  
+         </form>
+        </div>
+      </div>
+    </div>
+</script>
+
+ <script id="material-save" type="text/x-handlebars-template">
+    <div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+    <ul class="materiallist clear">
+      {{#if dataList}}
+      {{#each dataList}}
+      <li>
+        <span class="materiapic"><img src="{{filePath}}"/></span>
+        <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+      </li>
+      {{/each}}
+      {{else}}
+      <div>暂无数据</div>
+      {{/if}}
+    </ul>
+    <!--分页-->
+    <div class="js_pageDiv">
+      <div class="pageDiv">&nbsp;</div>
+    </div>
+  </script>
+ <div class="popup  js_continueaddcolumn" id="continueaddcolumn"></div>
+<script id="continueaddcolumn-save" type="text/x-handlebars-template">
+	<div class="popup_bg">&nbsp;</div>
+	<div class="popup_box continueaddcolumnbox">
+		<div class="popup_bt">提示<a class="popupclose js_popUpClose" href="javascript:void(0)">&nbsp;</a></div>
+		<div class="popupform">
+			<p class="formfill">保存成功<p>
+			<div class="formsubmit">
+				<input type="button" value="确定" class="quit formbtn js_popUpSure"/>
+				<input type="button" value="继续添加" class="save formbtn js_popUpcontinueadd"/>
+			</div>
+		</div>
+	</div>
+</script>
+<#include "/common/foot.html">               
+<script type="text/javascript">
+	require(['common/head','info/edit'],function(head,infoList){
+	head.init('module003001001');
+    var   articleVoDescription = "${(articleVo.description)!''}";
+    var   articleExtVoContent  = "${(articleExtVo.content)!''}";
+    var   picList              = "${(articleVo.articlePicString)!''}";
+	var categoryIdList = "${(articleVo.categoryIds)!''}";
+	var tags = "${(articleVo.tags)!''}";
+	infoList.init(articleVoDescription,articleExtVoContent,picList,categoryIdList,tags);
+	var pubDate = $('.js_pub_hidden').val();
+	if(pubDate != "") {
+		$('.js_pub_date').val(pubDate);
+	}
+   });
+</script>

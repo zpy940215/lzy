@@ -1,0 +1,99 @@
+<#include "/common/head.html">
+  <!--右侧内容区-->
+    <div class="rightcon clear" >
+    	<input id="isSyncAgent" type="hidden" value="${(isSyncAgent)!'N'}">
+        <div class=" tablewrap pt ">
+	          <div class="search searchpositon">
+	            <h3 class="manaicon search-head">查询</h3>
+	            <div class="search-bar">
+                    <input id="selectAreaId" type="hidden">
+                    <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+                    <!--<label>选择区域</label><select id="selProvince"><option>省</option></select><select id="selCity"><option>市</option></select><select id="selectCountry"><option>区</option></select>-->
+                    <label>上架状态</label><select id="showStatus"><option value="">请选择</option><option value="open">上架</option><option value="close">下架</option></select>
+                    <label>选择景区</label>
+                    <select id="selectSenicId"><option value="">景区</option></select>
+                    <select id="selectSpotId"><option value="">景点</option></select>
+                    <select id="selectChildSpotId"><option value="">子景点</option></select>
+                    <label>查询条件</label><input autocomplete="off" name="keywords" placeholder="请输入产品名称或景区名称" type="text" class="search_input js_search_input"/>
+                    <input value="搜索" class="comBtn btn-small searchbtn js_searchBtn" type="button"/>
+                   <!--  <input value="深大票务批量同步" class="comBtn btn-big sync_batch_ticket" type="button"/> -->
+	            </div>
+	          </div>
+	          <div class="data_table datatableheight" id="prod-list-content">
+	          </div>
+         </div>
+		  
+        <!--分页-->
+        <div class="bottom">
+            <div class="tableoperate">
+                <input type="button" value="删除" class="btn-small comBtn js_delBtn" id="banchdeleterow">
+                <input type="button" value="排序上升" class="btn-big comBtn js_sort_Up"/>
+                <input type="button" value="排序下降" class="btn-big comBtn js_sort_Down"/>
+                <input type="button" value="保存排序" class="btn-big comBtn savesort js_saveSort">
+            </div>
+            <div class="js_pageDiv">&nbsp;</div>
+        </div>
+    </div>
+    <script id="prod-list" type="text/x-handlebars-template">
+        <h3 class="manaicon table-head">列表<a class="comBtn btn-big fr js_sync_agent"  href="#">同步票务云</a><a class="comBtn btn-big addticket fr"  href="edit.html" target="blank"> 添加门票</a></h3>
+        <table style="width:100%" border="0" cellspacing="0">
+            <thead>
+            <tr class="title">
+                <td width="5%"><input type="checkbox" class="checkall js_check_all"/></td>
+                <td width="8%">名称</td>
+				<td width="8%">景区</td>
+                <td width="5%">市场价</td>
+				<td width="5%">优惠价</td>
+                <td width="5%">库存/张</td>
+                <td width="5%">销量/张</td>
+				<td width="4%">排序</td>
+                <td width="4%">状态</td>
+                <td width="24%">操作</td>
+            </tr>
+            </thead>
+            <tbody id="sortable">
+            {{#if dataList}}
+            {{#each dataList}}
+            <tr class="ui-state-default" dataId="{{id}}">
+                <td><input type="checkbox" class="checkbox js_check_row"/></td>
+                <td>{{name}}</td>
+				<td>{{viewName}}</td>
+                <td>{{price}}</td>
+				<td>{{preferentialPrice}}</td>
+                <td>{{freeNum}}</td>
+                <td>{{saleNum}}</td>
+				<td><input class="jspos tabletext pos_{{id}}" dataId="{{id}}" pos="{{pos}}" value="{{pos}}">
+				</td>
+                <td class="onsalestadus">{{#equals status 'open'}}<span class="style1">上架</span>{{/equals}}{{#equals status 'close'}}下架{{/equals}}</td>
+                <td class="operate">
+					<span>
+						{{#equals status 'open'}}<a href="javascript:void(0)" class="js_off_sale" dataId="{{id}}">下架{{/equals}}</a>
+                        {{#equals status 'close'}}<a href="javascript:void(0)" class="js_on_sale" dataId="{{id}}">上架{{/equals}}</a>&nbsp;|</span>
+					{{#equals dayPrice 'Y'}}
+					 <span class="set_price"><a href="price.html?prodVo.id={{id}}" target="_blank" class="js_set_price" dataId="{{id}}">价格设置</a>&nbsp;|</span>
+					{{/equals}}</a>
+                    
+                    <span class="edit_article"><a href="edit.html?prodVo.id={{id}}" target="_blank">编辑</a>&nbsp;|</span>
+                    <span class="del_article"><a href="javascript:void(0)" class="js_delete_row" dataId="{{id}}">删除</a>&nbsp;|</span>
+                    
+					<span><a href="javascript:void(0)"  class="js_sync_agent" dataId="{{outProdCode}}">云票务数据同步</a></span>
+                </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="5">暂无数据</td>
+            </tr>
+            {{/if}}
+            </tbody>
+        </table>
+    </script>
+
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/ticket/list','common/area'],function(head,ticketList,area){
+	head.init('module005001003');
+	ticketList.init();
+//    area.init();
+  });
+</script>

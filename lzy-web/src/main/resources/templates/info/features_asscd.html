@@ -1,0 +1,105 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+
+ <link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/specialtygente.css" rel="stylesheet" type="text/css"> 
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" href="${base}/js/plugin/ztree/jquery.ztree.core.js" type="text/css"></script>
+<script type="text/javascript" href="${base}/js/plugin/ztree/jquery.ztree.excheck.js" type="text/css"></script>
+<script type="text/javascript" href="${base}/js/plugin/ztree/jquery.ztree.exedit.js" type="text/css"></script>
+  <!--右侧内容区-->
+  <!--<div class="rightcon clear" >
+  	<div class="treewrap dataModle fl">
+			<!-- <ul id="themetreeDemo" class="ztree"> </ul>  -->
+		</div> -->
+    
+    <div class="data_table_wrap tablewrap  tablewrapwidth pt fr" style="padding-top:50px;padding-left:170px">
+        <div class="data_table datatableheight">
+         	<h3 class="manaicon table-head">关联文章列表<a href='javascript:;' class="addsceneryname btn-small comBtn js_genre_add" >新增</a></h3></h3>
+         <!-- 列表模板 -->
+         <table style="width:100%" border="0" cellspacing="0" > 
+         <thead>
+           	<tr class="title"> 
+				<td width="75%">标题</td>
+				<td width="15%">排序</td>
+				<td width="10%">操作</td>
+			</tr> 
+         </thead>
+         <tbody id="article-list-content">
+         </tbody>
+        </table>
+         
+
+     
+      	</div>
+    </div> 
+  </div>
+<!-- 关联文章列表 -->
+<script id="article-list" type="text/x-handlebars-template">
+		 {{#if specialArticleVos}}
+         {{#each specialArticleVos}}
+		  <tr>
+            <td >{{articleName}}</td>
+			<td ><input value="{{pos}}" vitulId="{{id}}"  type="text" class="js_pos tabletext"/></td>
+            <td class="operate"><span class="edit_row"><a class="js_delete_link" specialId="{{specialId}}" articleId="{{articleId}}" href="javascript:;">移出关联</a> </span></td>
+          </tr>
+         {{/each}}
+		{{else}}
+			<tr>
+				<td colspan="3">暂无数据</td>
+			</tr>	
+		{{/if}}
+        </script>
+  
+ <!--关联弹窗--> 
+<div class="popup js_popUpgenreadd" id="genreadd-save-content"> &nbsp; </div>
+<script id="genreadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">关联<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form action="" method="post" >
+		<ul id="themetreeDemo" class="ztree" style="float:left"> </ul>
+
+		<!--列表--> 
+		<div class="data_table features_tab">
+		 	<table style="width:100%" border="0" cellspacing="0" > 
+         <thead>
+           	<tr class="title"> 
+				<td width="15%">关联</td>
+				<td width="80%">标题</td>
+				<td width="5%">排序</td>
+			</tr> 
+         </thead>
+         <tbody id="articles-content">
+         </tbody>
+        </table>
+       </div>
+
+        <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_linkSubmit" id="genresubmit"></div>
+        </form>
+      </div>
+    </div>
+</script>
+<script id="articles" type="text/x-handlebars-template">
+		 {{#if dataList}}
+         {{#each dataList}}
+		  <tr articleId="{{articleId}}">
+			<td ><input type="checkbox" class="checkbox js_check_row" articleId="{{articleId}}"></td>
+            <td >{{subject}}</td>
+			<td ><input specialId="{{specialId}}" pos="{{pos}}" vitulId="{{id}}"  type="text" class="js_pos tabletext"/></td>
+          </tr>
+         {{/each}}
+		{{else}}
+			<tr>
+				<td colspan="3">暂无数据</td>
+			</tr>	
+		{{/if}}
+        </script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+	require(['common/head','info/link'],function(head,link){
+		head.init('module003001003');
+		link.init();
+	  });
+</script>

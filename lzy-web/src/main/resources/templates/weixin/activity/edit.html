@@ -1,0 +1,469 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/base.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/timepicker/jquery-clockpicker.min.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link href="${base}/js/plugin/laydate/need/laydate.css" rel="stylesheet" type="text/css">
+
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+    <div class="editbt">活动管理/<span class="style2">新增活动</span></div>
+    <div class="editbox ">
+      <div class="editboxbt ">
+        <span class="editboxbtline active style2" dataattr="basicinfo">基本信息</span>
+        <span class="editboxbtline" dataattr="attachedinfo">奖项设置</span>
+        <span class="editboxbtline" dataattr="enrollinfo">报名列表</span>
+        <span class="editboxbtline" dataattr="Interface">接口明细</span>
+        <span class="editboxbtline" dataattr="awardinfo">中奖列表</span>
+      </div>
+      <!--基本信息-->
+      <div class="editboxcon mb" id="basicinfo">
+         <form action="" id="submit_form" method="post">
+          <input type="hidden" name="activityVo.activityId" id="activityId" value="${(activityVo.activityId)!''}">
+          <input type="hidden" name="activityVo.id"  value="${(activityVo.id)!''}">
+	          <div class="formformat">
+					<label><span class="style1">*</span>名称：</label>
+					<input type="text" class="forminputstyle1" id="activityname" name="activityVo.name" value="${(activityVo.name)!''}">
+					<span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat">
+		            <label><span class="style1">*</span>公众号：</label>
+		            <select class="forminputstyle3" name="activityVo.weixinId">
+		                <#if weixinVoList??>
+			                <#list weixinVoList as weixinVo>
+			            		<option value="${(weixinVo.weixinId)!''}" <#if activityVo?? && (activityVo.weixinId)?? && activityVo.weixinId== weixinVo.weixinId>selected</#if>>${(weixinVo.name)!''}</option>
+			                </#list>
+		                </#if>
+		            </select>
+		            
+		            
+		            <label><span class="style1">*</span>类型：</label>
+		            <select class="forminputstyle3" name="activityVo.bigType">
+		            	<option value="抽奖" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="抽奖">selected</#if>>抽奖</option>
+		                <option value="投票" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="投票">selected</#if>>投票</option>
+		            	<option value="集卡" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="集卡">selected</#if>>集卡</option>
+		            	<option value="竞猜" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="竞猜">selected</#if>>竞猜</option>
+		            	<option value="盖楼" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="盖楼">selected</#if>>盖楼</option>
+		            	<option value="助力" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="助力">selected</#if>>助力</option>
+		            	<option value="找茬" <#if activityVo?? && (activityVo.bigTyp)?? && activityVo.bigType=="找茬">selected</#if>>找茬</option>
+		            	
+		            </select>
+		            <select class="forminputstyle3" name="activityVo.smallType">
+		            	<option value="摇一摇" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="摇一摇">selected</#if>>摇一摇</option>
+		            	<option value="报名抽" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="报名抽">selected</#if>>报名抽</option>
+		            	<option value="大转盘" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="大转盘">selected</#if>>大转盘</option>
+		            	<option value="跑马灯" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="跑马灯">selected</#if>>跑马灯</option>
+		            	<option value="砸金蛋" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="砸金蛋">selected</#if>>砸金蛋</option>
+		            	<option value="刮刮卡" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="刮刮卡">selected</#if>>刮刮卡</option>
+		            	<option value="上墙抽" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="上墙抽">selected</#if>>上墙抽</option>
+		            	<option value="翻卡片" <#if activityVo?? && (activityVo.smallType)?? && activityVo.smallType=="翻卡片">selected</#if>>翻卡片</option>
+		            </select>
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		            <label class="fl "><span class="style1">*</span>介绍：</label>
+		            <div class=" fl">
+		               	<textarea class="formareastyle1" id="introduce" name="activityVo.description">${(activityVo.description)!''}</textarea>
+		               	<span class="errortip js_errortip"></span>
+		            </div>
+	          </div>
+	          <div class="formformat">
+					<label><span class="style1">*</span>开始时间：</label>
+					<input type="text" class="forminputstyle2 js_start_Time" id="js_start_Time" placeholder="开始时间" name="activityVo.startTime" value="${(DateUtil.dateToString(activityVo.startTime,'yyyy-MM-dd HH:mm:ss'))!''}">
+					<label><span class="style1">*</span>结束时间：</label>
+					<input type="text" class="forminputstyle2 js_end_Time" id="js_end_Time" placeholder="截止时间" name="activityVo.endTime" value="${(DateUtil.dateToString(activityVo.endTime,'yyyy-MM-dd HH:mm:ss'))!''}">
+					<span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat">
+					<label><span class="style1">*</span>参与次数：</label>
+					<select  class="forminputstyle3" name="activityVo.periodType">
+					   <option <#if activityVo?? && (activityVo.periodType)?? && activityVo.periodType=="每天">selected</#if> value="每天">每天</option>
+					   <option <#if activityVo?? && (activityVo.periodType)?? && activityVo.periodType=="每小时">selected</#if> value="每小时">每小时</option>
+					   <option <#if activityVo?? && (activityVo.periodType)?? && activityVo.periodType=="一共">selected</#if> value="一共">一共</option>
+					</select>
+					<input type="text"  class="forminputstyle3" id="partnum" value="${(activityVo.joinLimitNum)!''}" name="activityVo.joinLimitNum"/> 次&nbsp;&nbsp;
+					<label><span class="style1">*</span>中奖次数：</label>
+					<select class="forminputstyle2" name="activityVo.winLimitNum">
+						<option <#if activityVo?? && (activityVo.winLimitNum)?? && activityVo.winLimitNum=="不限">selected</#if> value="不限">不限</option>
+						<option <#if activityVo?? && (activityVo.winLimitNum)?? && activityVo.winLimitNum=="全部奖品一次">selected</#if> value="全部奖品一次">全部奖品一次</option>
+						<option <#if activityVo?? && (activityVo.winLimitNum)?? && activityVo.winLimitNum=="每个奖品一次">selected</#if> value="每个奖品一次">每个奖品一次</option>
+					</select>
+	          		<span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		            <label><span class="style1">*</span>强制关注：</label>
+		            <span class="radiomargin"><input type="radio" name="activityVo.isForceAttention" <#if activityVo?? && activityVo.isForceAttention=="Y">checked="true"</#if> value="Y"/>是</span>
+		            <span class="radiomargin"><input type="radio" name="activityVo.isForceAttention" <#if activityVo?? && activityVo.isForceAttention=="N">checked="true"</#if> value="N"/>否</span>
+		            <label ><span class="style1">*</span>邀请增加：</label>
+		            <input type="text" class="forminputstyle3" id="invite" name="activityVo.inviteAddNum" value="${(activityVo.inviteAddNum)!''}"/> 次
+		            <label><span class="style1">*</span>分享增加：</label>
+		            <input type="text" class="forminputstyle3" id="share" name="activityVo.shareAddNum" value="${(activityVo.shareAddNum)!''}"/> 次
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		            <label><span class="style1">*</span>奖品互赠：</label>
+		            <span><input type="radio" name="activityVo.couldSharePrize" <#if activityVo??  && activityVo.couldSharePrize=="Y">checked="true"</#if> value="Y"/>允许</span>
+		            <span><input type="radio" name="activityVo.couldSharePrize" <#if activityVo??  && activityVo.couldSharePrize=="N">checked="true"</#if> value="N"/>不允许</span>
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		            <label><span class="style1">*</span>分享链接：</label>
+		            <input type="text" class="forminputstyle1" id="sharelink" name="activityVo.shareLink" value="${(activityVo.shareLink)!''}"/>
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		            <label><span class="style1">*</span>分享标题：</label>
+		            <input type="text" class="forminputstyle1" id="sharebt" name="activityVo.shareSubjcet" value="${(activityVo.shareSubjcet)!''}"/>
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		            <label><span class="style1">*</span>分享描述：</label>
+		            <input type="text" class="forminputstyle1" id="sharedescription" name="activityVo.shareDesc" value="${(activityVo.shareDesc)!''}"/>
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <div class="formformat clear">
+		           <label class="fl" ><span class="style1">*</span>分享主图：</label>
+		           <div class="parentFileBox fileboxheight fl" >
+		                <ul class="fileBoxUl" >
+			              	<#if activityVo?? && activityVo.sharePic!="">
+		                         <li>
+		                             <div class="editpicbox"><img id="js_img_file_name" data-original="${(base)!''}/images/img/emma-watson-2.jpg" src="${(config.WebuePicUrl)!''}${(activityVo.sharePic)!''}"/></div>
+		                         </li>
+                            </#if>
+                           <li class="diyUploadHover "><div id="uploadpic"></div></li>
+			            </ul>
+	               </div>
+	          </div>
+	          <div class="formformat clear">
+		            <label><span class="style1">*</span>活动链接：</label>
+		            <input type="text" class="forminputstyle1" id="activitylink" name="activityVo.activityUrl" value="${(activityVo.activityUrl)!''}"/>
+		            <input type="button" value="复制链接" class="comBtn btn-big"/>
+		            <span class="errortip js_errortip"></span>
+	          </div>
+	          <input name="activityVo.sharePic" type="hidden"  class="commtext js_weixin_icon" value="${(activityVo.sharePic)!''}"/>
+         </form>
+         <div class="page">
+	        <input type="button" value="保存修改" class="save combtn js_basicinfo_save" />
+	        <input type="button" value="返回列表" class="combtn btn-grey"/>
+	     </div>
+      </div>
+      <!--奖项设置-->
+      <div class="editboxcon tablebox" id="attachedinfo">
+          
+      </div>
+      <!--报名列表-->
+      <div class="editboxcon tablebox" id="enrollinfo">
+          
+      </div>
+       <!--接口明细-->
+      <div class="editboxcon tablebox" id="Interface">
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>活动链接：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>报名接口：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>报名列表：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>抽奖接口：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>中奖列表：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>邀请好友：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+          <div class="formformat clear">
+	            <label><span class="style1">*</span>奖品互赠：</label>
+	            <input type="text" class="forminputstyle1"/>
+	            <input type="button" value="复制链接" class="comBtn btn-big"/>
+	            <span class="errortip js_errortip"></span>
+          </div>
+      </div>
+      <!--中奖列表-->
+      <div class="editboxcon tablebox" id="awardinfo">
+      	  <div class="searchcon">
+      	  	<label>奖品：</label><select class="forminputstyle2"><option>全部</option><option>云曼温泉票</option></select>
+      	  	<label>用户昵称：</label><input type="text" class="forminputstyle2"/>
+      	  	<input type="button" value="查询" class="combtn bgcolor1"/>
+      	  	<input type="button" value="导出结果" class="combtn bgcolor1"/>
+      	  </div>
+          <table width="100%" border="0" cellspacing="0">
+				<thead>
+					  <tr>
+					  	  <th width="5%">编号</th>
+					      <th width="15%">奖品名称</th>
+					      <th width="8%">奖品代码</th>
+					      <th width="5%">数量</th>
+					      <th width="8%">微信昵称</th>
+					      <th width="8%">微信头像</th>
+					      <th width="16%">openId</th>
+					      <th width="10%">领取信息</th>
+					      <th width="5%">状态</th>
+					      <th width="10%">创建时间</th>
+					      <th width="10%">领奖时间</th>
+					  </tr>
+				</thead>
+				<tbody id="">
+					
+				</tbody>
+		  </table>
+      </div>
+     
+    </div>
+  </div>
+ 
+ <!--数据统计-->
+    <div class="popup js_popopUpcheckinfo" id="checkinfo-content"> </div>
+    <script id="checkinfo-save" type="text/x-handlebars-template">
+        <div class="popup_bg"></div>
+        <div class="popup_box popupheight1">
+            <div class="popup_bt">数据统计<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+            <div class="popupform ">
+               
+                <div class="tablebox">
+                    <table  cellpadding="0" cellspacing="0" >
+                        <tr>
+                            <th width="15%">活动名称</th>
+                            <td width="35%">杭州民宿遇见拾得玖舍</td>
+                            <th width="15%">活动类型</th>
+                            <td width="35%">抽奖</td>
+                        </tr>
+                        <tr>
+                            <th>活动形式</th>
+                            <td>摇一摇</td>
+                            <th>活动介绍</th>
+                            <td> 摇一摇、强制关注、每天1次</td>
+                        </tr>
+                        <tr>
+                            <th>公众号</th>
+                            <td>杭州民宿</td>
+                            <th>开始时间</th>
+                            <td>2017-07-25 9:00</td>
+                        </tr>
+                        <tr>
+                            <th>结束时间</th>
+                            <td>2017-07-28 9:00</td>
+                            <th>参与人数</th>
+                            <td>访客数UV：800  浏览量PV：1000 </td>
+                        </tr>
+                        <tr>
+                            <th>分享朋友圈</th>
+                            <td> UV：800  PV：1000</td>
+                            <th>发送好友</th>
+                            <td>UV：800  PV：1000</td>
+                        </tr>
+                        <tr>
+                            <th>邀请成功</th>
+                            <td>UV：800  PV：1000   </td>
+                            <th>投票总数</th>
+                            <td>UV：800  PV：1000  </td>
+                        </tr>
+                        <tr>
+                            <th>报名</th>
+                            <td colspan="3">总：20   有效：18</td>
+                        </tr>
+                      
+                    </table>
+                </div>
+                
+            </div>
+            
+        </div>
+    </script>
+    <!--添加,编辑报名-->
+	<div class="popup js_popUpaddenroll" id="addenroll-save-content"> &nbsp; </div>
+	<script id="addenroll-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box enrollpopupbox">
+    <div class="popup_bt"><span>添加报名</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+		<form id="enroll_form" method="post">
+            <input type="hidden" name="activityPersonVo.activityId" value="${(activityVo.activityId)!''}"/>
+			<p class="formfill">
+				<label><span class="mark">*</span>姓名：</label>
+				<input type="text"  name="activityPersonVo.name" value="{{name}}" class="comminputstyle1" placeholder="可以是姓名、昵称或者姓名组合，宝贝#妈妈#爸爸">
+			</p>
+			<p class="formfill">
+				<label>手机号：</label>
+				<input type="text" class="comminputstyle1" >
+	        </p>
+			<p class="formfill clear">
+				<label class="fl">公用内容2：</label>
+				<textarea class="commareastyle1" placeholder="可以是宣言、介绍、等等"></textarea>
+	        </p>
+			<p class="formfill clear">
+				<label class="fl">公用内容3：</label>
+				<textarea class="commareastyle1" placeholder="可以是宣言、介绍、等等"></textarea>
+	        </p>
+			<p class="formfill clear">
+				<label class="fl">公用内容4：</label>
+				<textarea class="commareastyle1" placeholder="可以是宣言、介绍、等等"></textarea>
+	        </p>
+			<input name="weixinVo.icon" type="hidden"  class="commtext js_enroll_icon" value="{{icon}}"/>
+		</form>
+		<div class="formfill  clear">
+            <label class="fl" style="height:100px">上传图片：</label>
+            <!--图片-->
+            <div class="parentFileBox fileboxheight fl" >
+                 <ul class="fileBoxUl">
+                     {{#if icon}}
+                         <li>
+                             <div class="editpicbox"><img id="js_img_file_name" data-original="${(base)!''}/images/img/emma-watson-2.jpg" src="${(config.WebuePicUrl)!''}{{icon}}"/></div>
+                         </li>
+                     {{/if}}
+                   <li class="diyUploadHover "><div id="uploadenrollpic" class="uploadpicstyle"></div></li>
+                 </ul>
+            </div>         
+        </div>	
+		<div class="formsubmit">
+            <input type="button" value="取消" class="quit formbtn js_popUpClose">
+            <input type="button" id="addcolumnbtn" value="保存" class="save formbtn js_popUpSubmit">
+        </div>
+    </div>
+	</script>
+	
+	<script id="attachedinfo-list" type="text/x-handlebars-template">
+<form action="" id="submit_award_form" method="post">
+    <table width="100%" border="0" cellspacing="0">
+				<thead>
+					  <tr>
+					  	  <th width="10%">编号</th>
+					      <th width="25%">奖品名称</th>
+					      <th width="10%">奖品代码</th>
+					      <th width="10%">数量</th>
+					      <th width="10%">剩余数量</th>
+					      <th width="10%">中奖概率（百分之）</th>
+					      <th width="15%">创建时间</th>
+					      <th width="10%">操作</th>
+					  </tr>
+				</thead>
+				<tbody id="awardList">
+                {{#if data}}
+         		{{#each data}}
+					<tr>
+                        <input type="hidden" name="award" value="{{prizeId}}">
+						<td>{{addOne @index}}</td>
+						<td>{{name}}</td>
+						<td>{{prizeId}}</td>
+						<td>{{totalNum}}</td>
+						<td>{{freeNum}}</td>
+						<td>{{winRate}}</td>
+						<td>{{formatDate createDate "default"}}</td>
+						<td><a href="javascript:;" dataId="{{id}}" class="js_delete_row">删除</a></td>
+					</tr>
+					{{/each}}
+                    
+                  {{/if}}
+				</tbody>
+		  </table>
+                 </form>
+          <div class="page">
+          		<input type="button" value="新增奖品" class="save combtn js_add_award">
+          		<input type="button" value="保存修改" class="save combtn js_save_award">
+          		<input type="button" value="刷新规则" class="save combtn js_refresh_award">
+          		<input type="button" value="中奖列表" class="save combtn js_award_List" >
+          		<input type="button" value="数据统计" class="save combtn js_check_datatotal">
+          </div>
+	</script>
+	
+<!-- 报名列表 -->
+<script id="enrollinfo-list" type="text/x-handlebars-template">
+<table width="100%" border="0" cellspacing="0">
+<thead>
+	  <tr>
+	  	  <th width="10%"><input type="checkbox" class="js_check_all"/>编号</th>
+	      <th width="25%">基本信息</th>
+	      <th width="15%">手机号码</th>
+	      <th width="15%">图片</th>
+	      <th width="15%">报名时间</th>
+	      <th width="10%">状态</th>
+	      <th width="10%">操作</th>
+	  </tr>
+</thead>
+<tbody id="">
+    {{#if data}}
+      {{#each data}}
+	<tr>
+		<td><input type="checkbox" class="js_check_row" value="{{id}}"/>{{addOne @index}}</td>
+		<td>{{name}}</td>
+		<td>13336094591</td>
+		<td><img class="enrolicon" src="${base!''}/images/default.jpg"/></td>
+		<td>2017-07-25 14:50</td>
+		<td>未审核</td>
+		<td><a href="javascript:;" class="js_edit_enroll">详情</a></td>
+	</tr>
+	   {{/each}}
+    {{/if}}
+</tbody>
+</table>
+<div class="page">
+	<input type="button" value="新增" class="save combtn js_add_enroll">
+	<input type="button" value="刷新规则" class="save combtn js_refresh_enroll">
+	<input type="button" value="删除选中项" class="save  combtn js_delBtn">
+</div>
+</script>
+ 
+<#include "/common/foot.html">    
+<script type="text/javascript" src="${base}/js/plugin/laydate/laydate.js"></script>                         
+<script type="text/javascript">
+require(['common/head','weixin/activity/edit'],function(head,activityEdit){
+	head.init('module008001003');
+	activityEdit.init();
+});
+var start = {
+	    elem: '#js_start_Time',
+	    format: 'YYYY-MM-DD hh:mm',
+	    istime: true,
+	    istoday: false,
+	    min: laydate.now(),
+	    choose: function(datas){
+	         end.min = datas;
+	         end.start = datas;
+	    }
+	};
+var end = {
+	    elem: '#js_end_Time',
+	    format: 'YYYY-MM-DD hh:mm',
+	    istime: true,
+	    istoday: false,
+
+	    min: laydate.now(),
+	   
+	    choose: function(datas){
+	        start.max = datas;
+	    } 
+	};
+	laydate(start);
+	laydate(end);
+	laydate.skin('molv');
+
+</script> 
+

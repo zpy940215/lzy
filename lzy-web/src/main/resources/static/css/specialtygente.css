@@ -1,0 +1,13 @@
+h1, .h1, h2, .h2, h3, .h3{margin:0px;padding:0px}
+.tabletitle{width: 100%;height:40px;line-height:40px; background-color: #7297db;color:#fff;}
+.tabletitle span{display: inline-block; text-indent: 5px;}
+.pms-tabletree ul div{min-height: 40px;line-height: 40px;font-size: 12px;}
+.pms-tabletree ul div:hover{background-color: #f2f4f3;}
+.pms-tabletree ul:nth-child(even) div.tabletreerow{background-color: #f2f4f3}
+.pms-tabletree ul li div.tabletreerow{background-color: #fff !important;}
+.pms-tabletree ul div.tabletreerowleft{width:auto;max-width: 82%;overflow-x:hidden}
+.pms-tabletree ul div.tabletreerowright{width: 22%;}
+.pms-tabletree ul div.tabletreerowright span{color:#428bca;}
+.glyphicon{left:5px;}
+.js_childTreeList{padding-left:20px;}
+.typeoption{width:200px;height:200px;overflow-y:scroll;border:1px solid #a9a9a9};

@@ -1,0 +1,37 @@
+/*站点设置*/
+div#rMenu {width:120px;border: 1px solid #eaeaea; position:absolute; visibility:hidden; margin-top:-70px;left:103px !important; background-color: #fff;text-align: left;}
+div#rMenu ul li{cursor: pointer;line-height: 40px; border-bottom: 1px solid #eaeaea;}
+div#rMenu ul li:last-child{border-bottom:none;}
+div#rMenu ul li span.editicon{display: inline-block; position: relative;top:2px;margin:0px 5px; width:15px;height:15px;background: url(../images/zTreeStandard.png) no-repeat -111px -49px;}
+div#rMenu ul li span.addcolumnicon{display: inline-block; position: relative;top:2px;margin:0px 5px; width:15px;height:15px;background: url(../images/zTreeStandard.png) no-repeat -111px -32px;}
+.ztree li span.demoIcon{padding:0 2px 0 10px;}
+.ztree li span.button.icon01{margin:0;background: url(../images/zTreeStandard.png) no-repeat -144px -1px;position: relative;top:2px; vertical-align:top; *vertical-align:middle}
+
+/*网站布局页面*/
+
+.cfgBar{ position: relative; height: 50px; margin-bottom:10px;}
+.cfgBar .cfgweb-tit{ position: relative; top:5px; width:200px; height: 40px; line-height: 40px; padding-left: 40px;box-sizing: border-box; border: 1px solid #f2f2f2; background:#fff url(../../images/cfgweb-tit.jpg) 10px center no-repeat; font-size: 14px; color: #333; font-weight: normal; cursor: pointer;}
+.cfgBar .cfgweb{ position: absolute; top: 44px; left:20px; z-index:9999; width: 641px; height: 400px; background: #fff; border: 1px solid #f2f2f2; box-sizing: border-box; display: none; }
+.cfgBar .cfgweb p{ text-indent: 30px; line-height: 30px; }
+.cfgBar .cfgweb p.allpage{ color: #999; }
+.cfgBar .cfgweb p.border-btm{ border-bottom: 1px solid #f2f2f2;}
+.cfgBar .cfgweb span{ display: inline-block; width: 152px; height: 50px; line-height: 50px; margin-left:40px;text-indent: 20px; border-left:1px solid #f2f2f2;cursor: pointer; background:url(../../images/hg.jpg) 0 center no-repeat;}
+.cfgBar .cfgweb span.active{ color: #F37400; }
+#Ueditor{height:450px;}
+.websave{margin-top:10px;position: relative;z-index: 9;}
+.edui-editor{z-index:0 !important;}
+
+.data_table_wrap .formfill{margin-top: 15px;padding-left:20px; display: block;}
+.data_table_wrap .formfill label{width:90px;display: inline-block;position: relative; text-align: right;color:#434343}
+.data_table_wrap .formfill label .mark{display: inline-block;position: absolute;left:0;width:4px;color:#DD433E;}
+.data_table_wrap .formfill  .textinput{width:575px;height:140px;border:1px solid #d1d1d1;padding:5px;}
+.data_table_wrap .formfill span.radiostyle{display: inline-block; min-width:60px;margin-right: 10px;}
+.data_table_wrap .formfill textarea.wordsarea{width:535px;height:170px;border:1px solid #d1d1d1;padding:5px;}
+.data_table_wrap .formfill span.question{color:#666;}
+.data_table_wrap .commtext{width:200px;height:32px;    border: 1px solid #dedede; text-indent:5px;}
+.data_table_wrap  .data_table .formsubmit{position: relative;padding-left: 100px; text-align: left;margin-top: 50px;}
+.data_table_wrap  .data_table .formsubmit .formbtn{width:70px;height:34px;cursor: pointer; margin:10px; font-size: 12px; border-radius:3px;border:1px solid #bcbcbc;}
+.data_table_wrap  .data_table .formsubmit .quit{background-color: #f2f2f2;color:#333;}
+.data_table_wrap  .data_table .formsubmit .save{background-color: #4d79aa;color: #fff;}
+.data_table_wrap  .columnedittable{height:100%;}
+.data_table_wrap  .columnedittable .columntitle{height:45px;border-bottom: 1px solid #dedede;line-height: 45px;}

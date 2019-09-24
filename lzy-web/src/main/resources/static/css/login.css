@@ -1,0 +1,13 @@
+.boxlayout{width:100%;height:100%;background: #243e56 url(../images/map.png) no-repeat center;}
+.loginbox{width:410px;height:300px; position:absolute;left:50%;margin-left: -205px;top:17%; background-color: #fff;}
+.loginbox .formbox{margin-bottom:20px; }
+.loginbox .loginboxtit{line-height: 65px;text-align: center;    font-size: 16px;color: #333;}
+.loginbox .formbox .forminput{width:310px;height:40px;text-indent: 25px;display: block; margin:0 auto; border: 1px solid #dbdad4;border-radius:3px;}
+.loginbox .formbox .forminput:hover{border: 2px solid #00b1f3}
+.loginbox .rememberpwd{margin-left: 50px;color:#333; width:100px;display:inline-block; text-align: left;margin-top: 10px;}
+.loginbox .rememberpwd input{position:relative;top:-1px;}
+.loginbox .formbox .loginbtn{width:310px;height:40px;display: block;margin:0 auto; cursor: pointer; background-color: #6297d9;border: none;color: #fff}
+.footer{width:100%; text-align: center;color:#fff; position: absolute;bottom:30px;}
+.pwd_icon{background: url(../images/pwd_icon.png) no-repeat left center;}
+.user_icon{background: url(../images/user_icon.png) no-repeat left center;}
+.error{display:inline-block;}

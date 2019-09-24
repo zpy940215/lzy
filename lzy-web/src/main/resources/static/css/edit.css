@@ -1,0 +1,116 @@
+/*二级页编辑页*/
+.editbt{width:100%;height:40px;line-height: 40px;z-index:3; border-bottom: 1px solid #e4e4e4; position: fixed;top:60px;left:160px; text-indent:20px; background-color: #fff;}
+.editbox{width: 100%;min-height:100%;min-height: auto;padding-bottom:80px; background-color: #fff; border:1px solid #e4e4e4;}
+.editbox .editboxbt{width:100%;height:35px;line-height: 35px;border-bottom: 1px solid #e4e4e4;}
+.editboxbtline{display:inline-block; cursor: pointer; width:85px; text-align: center;}
+.editbox .editboxbt span.active{border-bottom: 2px solid #38ADFF;color:#38ADFF;}
+.editboxcon .formformat{margin-top: 20px;}
+.editboxcon .formformat label{display:block; float:left;width:140px; margin-right: 10px; text-align: right;color:#434343;font-weight: normal; height: 36px; line-height: 34px; }
+.editboxcon .formformat input.formoinputtext{width:260px;height:35px; padding-left:5px;border:1px solid #dedede;}
+.editboxcon .formformat .clear_float{float:left}
+.editboxcon .formformat select.formselect{width:260px;height:35px;border:1px solid #dedede;}
+.editboxcon .formformat span.formradio{margin-right: 30px;}
+.editboxcon .formformat span.radiomargin{line-height:40px;}
+.Ueditorbox{height:420px;}
+.ueditor{width:750px;margin-left:140px;}
+.editsubmit{padding-left: 95px;}
+.edui-editor{z-index: 2 !important;}
+.formformat label.marktitle{} 
+.formformat .markbox{max-width:750px;}
+.formformat .markbox span.markcheck{display: inline-block;margin-bottom: 10px;margin-right:10px;}
+.formformat .markbox span.markcheck input[type="checkbox"]{position: relative;top:-2px;}
+.scenerypicbox{width: 900px;}
+.mapbox{width:750px;height:450px; position:relative;}
+.maps{width:100%;height:400px;}
+/*地图经纬度*/
+.map_zb{margin-bottom:15px;}
+.map_zb .wd,.map_zb .jd{ width: 150px;height:30px;color:#666; text-indent: 6px; text-align: left;}
+.editboxcon .mana_pic{padding-left:15px;}
+/*.mana_pic{max-width: 750px;max-height: 300px;overflow-y:auto;}
+*/.mana_pic .fileBoxUl li{margin-bottom: 10px;}
+.mana_pic li em.title {background-color: #e84c3d !important;display: block !important;}
+.mana_pic .parentFileBox>.fileBoxUl>li{width:180px;height:135px;}
+.mana_pic .parentFileBox>.fileBoxUl>li>.viewThumb{width:180px;height:135px;}
+.mana_pic .parentFileBox>.fileBoxUl>li:last-child{width:180px !important;height:135px !important;}
+.mana_pic .webuploader-pick{width:180px !important;height:135px !important;}
+/*线路编辑*/
+.routetable{width:930px;padding-left: 20px;}
+.routetabletitle{margin-bottom: 15px;color:#666;}
+.routetable table{border-bottom: 1px solid #a1a1a1; }
+.routetable  tr td{font-size: 12px;text-align: center;padding:5px 0px;border-left: 1px solid #a1a1a1;border-top: 1px solid #a1a1a1;}
+.routetable  tr.title td{height:30px;}
+.routetable  tr td input.routename{width:115px;height:30px;}
+.routetable  tr td .peoselect{width:90px;height:24px; display: inline-block;border:1px solid #dedede}
+.routetable  tr td p{margin: 10px 0px;}
+.routetable  tr td:last-child{border-right: 1px solid #a1a1a1;}
+.routetable  tr td input.pricetext{width:80px;height:25px;border:1px solid #dedede}
+.routetable  tr td input.stockinput{width:80px;height:30px;border:1px solid #dedede}
+.routeadd{width:930px;}
+.addnewroute{display: block; width:65px;height:30px;margin-top: 10px; line-height:26px; color:#333;background-position: -90px -152px; text-indent:23px; border: 1px solid #e4e4e4;border-radius: 2px;}
+.delroute{display: block; width:65px;height:30px;margin-top: 10px; line-height:26px; color:#333; border: 1px solid #e4e4e4;border-radius: 2px; text-align:center;margin-right:5px;}
+
+.orderstatuscheck{padding-left: 98px;margin-top: -10px;}
+input[type="radio"]{position: relative;top:-3px;}
+/*门票编辑*/
+.formwidth{width:510px;}
+.formwidth p{margin-bottom: 15px;    line-height: 35px;}
+.formwidth  input.formoinputtext{width:320px !important;height:35px !important; border:1px solid #dedede}
+.formwidth  select.formselect{width:320px !important;height:35px !important; border:1px solid #dedede}
+.formwidth p textarea.formarea{width:320px;height:85px; padding: 5px; border:1px solid #dedede}
+.formwidth p a.addscenery{color:#009DD9;margin-left: 5px;}
+.formwidth p span.dateform{display: inline-block;    overflow: hidden; width:320px;height:35px;line-height: 35px; border:1px solid #dedede;}
+.formwidth p span.dateform input.dateinput{width:90px; border: none; }
+.formformat label.labelwidth{width: 140px;}
+.datetimetext{width:135px;height:35px;padding-left: 5px; border:1px solid #dedede}
+.input-group {width: 158px; display: inline-block; position: relative;left:-4px;}
+.input-group-addon{position:absolute;right:0;top:0;height:35px;width:40px;border:1px solid #dedede !important;}
+.glyphicon{top:4px;}
+/*.picuploadbox{width:750px;}*/
+.columnsetbox{width:750px;max-height:100px;overflow-y:auto}
+.areaselect{width:160px !important;}
+/* .load{display:none} */
+.sceneryitems{position:relative}
+.sceneryconn{margin-bottom:15px;line-height:35px;}
+.sceneryconn .removescenery{margin-left:10px;}
+.connectscenery{position:relative;}
+.scenery_matchs{width:320px;height:auto;display:none; z-index:99; background-color:#fff; border:1px solid #dedede;position:absolute;top:34px;left:100px}
+.scenery_matchs .scenery_item{line-height:30px;margin-bottom:0px;text-indent:5px;cursor:pointer;}
+.scenery_matchs .noitem{line-height:30px;}
+.scenery_matchs .scenery_item:hover{background-color:#dedede}
+.addscenery{line-height:35px;}
+/*2017.7.31新增*/
+#nativeinfo .routetable{margin-top:10px;}
+.ordereditbox{width: 100%; background-color: #fff; border:1px solid #e4e4e4;}
+.ordereditbox .editboxbt{width:100%;height:35px;line-height: 35px;border-bottom: 1px solid #e4e4e4;}
+.ordereditbox .editboxbt span.active{border-bottom: 2px solid #38ADFF;color:#38ADFF;}
+.ordereditbox .editboxcon table {margin:15px auto;font-size:12px;border:1px solid #e4e4e4;border-left:0px; text-indent: 10px;border-top:0px;}
+.ordereditbox .editboxcon table tr th{width:10%; font-weight: normal;height:37px; text-align: left;border:1px solid #e4e4e4;border-bottom:0px;}
+.ordereditbox .editboxcon table tr td{border:1px solid #e4e4e4;border-bottom:0px;height:37px;border-left:0px;border-right:0px;}
+.ordereditbox .editboxcon table tr td .commtext{width:170px;height:30px;border:1px solid #dedede; text-indent:10px;}
+
+/*2017.8.8号新增*/
+.editboxcon .forminputstyle1{width:572px;height:35px; padding-left:5px;border:1px solid #dedede;}
+.editboxcon .forminputstyle2{width:231px;height:35px; padding-left:5px;border:1px solid #dedede;}
+.editboxcon  .forminputstyle3{width:100px;height:35px;border:1px solid #dedede;}
+.editboxcon .forminputstyle4{width:70%;height:35px; padding-left:5px;border:1px solid #dedede;}
+
+.editboxcon  .formareastyle1{width:572px;height:100px; padding-left:5px;border:1px solid #dedede;margin-left:3px;}
+.editboxcon.tablebox{padding:15px;}
+.editboxcon.tablebox table tr th{line-height:40px; border:1px solid #dedede; text-align:center;}
+.editboxcon.tablebox table tr td{line-height:40px; border:1px solid #dedede; text-align:center;padding:5px 0px;}
+.editboxcon.tablebox table tr td .enrolicon{width:50px;height:auto}
+.editboxcon .searchcon{padding:15px 0px;}
+.editboxcon .searchcon label{font-weight:normal;}
+/*2017.9.9新增*/
+.commarea{width:600px;height:100px; border: 1px solid #dedede;}
+.forminfo{line-height:35px;}
+.webuploader-pick{width:100% !important}
+.audiouploadbtn{width:90px;height:40px;cursor:pointer; margin-left:20px; line-height:40px;border-radius:3px;border:none;color:#fff; background-color:#00b7ee}
+.editboxheight{min-height:100%}
+
+.inputItem{ width:auto; height:auto; border-bottom:1px dotted #ccc; padding-bottom:20px;}
+
+
+.ordertotal{width:100%;text-align:right;padding:20px 0px}
+.ordertotal span b{font-size:22px;color:#DD433E;font-weight:normal;}
+.ordertotal span{margin-right:20px;}

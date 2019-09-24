@@ -1,0 +1,102 @@
+<#include "/common/head.html">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+		  <input id="selectAreaId" type="hidden">
+		  <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+		  <div class="formformat clear">
+          <label>类型</label>
+          <span class="radiomargin">
+          <select class="js_search_usetype">
+          <option value="">请选择</option>
+          <option value="hotel">住宿产品</option>
+          <option value="scenic">门票产品</option>
+          </select>
+          </span>
+          <label>条件查询</label><input name="keywords" placeholder="请输入名称" type="text" class="search_input js_search_input">
+          <input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+		<div class="data_table datatableheight" >
+	    	<h3 class="manaicon table-head">列表<a class="pubspecialty btn-small comBtn fr" href="edit.html" target="blank">添加</a></h3>
+			<div class="tableBox" id="native-list-content">
+			<table style="width:100%" border="0" cellspacing="0"> 
+	        <thead>
+	          <tr class="title"> 
+	            <td width="20%">券名称</td>
+	            <td width="10%">类型</td>
+	            <td width="20%">关联商户</td> 
+	            <td width="15%">有效期</td> 
+	            <td width="5%">已售</td>
+	            <td width="10%">状态</td>
+	            <td width="20%">操作</td> 
+	         </tr> 
+	        </thead>
+	  	 	</table>
+	    	</div>
+    	</div>
+    </div> 
+    <script type="text/x-handlebars-template" id="native-list">
+	    <table style="width:100%" border="0" cellspacing="0"> 
+	        <thead>
+	          <tr class="title"> 
+	            <td width="20%">券名称</td>
+	            <td width="10%">类型</td>
+	            <td width="20%">关联商户</td> 
+	            <td width="15%">有效期</td> 
+	            <td width="5%">已售</td>
+	            <td width="10%">状态</td>
+	            <td width="20%">操作</td> 
+	         </tr> 
+	        </thead>
+	        <tbody>
+				{{#each dataList}}
+					<tr class="ui-state-default" dataId="{{prodVo.id}}">
+						<td>{{prodVo.name}}</td>
+						<td>{{viewType prodVo.viewVo.type}}</td>
+						<td>{{prodVo.viewVo.name}}</td>
+						<td>{{formatDate prodVo.paramValVo.useStartDate "yyyy-MM-dd"}}
+						至 {{formatDate prodVo.paramValVo.useEndDate "yyyy-MM-dd"}}</td>
+						<td>{{prodVo.saleNum}}</td>
+						<td class="onsalestadus">
+						{{#status prodVo.status}}
+						<span class="style2">上架</span>
+						{{else}}
+						<span class="style1">下架</span>
+						{{/status}}
+						</td>
+						<td class="operate">
+						{{#status prodVo.status}}
+						<span class="onsale"><a href="javascript:void(0)" class="js_off_sale" dataId="{{prodVo.id}}">下架</a>
+						{{else}}
+						<a href="javascript:void(0)" class="js_on_sale" dataId="{{prodVo.id}}">上架</a>
+						{{/status}}
+						 | </span><span class="edit_article"><a href="edit.html?prodVo.id={{prodVo.id}}" target="_blank">编辑</a>
+						 | <span class="edit_article"><a href="price.html?prodVo.id={{prodVo.id}}" target="_blank">价格设置</a></span>
+						 | </span><span class="del_article"><a href="javascript:void(0)" class="js_delete_row" dataId="{{prodVo.id}}">删除</a> </span></td>
+					</tr>
+				{{/each}}
+	        </tbody>
+	  	 </table>
+    </script>
+     <!--分页-->
+     <div class="bottom ">
+		 <div class="tableoperate">
+		 </div>
+	     <div class="js_pageDiv"></div>
+	 </div>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prodnew/coupon/list','common/area'],function(head,coupon,area){
+	head.init('module007001003');
+	coupon.init();
+	area.init();
+  });
+</script>
+

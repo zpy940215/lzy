@@ -1,0 +1,75 @@
+<#include "/common/head.html">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search">
+		        <h3 class="manaicon search-head">查询</h3>
+		        <div class="search-bar">
+					<input id="selectAreaId" type="hidden">
+					<input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+					<label>选择区域</label><select id="selProvince"><option>省</option></select><select id="selCity"><option>市</option></select><select id="selectCountry"><option>区</option></select>
+					<label>查询条件</label><input name="keywords" placeholder="请输入酒店/民宿名称" type="text" class="search_input js_search_input"/>
+					<input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+		        </div>
+			</div>
+	    </div>
+	    <div class=" tablewrap tablewrapwidth pt" >
+	    	<div class="data_table datatableheight" >
+				<h3 class="manaicon table-head">列表<a class="addhotel btn-small comBtn fr" href="edit.html" target="blank">新增</a></h3>
+	    		<div class="tableBox" id="prod-list-content">
+	    		</div>
+	    	</div>
+	    </div>
+	  	<!--分页-->
+	     <div class="bottom js_pageDiv">
+	     	 <div class="pageDiv">&nbsp;</div>  
+	     </div>  
+   </div>
+	<script id="prod-list" type="text/x-handlebars-template">
+		
+		<table style="width:100%" border="0" cellspacing="0">
+			<thead>
+				<tr class="title">
+					<td width="20%">房间名称</td>
+					<td width="15%">关联酒店</td>
+					<td width="10%">联系电话</td>
+					<td width="10%">区域</td>
+					<td width="25%">详细地址</td>
+					<td width="20%">操作</td>
+				</tr>
+			</thead>
+			<tbody>
+			{{#if dataList}}
+				{{#each dataList}}
+					<tr>
+						<td>{{prodVo.name}}</td>
+						<td>{{prodVo.viewVo.name}}</td>
+						<td>{{prodVo.linkMobile}}</td>
+						<td>{{areaName}}</td>
+						<td>{{prodVo.address}}</td>
+						<td class="operate">
+                            <span>{{#equals prodVo.status 'open'}}<a href="javascript:void(0)" class="js_off_sale" dataId="{{prodVo.id}}">下架{{/equals}}</a>
+                            {{#equals prodVo.status 'close'}}<a href="javascript:void(0)" class="js_on_sale" dataId="{{prodVo.id}}">上架{{/equals}}</a> |</span>
+							<span class="edit_article"><a href="edit.html?prodVo.id={{prodVo.id}}" target="_blank">编辑</a>&nbsp;|</span>
+							<span class="set_price"><a href="price.html?prodVo.id={{prodVo.id}}" target="_blank" class="js_set_price" dataId="{{prodVo.id}}">价格设置</a>&nbsp;|</span>
+                            <span class="del_article"><a href="javascript:void(0)" class="js_delete_row" dataId="{{prodVo.id}}">删除</a></span>
+						</td>
+					</tr>
+				{{/each}}
+			{{else}}
+				<tr>
+					<td colspan="5">暂无数据</td>
+				</tr>
+			{{/if}}
+			</tbody>
+		</table>
+	</script>
+	  
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prodnew/hotel/list','common/area'],function(head,hotellist,area){
+	hotellist.init();
+	head.init('module007001001');
+	area.init();
+  });
+</script>

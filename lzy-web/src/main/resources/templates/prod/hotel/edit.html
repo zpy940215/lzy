@@ -1,0 +1,247 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="editbt">
+        <span class="js_editbt"></span>/
+        <#if prodVo.id??>
+            <span class="style2 " >编辑<span class="js_editbt"></span></span>
+            <#else>
+                <span class="style2">添加<span class="js_editbt"></span></span>
+        </#if>
+    </div> 
+    <div class="editbox mt2">
+      <div class="editboxbt ">
+        <span class="editboxbtline active " dataattr="basicinfo">基本信息</span>
+        <span class="editboxbtline" dataattr="nativeinfo">产品规格</span>
+      </div>
+      <form action="" >
+      <div class="editboxcon mb" id="basicinfo">
+       
+          <div class="formformat">
+              <input id="id" value="${(prodVo.id)!''}" type="hidden">
+              <input id="prodId" value="${(prodVo.prodId)!''}" type="hidden">
+              <input id="area" value="${(prodVo.areaId)!''}" type="hidden">
+              <input id="selectAreaId" type="hidden">
+              <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+            <label><span class="style1">*</span>产品名称：</label><input type="text" id="title" class="formoinputtext fl" name="productname" value="${(prodVo.name)!''}"/>
+            <span class="errortip producterrortip"></span>
+            <label><span class="style1">*</span>选择区域：</label><select class="formselect areaselect" name="selectarea"  id="selProvince"><option>请选择</option></select>
+            <select class="formselect areaselect" name="selectarea" id="selCity"><option>请选择</option></select>
+            <select class="formselect areaselect" name="selectarea" id="selectCountry"><option>请选择</option></select>
+            <span class="errortip areaerrortip"></span>
+          </div>
+          <div class="formformat">
+              <label>联系电话：</label><input type="text" class="formoinputtext fl" id="tel" value="${(prodVo.linkMobile)!''}"/>
+              <label>库存量：</label><input type="text" class="formoinputtext" id="stockNum" value="${(prodVo.freeNum)!''}"/>
+          </div>
+          <div class="formformat">
+            <label>商品价格：</label><input type="text" class="formoinputtext fl" id="price" value="${(prodVo.price)!''}"/>
+            <label>优惠价格：</label><input type="text" class="formoinputtext" id="preferentialPrice" value="${(prodVo.preferentialPrice)!''}"/>
+          </div>
+          <div class="formformat clear">
+         	<label class=" fl"><span class="style1">*</span>选择标签：</label>
+			<div class=" fl js_tagLable">
+				<#if tagsGroupVos?? && ( tagsGroupVos.size() > 0)> 
+          				<#list tagsGroupVos as tagsGroupVo>
+          					<div class="iteminfo clear">
+          					 	<span>${(tagsGroupVo.groupName)!''}：</span>
+								<#list tagsGroupVo.tagsDataVos as tag> 
+									<span class="markcheck">
+									<input type="checkbox" name="prodVo.tags" value="${(tag.tagsId)!''}"/>${(tag.tagsName)!''}</span> 
+								</#list>
+							</div>
+						</#list>
+				</#if>
+			</div>
+          		 <label for="mark" class="error"></label>
+   		 </div>
+          <div class="formformat">
+            <label>是否上架：</label><select class="formselect" id="status">
+              <#if prodVo.status??&&prodVo.status == 'open'>
+                <option value="">请选择</option>
+                <option value="open" selected="selected">是</option>
+                <option value="close">否</option>
+              <#elseif prodVo.status??&&prodVo.status == 'close'>
+                <option value="">请选择</option>
+                <option value="open">是</option>
+                <option value="close" selected="selected">否</option>
+              <#else>
+                <option value="" selected="selected">请选择</option>
+                <option value="open">是</option>
+                <option value="close">否</option>
+              </#if>
+            </select>
+          </div>
+         <div class="formformat">
+			<label>详细地址：</label><input type="text" id="address"
+				name="prodVo.address"  value="${(prodVo.address)!''}"
+				class="formoinputtext" /><input type="button" value="查询"
+				id="searchArea" class="comBtn btn-small btn-grey"
+				style="height: 35px;" />
+				
+		</div>
+
+		<div class="formformat clear">
+			<label class="fl"><span class="style1">*</span>地图坐标：</label>
+			<div class="mapbox fl">
+				<div class="map_zb">
+					经度: <input class="wd" type="text"
+						value="${(prodVo.longitude)!''}" id="lng"
+						name="prodVo.longitude" /> 纬度: <input class="jd" type="text"
+						value="${(prodVo.latitude)!''}" id="lat" name="prodVo.latitude" />
+						<span class="errortip js_errortip"></span>
+				</div>
+				<div id="custom_places" class="maps"></div>
+			</div>
+		</div>
+
+          <div class="formformat Ueditorbox  clear"><label class="fl">产品简介：</label><div class="ueditor" id="Ueditor" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">产品详情：</label><div class="ueditor" id="Ueditor2" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">费用说明：</label><div class="ueditor" id="Ueditor3" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">预订说明：</label><div class="ueditor" id="Ueditor4" type="text/plain" ></div></div>
+          <div class="formformat   clear">
+              <label class="fl" >上传图片：</label> 
+              <input type="hidden" value="${(prodVo.icon)!''}" class="js_viewIcon" />
+              <div class="picmaterialcon  docs-pictures fl js_pic" id="sortable">
+                  <#if picList?? && (picList?size > 0) >
+                      <#list picList as map>
+                          <div class="picinsert js_picinsert fl ui-state-default">
+                              <div class="Cancel js_Cancel"></div>
+                              <img data-original='${base}/images/img/emma-watson-1.jpg' src="${(config.WebArticleCdnUrl)!''}${map.url!''}" _src="${map.url!''}" picId="${map.picId!''}"/>
+                          </div>
+                      </#list>
+                  </#if>
+                <div class="picupload fl js_picupload"></div>
+              </div>
+            </div>
+
+      </div>
+      <!-- 产品规格 -->
+      <div class="editboxcon mb" id="nativeinfo">
+          <div id="nativebox-content">
+         	 <div class="routebox">
+   					<div class="routetable">
+   					  <table width="100%" border="0" cellspacing="0">
+   						<thead>
+   						  <tr class="title">
+                              <td width="20%">名称</td>
+	   						  <td width="20%">市场价</td>
+						      <td width="15%">优惠价</td>
+						      <td width="15%">库存</td>
+						      <td width="20%">图片</td>
+						      <td width="10%">操作</td>
+   						  </tr>
+   						</thead>
+   						<tbody id="prodPriceContent">
+	   						
+   						</tbody>
+   					  </table>
+   					</div>
+   					
+   					</div>
+          </div>
+          <div class="clear routeadd"><a class="addnewroute manaicon fr" href="javascript:void(0)">新增</a></div>
+      </div>
+      </form>
+    </div>
+  </div>
+    <div class="page">
+        <div class="editsubmit"><input type="button" value="保存" class="save btn-small comBtn " id="producteditsubmit"/>
+        <input type="button" value="取消" class="btn-small comBtn btn-grey" onclick="location.href='list.html'"/></div>
+    </div>
+  <!--选择图片弹窗-->
+  <div class="popup js_popUpuploadpic" id="uploadpic-save-content">
+     
+  </div>
+    <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+      <div class="popup_box popupheight3">
+          <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+          <div class="popupform">
+              <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+              <div class="picuploadbox" id="localupload">
+                  <div class="parentFileBox">
+                      <ul class="fileBoxUl" >
+                          <li class="diyUploadHover "><div id="uploadpic"></div></li>
+                      </ul>
+                  </div>
+                  <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+              </div>
+              <div class="picuploadbox clear" id="materialupload"  style="display:none">
+                  <form  action="" method="post" id="uploadmaterialform">
+
+                      <div class="materialbox clear" id="material-content">
+
+
+						</div>
+                      <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+    </script>
+    <script id="material-save" type="text/x-handlebars-template">
+		<div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+           					 <ul class="materiallist clear">
+               					 {{#if dataList}}
+              					  {{#each dataList}}
+             					   <li>
+                  					  <span class="materiapic"><img src="{{filePath}}"/></span>
+                  					  <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+              					  </li>
+               				 {{/each}}
+              				  {{else}}
+              				  <div>暂无数据</div>
+              				  {{/if}}
+           					 </ul>
+          					  <!--分页-->
+          					  <div class="js_pageDiv">
+                				<div class="pageDiv">&nbsp;</div>
+            				  </div>
+   </script>
+    <script id="prodPriceList" type="text/x-handlebars-template">
+        {{#each prodPriceVoList}}
+            <tr  class="prodPrice" id="{{id}}" >
+                <td><input type="text" class="routename js_name" style="width:70px; text-align: center;" value="{{param1Value}}"/></td>
+                <td><input type="text" class="routename js_marketPrice" style="width:70px; text-align: center;" value="{{price}}"/></td>
+                <td><input type="text" class="routename js_discountPrice" style="width:70px; text-align: center;" value="{{discountPrice}}"/></td>
+                <td><input type="text" class="routename js_freeNum" style="width:70px; text-align: center;" value="{{freeNum}}"/></td>
+                <td class="picset">
+					<div class="parentFileBox">
+                      	<ul class="fileBoxUl" >
+                            {{#if param2Value}}
+							<li class="diyUploadHover">
+                                <div class="viewThumb"><img src="${(config.WebArticleCdnUrl)!''}{{param2Value}}" /></div>
+								<div class="diyCancel js_diyCancel"></div>
+ 							</li>
+                            {{/if}}
+                          	<li class="hoteluploadpic"><div class="picid" id="picid{{id}}"></div></li>
+                      	</ul>
+                  	</div>
+				</td>
+                <td><a class="js_delete_row" dataId="{{id}}" href="javascript:;">删除</a></td>
+            </tr>
+        {{/each}}
+    </script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/hotel/edit','common/map','common/area'],function(head,nativeList,map,area){
+    head.init('module005001001');
+    var description = "${(prodExtVo.description)!''}";
+    var content = "${(prodExtVo.content)!''}";
+    var costExplain = "${(prodExtVo.costExplain)!''}";
+    var bookedExplain = "${(prodExtVo.bookedExplain)!''}";
+    var mapset = '${(mapset)!''}';
+    var tags = "${(prodVo.tags)!''}";
+    nativeList.init(description,content,costExplain,bookedExplain,tags);
+    map.init(mapset);
+    area.init();
+  });
+</script>

@@ -1,0 +1,95 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >  
+    <div class=" tablewrap pt ">
+    	<div class="searchpositon">
+		      <div class="search"> 
+		        <h3 class="manaicon search-head">查询</h3>
+		        <div class="search-bar">
+		        	<label>类型</label>
+		          	<select id="js_view_type">
+		          		<option value="">全部</option>
+		          		<option value="travel_agency" >旅行社</option>
+		          		<option value="complain_refer">投诉咨询</option>
+		            	<option value="comment">评论</option>
+                        <option value="resource_pic">图片</option>
+		            </select>
+		          	<label>是否审核</label>
+		          	<select id="js_status">
+		          		<option value="">全部</option>
+		          		<option value="create" >未审核</option>
+		          		<option value="nopass">未通过</option>
+		            	<option value="finish">已通过</option>
+		            </select>
+		          <input value="查询" class="comBtn btn-small" type="button" id="js_doSearch">
+		        </div>
+		      </div>
+      	</div>
+      	<div class="data_table datatableheight" >
+         	<h3 class="manaicon table-head">列表</h3>
+			<div class="tableBox" id="view-list-content">
+				&nbsp;
+			</div>	
+      	</div>
+      <!--<div class="data_table datatableheight">-->
+        <script id="view-list" type="text/x-handlebars-template">
+         <table style="width:100%" border="0" cellspacing="0" > 
+         <thead>
+           <tr class="title" > 
+             <td width="5%"><input type="checkbox" class="checkall js_check_all"></td>
+             <td width="15%">类型</td> 
+             <td width="20%">标题</td>
+             <td width="15%">状态</td>
+             <td width="15%">时间</td>
+             <td width="15%">被审核人</td>
+             <td width="15%">操作</td>
+          </tr> 
+         </thead>
+         <tbody id="sortable">
+		{{#if dataList}}
+         {{#each dataList}}
+          <tr class="ui-state-default" dIndex="{{@index}}" >
+              <td ><input type="checkbox" class="checkall js_check_all"></td>
+              <td >{{dataTypeStr}}</td>
+            <td >{{content}}</td>
+            <td  class="publishstadus">{{#equals status 'finish'}}已通过{{/equals}}{{#equals status 'create'}}<font color="red">未审核<font>{{/equals}}{{#equals status 'nopass'}}未通过{{/equals}}</td>
+              <td>{{formatDate createDate "default"}}</td>
+            <!--<td><img src="{{qrcode}}" style="width:60px;height:60px;margin:5px auto;"></td>-->
+            <td >{{userName}}</td>
+            <td class="operate">	<span class="edit_article">
+
+                <a href="edit.html?auditVo.id={{id}}&auditVo.dataType={{dataType}}&auditVo.dataId={{dataId}}" target="_blank">审核</a>|
+
+                <span class="del_minsu">
+                    <a  class="js_view_delete" dataId="{{id}}" viewId="{{viewId}}" href="javascript:;" >删除</a></span>
+            </td>
+          </tr>
+         {{/each}}
+		{{else}}
+				<tr>
+					<td colspan="9">暂无数据</td>
+				</tr>
+  		{{/if}}
+	
+         </tbody>
+        </table>
+      </div>
+        </script>
+      <!--分页-->
+      <div class="bottom">
+           <div class="tableoperate">
+           </div>
+	       <div class="js_pageDiv">&nbsp;</div>
+      </div>
+    </div>           
+  </div>
+ </body>
+<#include "/common/foot.html">      
+<script type="text/javascript">
+	require(['common/head','tool/audit/list'],function(head,auditList){
+		head.init('module006002003');
+		auditList.initAudit();
+	});
+</script>
+

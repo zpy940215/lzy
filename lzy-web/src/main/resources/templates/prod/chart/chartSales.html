@@ -1,0 +1,169 @@
+<#include "/common/head.html">
+<link type="image/x-icon" rel="shortcut icon" href="../../images/favicon.ico">
+<link href="../../css/base.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../../js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../../js/plugin/date/css/css.css"/>
+<link href="../../css/chart.css" rel="stylesheet" type="text/css">
+  <div class="Menu_bar">
+    <div class="logo"><a href="sitemana.html"><i>Teemax</i> Service Platform</a></div>
+    <div class="menulist">
+      <ul>
+        <li><a href="../../index/site/list.html">首页</a></li>
+        <li><a href="../../tourdata/scenicspot/list.html">旅游数据</a></li>
+        <li><a href="../../theme/article/list.html">资讯管理</a></li>
+        <li><a href="../../material/pic/list.html">素材库</a></li>
+        <li class="active"><a href="javascript:;">电商管理</a></li>
+        <li><a href="../../tool/site/list.html">工具</a></li>
+      </ul>
+    </div>
+    <div class="right_bar">
+      <div class="user"><a href="../../user/account/list.html">欢迎您，admin</a></div>
+      <div class="manaicon set-btn"></div>
+      <div class="manaicon link-btn"></div>
+    </div>
+    <div class="stylebox">
+      <span class="style-border">
+        <span class="style-borderbg"></span>
+      </span>
+      <p class="styleboxtit">风格颜色</p>
+      <div class="themebg"><span class="themestyle themestyle1"></span><span class="themestyle themestyle2"></span><span class="themestyle themestyle3"></span></div>
+    </div>
+  </div>
+  <!--左侧导航-->
+  <div class="leftcon">
+    <p class="sideBartit"><span class="manaicon product_icon"></span>产品管理</p>
+     <ul class="sideBar">
+        <li><a href="javascript:;">住宿产品</a></li>    
+        <li><a href="../route/list.html">线路产品</a></li> 
+        <li><a href="../ticket/list.html">门票产品</a></li>      
+     </ul>
+        <p class="sideBartit"><span class="manaicon specialty_icon"></span>特产管理</p>
+     <ul class="sideBar">
+        <li><a href="../specialty/list.html">特产产品</a></li>    
+        <li><a href="../specialtygenre/list.html">特产分类</a></li>      
+     </ul>
+        <p class="sideBartit"><span class="manaicon specialty_icon"></span>报表统计</p>
+     <ul class="sideBar">
+        <!--<li class="active"><a href="../chart/chartSales.html">订单销售报表</a></li>   
+        <li><a href="../chart/ticketSales.html">门票销售报表</a></li>    
+        <li><a href="../chart/chartDistributor.html">分销商统计</a></li> -->
+        <li class="active"><a href="../chart/chartSales.html">门票销售报表</a></li>    
+        <li><a href="../chart/ticketSales.html">门票销售汇总</a></li>      
+     </ul>
+     <p class="sideBartit"><a href="../order/list.html"><span class="manaicon order_icon"></span>订单管理</a></p>
+     <p class="sideBartit"><a href="../member/list.html"><span class="manaicon member_icon"></span>会员管理</a></p>
+  </div>
+  <!--右侧内容区-->
+  <div class="rightcon chartsales">
+  	<div class="bigBox">
+  	<div class="part1">
+  		<div class="wrap">
+  		<ul class="clear">
+  			<li>
+  				<div class="list bgcolor1">
+  					<div class="info clear">
+  						<div class="info_l">
+  							<p class="tit">今日订单量</p>
+  							<h3 class="num">50</h3>
+  							<p class="txt"><i class="icon fallIcon"></i>较昨日下降300</p>
+  						</div>
+  						<div class="info_r">
+  							<p class="tit">今日销售额</p>
+  							<h3 class="num">200</h3>
+  							<p class="txt"><i class="icon fallIcon"></i>较昨日下降300</p>
+  						</div>
+  					</div>
+  				</div>
+  			</li>
+  			<li>
+  				<div class="list bgcolor2">
+  					<div class="info clear">
+  						<div class="info_l">
+  							<p class="tit">本周订单量</p>
+  							<h3 class="num">50</h3>
+  							<p class="txt"><i class="icon fallIcon"></i>较昨日下降300</p>
+  						</div>
+  						<div class="info_r">
+  							<p class="tit">本周销售额</p>
+  							<h3 class="num">200</h3>
+  							<p class="txt"><i class="icon fallIcon"></i>较昨日下降300</p>
+  						</div>
+  					</div>
+  				</div>
+  			</li>
+  			<li>
+  				<div class="list bgcolor3">
+  					<div class="info clear">
+  						<div class="info_l">
+  							<p class="tit">本月订单量</p>
+  							<h3 class="num">50</h3>
+  							<p class="txt"><i class="icon fallIcon"></i>较昨日下降300</p>
+  						</div>
+  						<div class="info_r">
+  							<p class="tit">本月销售额</p>
+  							<h3 class="num">200</h3>
+  							<p class="txt"><i class="icon fallIcon"></i>较昨日下降300</p>
+  						</div>
+  					</div>
+  				</div>
+  			</li>
+  		</ul>
+  		</div>
+	  	<div class="filterBox">
+	  		<div class="filter"> 
+	        <h3 class="search-head">筛选维度<i class="arrowUp"></i></h3>
+	        <div class="barBox">
+		         <div class="search-bar">
+		          <label>产品类型</label>
+		          <span class="active">全部</span><span>门票</span><span>线路</span><span>商品</span>
+		        </div>
+		        <div class="search-bar js_dayselect">
+		          <label>选择时间</label>
+		          <span class="active datetype" datetype="typeDay">按日</span><span class="datetype" datetype="typeMonth">按月</span><span class="datetype m1" datetype="typeYear">按年</span>          
+		        	<div class="daybox js_day">
+			        	<input  class="datecheck js_start_Date" value=""  readonly type="text" placeholder="年/月/日"> 至
+			        	<input  class="datecheck js_end_Date" value=""  readonly type="text" placeholder="年/月/日">	
+		        	</div>	
+		        	<div class="monthbox js_month">
+			        	<input  class="datecheck js_start_Month" value=""  readonly type="text" placeholder="年/月"> 至
+			        	<input  class="datecheck js_end_Month" value=""  readonly type="text" placeholder="年/月">	
+		        	</div>			        	
+			        <div class="page-form js_year">
+			            <label>
+			                <input type="text" class="search-control control-input datecheck" data-toggle="jodate" data-show="year" placeholder="选择起始年份" id="dateYear" /> 至
+			            </label>
+			            <label>
+			                <input type="text" class="search-control control-input datecheck" data-toggle="jodate" data-show="year" placeholder="选择截止年份" id="dateYear" />
+			            </label>
+			        </div>
+		          <input value="查询" class="comBtn btn-small" type="button"> 
+		        </div>       	
+	        </div>
+	      </div>
+	  	</div>  		
+  	</div>
+  	<div class="part2">
+  		<div class="box">
+	  		<div class="tit clear">
+	  			<span class="active" typeattr="sales">订单量</span>
+	  			<span typeattr="salesAmount">销售额</span>
+	  			<i class="icon iconDownload"></i>
+	  		</div>
+	  		<div class="chartCon clear">
+	  			<div class="wrap1" id="chartSales_l" style="height: 100%;"></div>
+	  			<div class="wrap2" id="chartSales_r" style="height: 100%;"></div>
+	  		</div>
+  		</div>
+  	</div>
+  	</div>
+  </div>
+<#include "/common/foot.html"> 
+<script type="text/javascript">
+require(['prod/chart/chartSales'],function(chartSales){
+chartSales.init();
+});
+</script>
+
+<script type="text/javascript" src="../../js/lib/jquery-2.1.0.min.js"></script>
+<script src="../../js/plugin/jodate/jodate.js"></script>
+

@@ -1,0 +1,106 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+        <div class="search">
+            <h3 class="manaicon search-head">查询</h3>
+            <div class="search-bar">
+            <label>查询名称</label>
+            <input name="keywords" placeholder="请输入名称" type="text" class="search_input js_search_input"/>
+              <label>所属位置</label>
+              <select class="commtext js_selectType_search" name="search_selecttagtype">
+                  	<option value="">请选择</option>
+              </select>
+              <input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+            </div>
+        </div>
+    </div>
+     <div class="tablewrap tablewrapwidth pt" >
+         <div class="data_table datatableheight" >
+             <h3 class="manaicon table-head">列表<a class="addsceneryname btn-small comBtn js_add_tagtype" href="javascript:;">添加</a></h3>
+         	 <div class="tableBox" id="tagtype-list-content">
+         	 	
+			 </div>	
+         </div>
+     </div>
+      <!--分页-->
+      <div class="bottom js_pageDiv">
+	      <div class="pageDiv"></div>
+      </div>
+  </div>
+
+    <script id="tagtype-list" type="text/x-handlebars-template">
+        <table style="width:100%" border="0" cellspacing="0">
+            <thead>
+            <tr class="title">
+                <td width="20%">ID</td>
+                <td width="10%">标签组名称</td>
+                <td width="15%">所属位置</td>
+                <td width="25%">描述</td>
+				<td width="15%">创建时间</td>
+                <td width="15%">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if dataList}}
+            {{#each dataList}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{tagTypename}}</td>
+				<td>{{moduleName}}--{{childModuleName}}</td>
+				<td>{{description}}</td>
+                <td>{{formatDate createDate "default"}}</td>
+                <td class="operate">
+                    <span class="edit"><a href="javascript:;" class="js_edit_type" editId="{{id}}">编辑</a> |</span>
+                    <span class="del_data"><a href="javascript:void(0)" class="js_delete_row" deleteId="{{id}}">删除</a></span>
+                </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="5">暂无数据</td>
+            </tr>
+            {{/if}}
+            </tbody>
+        </table>
+    </script>
+  <!--添加/编辑位置弹窗-->
+<div class="popup js_popUpaddTagType" id="addTagType-save-content"> &nbsp; </div>
+<script id="addTagType-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight5 popupwidth4">
+      <div class="popup_bt">添加标签类型<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addtagtypeform" name="addtagtypeform" method="post" >
+            <p class="formfill"><label><span class="style1">*</span>类型名称：</label>
+			<input type="text" class="commtext js_tagtypename" value="{{tagTypename}}" name="tagtypename"></p>
+            <p class="formfill"><label><span class="style1">*</span>选择模块：</label>
+              <select class="commtext js_select_module">
+                  	<option value="" selected="selected">请选择</option>
+					{{#if moduleProjectVoList}}
+					{{#each moduleProjectVoList}}
+                  	<option value="{{moduleId}}">{{moduleAlias}}</option>
+					{{/each}}
+					{{/if}}
+              </select>
+          	 </p>
+			 <p class="formfill"><label><span class="style1">*</span>选择位置：</label>
+              <select class="commtext js_selectType" name="selecttagtype">
+                  	<option value="" selected="selected">请选择</option>
+              </select>
+          	 </p>
+			 <p class="formfill"><label>描述：</label>
+			 <input type="text" value="{{description}}" class="commtext js_description"></p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addtagtype"></div>
+        </form>
+      </div>
+    </div>
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/tag/type'],function(head,type){
+	head.init('module006007001');
+	type.init();
+  });
+</script>

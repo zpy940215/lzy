@@ -1,0 +1,235 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+    <div class="editbt">景区管理/<span class="style2">新增线路</span></div>
+    <div class="editbox ">
+      <div class="editboxbt ">
+        <span class="editboxbtline active" dataattr="basicinfo">基本信息</span>
+        <span class="editboxbtline" dataattr="attachedinfo">附属信息</span>
+        <span class="editboxbtline" dataattr="businessinfo">产品规格</span>
+        <span class="editboxbtline" dataattr="sceneryinfo">图片上传</span>
+      </div>
+      <form action="" >
+      <div class="editboxcon mb" id="basicinfo">
+          <input id="id" value="${(prodVo.id)!''}" type="hidden">
+          <input id="prodId" value="${(prodVo.prodId)!''}" type="hidden">
+          <input id="area" value="${(prodVo.areaId)!''}" type="hidden">
+          <input id="selectAreaId" type="hidden">
+          <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+          <div class="formformat">
+            <label><span class="style1">*</span>主标题：</label><input type="text" class="formoinputtext" id="title" value="${(prodVo.name)!''}" name="maintitle"/>
+            <span class="errortip js_errortip"> &nbsp; </span>
+          </div>
+          <div class="formformat">
+            <label>副标题：</label><input type="text" class="formoinputtext" id="subTitle" value="${(prodVo.subTitle)!''}"/>
+          </div>
+          <div class="formformat">
+              <label><span class="style1">*</span>选择区域：</label>
+              <select id="selProvince" class="formselect areaselect"><option>省</option></select>
+              <select id="selCity" class="formselect areaselect"><option>市</option></select>
+              <select id="selectCountry" class="formselect areaselect"><option>区</option></select>
+          </div>
+          <div class="formformat clear">
+         	<label class=" fl">选择标签：</label>
+			<div class=" fl js_tagLable">
+          		<#if tagsGroupVos?? && ( tagsGroupVos.size() > 0)> 
+          				<#list tagsGroupVos as tagsGroupVo>
+          					<div class="iteminfo clear">
+          					 	<span>${(tagsGroupVo.groupName)!''}：</span>
+								<#list tagsGroupVo.tagsDataVos as tag> 
+									<span class="markcheck">
+									<input type="checkbox" name="prodVo.tags" value="${(tag.tagsId)!''}"/>${(tag.tagsName)!''}</span> 
+								</#list>
+							</div>
+						</#list>
+				</#if>
+			</div>
+          		 <label for="mark" class="error"></label>
+   		 </div>
+          <div class="formformat clear">
+            <label class="fl marktitle">是否上架：</label>
+            <div class="markbox fl">
+              <span class="markcheck"><input type="radio" <#if prodVo.status??&&prodVo.status == 'open'> checked </#if> name="onsale" value="open"/>上架</span>
+              <span class="markcheck"><input type="radio" <#if prodVo.status??&&prodVo.status == 'close'> checked </#if> name="onsale" value="close"/>下架</span>
+            </div>
+          </div>
+          <div class="formformat Ueditorbox  clear"><label class="fl">产品简介：</label><div class="ueditor" id="Ueditor" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">产品详情：</label><div class="ueditor" id="Ueditor2" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">费用说明：</label><div class="ueditor" id="Ueditor3" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">预订说明：</label><div class="ueditor" id="Ueditor4" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">其他内容：</label><div class="ueditor" id="Ueditor5" type="text/plain" ></div></div>
+      </div>
+      <!--附属信息-->
+      <div class="editboxcon" id="attachedinfo">
+          <div class="formformat">
+            <label>推荐旅行社：</label><input type="text" class="formoinputtext" id="travelAgency" value="${(paramVal)!''}"/>
+          </div>
+          <div class="formformat">
+            <label>集合地：</label><input type="text" class="formoinputtext" id="getherPlace" value="${(paramVal)!''}"/>
+          </div>
+          <div class="formformat">
+            <label>交通工具：</label><select class="formselectn js_formselectn"><option>请选择</option><option>飞机</option><option>火车</option><option>轮船</option><option>汽车</option><option>自行车</option></select>
+          </div>
+          <div class="formformat">
+            <label>报名电话：</label><input type="text" class="formoinputtext" id="mobile" value="${(paramVal)!''}"/>
+          </div>
+          <div class="formformat">
+            <label>目的地：</label><input type="text" class="formoinputtext" id="address" value="${(paramVal)!''}"/>
+          </div>
+
+      </div>
+      <!--行程管理-->
+      <div class="editboxcon mb" id="businessinfo">
+          <div id="routebox-content"></div>
+          <div class="clear routeadd"><a class="addnewroute manaicon fr" href="javascript:void(0)">新增</a></div>
+      </div>
+      <script id="routeBoxList" type="text/x-handlebars-template">
+          {{#each prodLinePriceVoList}}
+          <div class="routebox" id="{{id}}">
+          <div class="formformat cheduletime"><label>行程时间：</label>
+              <input  class="formoinputtext startDate js_startDate" value="{{formatDate startDate}}"  readonly  type="text" placeholder="年/月/日"/>
+              <input  class="formoinputtext endDate js_endDate" value="{{formatDate endDate}}" readonly type="text" placeholder="年/月/日"/></div>
+          <div class="formformat buytime"><label>购买时间：</label>
+              <input  class="formoinputtext startDate js_buyStartDate" value="{{formatDate buyStartDate}}" readonly type="text" placeholder="年/月/日"/>
+              <input  class="formoinputtext endDate js_buyEndDate" value="{{formatDate buyEndDate}}"  readonly type="text" placeholder="年/月/日"/></div>
+          <div class="formformat">
+              <p class="routetabletitle"><label>价格库存：</label>（说明：套票模式成人以及儿童最少最多人数需保持一致；合计价格为销售价格）</p>
+              <div class="routetable">
+                  <table width="100%" border="0" cellspacing="0">
+                      <thead>
+                      <tr class="title">
+                          <td width="14%">名称</td>
+                          <td width="30%">人数限制</td>
+                          <td width="30%">单价/元</td>
+                          <td width="13%">合计价格</td>
+                          <td width="13%">库存</td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                          <td><input type="text" class="routename" value="{{name}}"></td>
+                          <td>
+                              <p>成人：<select class="peoselect minpeonum"><option value="">最少成人数</option><option {{#equals personMinNum 0}}selected{{/equals}} >0</option><option {{#equals personMinNum 1}}selected{{/equals}}>1</option><option {{#equals personMinNum 2}}selected{{/equals}}>2</option><option {{#equals personMinNum 3}}selected{{/equals}}>3</option><option {{#equals personMinNum 4}}select{{/equals}}>4</option><option {{#equals personMinNum 5}}selected{{/equals}}>5</option></select>&nbsp&nbsp&nbsp
+                                  <select class="peoselect maxpeonum"><option value="">最多成人数</option><option {{#equals personMaxNum 0}}selected{{/equals}}>0</option><option {{#equals personMaxNum 1}}selected{{/equals}}>1</option><option {{#equals personMaxNum 2}}selected{{/equals}}>2</option><option {{#equals personMaxNum 3}}selected{{/equals}}>3</option><option {{#equals personMaxNum 4}}selected{{/equals}}>4</option><option {{#equals personMaxNum 5}}selected{{/equals}}>5</option></select>
+                              </p>
+                              <p>儿童：<select class="peoselect minChildrennum"><option value="">最少儿童数</option><option {{#equals childMinNum 0}}selected{{/equals}}>0</option><option {{#equals childMinNum 1}}selected{{/equals}}>1</option><option {{#equals childMinNum 2}}selected{{/equals}}>2</option><option {{#equals childMinNum 3}}selected{{/equals}}>3</option><option {{#equals childMinNum 4}}selected{{/equals}}>4</option><option {{#equals childMinNum 5}}selected{{/equals}}>5</option></select>&nbsp&nbsp&nbsp
+                                  <select class="peoselect maxChildnum"><option value="">最多儿童数</option><option {{#equals childMaxNum 0}}selected{{/equals}}>0</option><option {{#equals childMaxNum 1}}selected{{/equals}}>1</option><option {{#equals childMaxNum 2}}selected{{/equals}}>2</option><option {{#equals childMaxNum 3}}selected{{/equals}}>3</option><option {{#equals childMaxNum 4}}selected{{/equals}}>4</option><option {{#equals childMaxNum 5}}selected{{/equals}}>5</option></select>
+                              </p>
+                          </td>
+                          <td>
+                              <p>成人：
+                                  <input type="text" placeholder="原价" class="pricetext historypeoPrice" value="{{oldPersonPrice}}">
+                                  <input type="text" placeholder="现价" class="pricetext currentpeoPrice" value="{{personPrice}}"/>
+                              </p>
+                              <p>儿童：
+                                  <input type="text" placeholder="原价" class="pricetext historychildPrice" value="{{oldChildPrice}}">
+                                  <input type="text" placeholder="现价" class="pricetext currentchildPrice" value="{{childPrice}}"/>
+                              </p>
+                          </td>
+                          <td><input type="text" class="stockinput totalprice" value="{{totalNum}}"/></td>
+                          <td><input type="text" class="stockinput stocknum" value="{{freeNum}}"/></td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div class="clear routeadd"><a class="delroute fr js_delLinePrice" href="javascript:void(0)" dataId="{{id}}">删除</a></div>
+          </div>
+          {{/each}}
+      </script>
+      <!--图片上传-->
+      <div class="editboxcon scenerypicbox" id="sceneryinfo">
+      <input type="hidden" value="${(prodVo.icon)!''}" class="js_viewIcon" />
+          <div class="formformat  picmaterialcon docs-pictures clear js_pic" id="sortable">
+            <#if picList?? && (picList?size > 0) >
+              <#list picList as map>
+                <div class="picinsert fl ui-state-default">
+                  <div class="Cancel js_Cancel"></div>
+                  <img data-original='${base}/images/img/emma-watson-1.jpg' src="${(config.WebArticleCdnUrl)!''}${map.url!''}" _src="${map.url!''}" picId="${map.picId!''}"/>
+                </div>
+              </#list>
+            </#if>
+            <div class="picupload fl js_picupload"></div>
+          </div>
+      </div>
+       </form>
+    </div>
+      <div class="page">
+        <div class="editsubmit"><input type="button" value="保存" class="save btn-small comBtn js_infosubmit"/><input type="button" value="返回" class="btn-small comBtn btn-grey"/></div>
+      </div>
+  </div>
+  
+  <!--选择图片弹窗-->
+  <div class="popup js_popUpuploadpic" id="uploadpic-save-content">
+  </div>
+  <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+      <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+        <div class="picuploadbox" id="localupload">
+          <div class="parentFileBox">
+            <ul class="fileBoxUl" >
+              <li class="diyUploadHover "><div id="uploadpic"></div></li>
+            </ul>
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+        </div>
+        <div class="picuploadbox clear" id="materialupload"  style="display:none">
+          <form  action="" method="post" id="uploadmaterialform">
+
+            <div class="materialbox clear" id="material-content">
+
+
+            </div>
+            <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </script>
+  <script id="material-save" type="text/x-handlebars-template">
+    <div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+    <ul class="materiallist clear">
+      {{#if dataList}}
+      {{#each dataList}}
+      <li>
+        <span class="materiapic"><img src="{{filePath}}"/></span>
+        <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+      </li>
+      {{/each}}
+      {{else}}
+      <div>暂无数据</div>
+      {{/if}}
+    </ul>
+    <!--分页-->
+    <div class="js_pageDiv">
+      <div class="pageDiv">&nbsp;</div>
+    </div>
+  </script>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/route/edit','common/area'],function(head,routeEdit,area){
+	head.init('module005001002');
+    var description = "${(prodExtVo.description)!''}";
+    var content = "${(prodExtVo.content)!''}";
+    var costExplain = "${(prodExtVo.costExplain)!''}";
+    var bookedExplain = "${(prodExtVo.bookedExplain)!''}";
+    var othersExplain = "${(prodExtVo.othersExplain)!''}";
+    var param = '${(prodExtVo.paramVal)!""}';
+    var tags = "${(prodVo.tags)!''}";
+	routeEdit.init(description,content,costExplain,bookedExplain,othersExplain,param,tags);
+	area.init();
+  });
+</script>       
+

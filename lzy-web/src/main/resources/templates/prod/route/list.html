@@ -1,0 +1,151 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+	  <div class=" tablewrap pt ">
+	    <div class="search searchpositon"> 
+		   <h3 class="manaicon search-head">查询</h3>
+		   <div class="search-bar">
+               <input id="selectAreaId" type="hidden">
+               <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+               <label>选择区域</label><select id="selProvince"><option>省</option></select><select id="selCity"><option>市</option></select><select id="selectCountry"><option>区</option></select>
+               <label>上架状态</label><select id="showStatus"><option value="">请选择</option><option value="open">上架</option><option value="close">下架</option></select>
+               <label>查询条件</label><input name="keywords" placeholder="请输入名称" type="text" class="search_input js_search_input"/>
+               <input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+		   </div>
+	     </div>
+		  <div class="data_table datatableheight">
+		  	<h3 class="manaicon table-head">列表<a class="addroute btn-small comBtn fr" href="edit.html" target="blank">新增</a></h3>
+	  		<div class="tableBox"  id="prod-list-content">
+	  			
+	  		</div>
+		  </div>
+	  </div>
+	  <script id="prod-list" type="text/x-handlebars-template">
+		  <table style="width:100%" border="0" cellspacing="0">
+			  <thead>
+			  <tr class="title">
+				  <td width="10%"><input type="checkbox" class="js_check_all"/></td>
+				  <td width="20%">线路名称</td>
+				  <td width="20%">区域</td>
+				  <td width="15%">行程产品</td>
+				  <td width="10%">参与人数</td>
+				  <td width="10%">状态</td>
+				  <td width="15%">操作</td>
+			  </tr>
+			  </thead>
+			  <tbody id="sortable">
+			  {{#if dataList}}
+                    {{#each dataList}}
+                        <tr class="ui-state-default" dataId="{{id}}">
+                            <td><input type="checkbox" class="checkbox js_check_row"/></td>
+                            <td>{{name}}</td>
+                            <td>{{areaName}}</td>
+                            <td><span class="style1"></span></td>
+                            <td>{{jionNum}}</td>
+                            <td class="onsalestadus"><span class="style1">{{#equals status 'open'}}上架{{/equals}}{{#equals status 'close'}}下架{{/equals}}</span></td>
+                            <td class="operate">
+					        <span>{{#equals status 'open'}}<a href="javascript:void(0)" class="js_off_sale" dataId="{{id}}">下架{{/equals}}</a>
+							{{#equals status 'close'}}<a href="javascript:void(0)" class="js_on_sale" dataId="{{id}}">上架{{/equals}}</a> |</span>
+                            <span class="edit_article"><a href="edit.html?prodVo.id={{id}}" target="_blank">编辑</a>
+					        |</span><span class="del_article"><a href="javascript:void(0)" class="js_delete_row" dataId="{{id}}">删除</a>
+					        |</span><span ><a class="addroute js_route_add" href="javascript:void(0)" dataId="{{id}}">新增行程</a></span>
+                            </td>
+                        </tr>
+                    {{/each}}
+              {{else}}
+                    <tr>
+                        <td colspan="5">暂无数据</td>
+                    </tr>
+			  {{/if}}
+            </tbody>
+		  </table>
+	  </script>
+	  <!--分页-->
+	  <div class="bottom">
+          <div class="tableoperate">
+              <input type="button" value="删除" class="btn-small comBtn js_delBtn" id="banchdeleterow">
+              <input type="button" value="排序上升" class="btn-big comBtn js_sort_Up"/>
+              <input type="button" value="排序下降" class="btn-big comBtn js_sort_Down"/>
+              <input type="button" value="保存排序" class="btn-big comBtn savesort js_saveSort">
+          </div>
+		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+  </div>
+  <!--新增行程弹窗-->
+<div class="popup js_popUprouteadd" id="routeadd-save-content"> &nbsp; </div>
+<script id="routeadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight2 popupwidth2">
+      <div class="popup_bt">新增行程-杭州七日游<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform editboxcon">
+        <form action="" >
+          <div class="formformat"><label>行程时间：</label>
+              <input  id="startDate" class="formoinputtext startDate" value=""  readonly  type="text" placeholder="年/月/日"/>
+              <input  id="endDate" class="formoinputtext startDate" readonly type="text" placeholder="年/月/日"/>
+          </div>
+          <div class="formformat"><label>购买时间：</label>
+              <input id="buyStartDate" class="formoinputtext startDate" value="" readonly type="text" placeholder="年/月/日"/>
+              <input id="buyEndDate" class="formoinputtext startDate" value=""  readonly type="text" placeholder="年/月/日"/>
+          </div>
+          <div class="formformat">
+            <p class="routetabletitle"><label>价格库存：</label>（说明：套票模式成人以及儿童最少最多人数需保持一致；合计价格为销售价格）</p>
+            <div class="routetable">
+              <table width="100%" border="0" cellspacing="0">
+                <thead>
+                  <tr class="title">
+                    <td width="14%">名称</td>
+                    <td width="30%">人数限制</td>
+                    <td width="30%">单价/元</td>
+                    <td width="13%">合计价格</td>
+                    <td width="13%">库存</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr >
+                    <td><input type="text" class="routename" id="name"></td>
+                    <td>
+                        <p>成人：
+                            <select class="peoselect" id="personMinNum"><option value="">最少成人数</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>&nbsp&nbsp&nbsp
+                            <select class="peoselect" id="personMaxNum"><option value="">最多成人数</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+                        </p>
+
+                        <p>儿童：
+                            <select class="peoselect" id="childMinNum"><option value="">最少儿童数</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>&nbsp&nbsp&nbsp
+                            <select class="peoselect" id="childMaxNum"><option value="">最多儿童数</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+                        </p>
+                    </td>
+                    <td>
+                      <p>成人：
+                          <input type="text" placeholder="原价" class="pricetext" id="oldPersonPrice">
+                          <input type="text" placeholder="现价" class="pricetext" id="personPrice">
+                      </p>
+                      <p>儿童：
+                          <input type="text" placeholder="原价" class="pricetext" id="oldChildPrice">
+                          <input type="text" placeholder="现价" class="pricetext" id="childPrice">
+                      </p>
+                    </td>
+                    <td><input type="text" class="stockinput" id="totalNum"></td>
+                    <td><input type="text" class="stockinput" id="freeNum"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="genresubmit"></div>
+        </form>
+      </div>
+    </div>
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/route/list','common/area'],function(head,routeList,area){
+	head.init('module005001002');
+	routeList.init();
+    area.init();
+  });
+</script>
+

@@ -1,0 +1,182 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search"> 
+			   <h3 class="manaicon search-head">查询</h3>
+			   <div class="search-bar">
+			   <!--<label>会员来源</label><select><option>请选择</option><option>APP</option><option>PC</option></select>-->
+			      <label></label>
+			      <input name="keywords" placeholder="请输入账号"  type="text" class="search_input js_search_input"/>
+			      <input name="keywords" placeholder="请输入真实姓名"  type="text" class="search_input js_realName"/>
+				   <label class="fl">查询条件：</label>
+				   <div class="fl">
+					   <input class="search_input js_dept_select" value="" type="text" placeholder="请输入部门">
+					   <input class="search_input js_positionId_select" value="" type="text" placeholder="请输入职位">
+				   </div>
+			      <input value="搜索" class="comBtn btn-small searchbtn js_search" type="button"/>
+			   </div>
+			</div>
+	    </div>
+        <div class=" tablewrap tablewrapwidth pt" >
+	        <div class="data_table datatableheight" id="member-list-content">
+	         	<h3 class="manaicon table-head" >列表
+	         		<a class="addgenre btn-big comBtn fr js_deptUser_add" href="javascript:void(0)">添加员工</a>
+	         		<a class="addgenre btn-big comBtn fr js_exportDeptExcel" href="javascript:void(0)">导出Excel</a>
+	         		<a class="addgenre btn-big comBtn fr js_importDeptExcel" href="javascript:void(0)">导入Excel</a>
+	         		<a class="addgenre btn-big comBtn fr" href="${config.WebUrl}appfile/ExcleTemplate/deptposition.xls">下载Excel模板</a>
+	         	</h3>
+	         	<div class="tableBox">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+				         <thead>
+					           <tr class="title">
+								   <td width="5%"><input type="checkbox" class="checkall js_check_all"/></td>
+								  
+								   <td width="7%">头像</td>
+								   <td width="7%">登录账号</td>
+								   <td width="7%">真实姓名</td>
+								   <td width="7%">昵称</td>
+								   <td width="7%">性别</td>
+								   <td width="10%">联系电话</td>
+								   <td width="10%">所属部门</td>
+								   <td width="10%">所属职位</td>
+								   <td width="8%">状态</td>
+								   <td width="12%">操作</td>
+					          </tr> 
+				         </thead>
+				         <tbody id="user-list-content">
+				         </tbody>
+			        </table>
+		        </div>
+	        </div> 
+        </div>
+	  <!--分页-->
+	  <div class="bottom">
+		  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn banchdel js_banch_delete" id="banchdeleterow"/></div>
+		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+	  <input type="radio" name="xingbie"> 男
+	  <input type="radio" name="xingbie"> 女
+  </div>
+  
+<div class="popup js_deptUseadd" id="deptUseradd-save-content"> &nbsp; </div>
+<div class="popup js_question_import" id="importQuestion">&nbsp;  </div>
+<script id="addquestion-import" type="text/x-handlebars-template">
+		  <div class="popup_bg"></div>
+		    <div class="popup_box questionbox" style="width:400px;height:250px;margin-top:-100px;margin-left:-85px;">
+		      <div class="popup_bt"><span>导入Excel</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+		      <div class="popupform">
+		        <form id="upfileform" name="upfileform" method="post" enctype="multipart/form-data"style="
+    text-align:  center;
+    margin-top: 65px;
+">
+					<input type="file"  id="upfile" name="file"style="padding-left: 80px;">
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"><input type="button" value="导入" class="save formbtn" id="importRloe"></div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+</script>
+
+<script id="user-list" type="text/x-handlebars-template">
+		{{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			<td><input type="checkbox" class="checkbox js_check_row"/></td>
+			
+			<td>
+				<div class="pro_pic fl">
+					<img src="${(config.WebArticleCdnUrl)!''}/{{icon}}"/>
+				</div>
+			</td>
+			<td>{{account}}</td>
+			<td>{{realName}}</td>
+			<td>{{nick}}</td>
+			<td>{{#equals sex 'male'}}男{{/equals}}{{#equals sex 'female'}}女{{/equals}}</td>
+			<td>{{mobile}}</td>
+			<td>{{deptVo.name}}</td>
+			<td>{{deptPositionVo.name}}</td>
+			<td>{{#equals status 'open'}}正常{{/equals}}{{#equals status 'disable'}}禁用{{/equals}}{{#equals status 'create'}}创建{{/equals}}</td>
+			<td class="operate">
+						<span>{{#equals status 'open'}}<a href="javascript:void(0)" class="js_change_status" dataId="{{id}}" status="disable">禁用{{/equals}}</a>
+						{{#equals status 'disable'}}<a href="javascript:void(0)" class="js_change_status" dataId="{{id}}" status="open">启用{{/equals}}</a>
+						{{#equals status 'create'}}<a href="javascript:void(0)" class="js_change_status" dataId="{{id}}" status="open">启用{{/equals}}</a> |</span>
+				<span class="js_del"><a href="javascript:void(0)" class="js_delete_row" dataId="{{id}}">删除</a>
+						|</span>
+				<span><a href="javascript:void(0)" class="js_updata" uid="{{uid}}">编辑</a>
+						|</span>
+				<span><a href="javascript:void(0)" class="js_reset_pwd" uid="{{uid}}">重置密码</a>
+						</span>
+
+			</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="5">暂无数据</td>
+		</tr>
+		{{/if}}
+</script>
+<script id="dept-list" type="text/x-handlebars-template">
+	 <div class="popup_bg"></div>
+     <div class="popup_box popupheight1" style="height:550px">
+			<input type="hidden" value="{{userVo.id}}" id="userId">
+      		<div class="popup_bt">{{popUp.titleName}}<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      		<div class="popupform">
+        	<form action="" method="post" >
+			<p class="formfill">
+				登录账号：<input type="text" placeholder="输入账号" class="commtext" id="username" value="{{userVo.account}}"><span class="errortip js_errortip"></span>
+			</p>
+			<p class="formfill">
+				真实姓名：<input type="text" placeholder="输入真实姓名" class="commtext" id="realName" value="{{userVo.realName}}"><span class="errortip js_errortip"></span>
+			</p>
+			<p class="formfill">
+				用户昵称：<input type="text" placeholder="输入用户昵称" class="commtext" id="usernick" value="{{userVo.nick}}"><span class="errortip js_errortip"></span>
+			</p>
+			<p class="formfill">
+				
+				性别: <input type="radio" name="xingbie" value="male" id="sex" {{#equals userVo.sex 'male'}}checked{{/equals}}>男
+	  			<input type="radio" name="xingbie" value="female" id="sex" {{#equals userVo.sex 'male'}}{{else}}checked{{/equals}}> 女<span class="errortip js_errortip"></span>
+			</p>
+			<p class="formfill">
+				联系电话：<input type="text" placeholder="输入联系电话" class="commtext" id="mobile" value="{{userVo.mobile}}"><span class="errortip js_errortip"></span>
+			</p>
+          	<p class="formfill"><label><span class="style1">*</span>所属部门：</label>
+              <select class="commtext js_positiontext" name="prevgenre">
+                  {{#each deptList}}
+						{{#equals deptId ../userVo.deptId}}
+						<option value="{{deptId}}" class="lvl_{{lvl}}" selected="selected">{{name}}</option>
+						{{else}}                        
+						<option value="{{deptId}}" class="lvl_{{lvl}}">{{name}}</option>
+						{{/equals}}
+                  {{/each}}
+              </select>
+            <span class="errortip"></span>
+          </p>
+		<p class="formfill"><label><span class="style1">*</span>职位名称：</label>
+              <select class="commtext js_depttext" name="prevgenre">
+                  {{#each deptPositionList}}
+						{{#equals positionId ../userVo.positionId}}
+                        <option value="{{positionId}}" selected="selected">{{name}}</option>
+						{{else}}  
+						<option value="{{positionId}}">{{name}}</option>
+						{{/equals}}
+                  {{/each}}
+              </select>
+            <span class="errortip"></span>
+          </p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_positionSubmit" ></div>
+        </form>
+      </div>
+    </div>
+</script>
+         
+  <#include "/common/foot.html">                              
+	<script type="text/javascript">
+		require(['common/head','prod/member/deptUser'],function(head,memberList){
+			head.init('module005004005');
+			memberList.init();
+		  });
+	</script>

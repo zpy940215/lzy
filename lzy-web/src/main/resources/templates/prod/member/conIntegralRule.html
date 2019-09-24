@@ -1,0 +1,53 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" type="text/css" href="${base}/css/rule.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="editbt">
+        <span class="js_editbt"></span>/
+            <span class="style2">编辑<span class="js_editbt"></span></span>
+    </div>
+    <div class="editbox mt2">
+      <div class="editboxbt ">
+        <span class="editboxbtline active " dataattr="basicinfo">积分规则</span>
+        <!-- <span class="editboxbtline" dataattr="nativeinfo">产品规格</span> -->
+      </div>
+      <form action="" >
+      <div class="editboxcon mb" id="basicinfo">
+       
+       <div class="formformat clear">
+		<div>
+			<span>* </span>每消费<input type="text" id="consumeNum" value="${(conIntegralRule.consumeNum)!''}">元可以获得
+			<input type="text" id="consumeScore" value="${(conIntegralRule.consumeScore)!''}">分
+		</div>
+
+		<div>
+			<span>* </span><input type="text" id="sourceNumber" value="${(conIntegralRule.sourceNumber)!''}">积分
+			可以抵<input type="text" id="sourceMoney" value="${(conIntegralRule.sourceMoney)!''}">元
+		</div>
+    </div> 
+    
+     
+
+      </div>
+      </form>
+    </div>
+  </div>
+    <div class="page">
+        <div class="editsubmit"><input type="button" value="保存" class="save btn-small comBtn " id="ruleeditsubmit"/><input type="button" value="取消" class="btn-small comBtn btn-grey"/></div>
+    </div>
+
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/member/conIntegralRule','common/area'],function(head,conIntegralRule){
+	head.init('module005004006');
+	conIntegralRule.init();
+  });
+</script>

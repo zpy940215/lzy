@@ -1,0 +1,29 @@
+<#include "/common/head.html">
+
+<link href="${base}/css/tool.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" style="padding:70px 20px 10px 175px;">
+    <div class="modleItem">
+      <input type="button" value="保存" class="comBtn btn-big fr websave">
+      <div class="cfgBar">
+          <h3 class="cfgweb-tit">首页</h3>
+          <div class="cfgweb">
+            <p class="allpage">全部页面</p>
+            <p class="border-btm">基础页面</p>
+            <span class="active">首页</span>
+            <span>站点管理</span>
+            <span>模块管理</span>
+            <span>用户管理</span>
+            <span>门票产品</span>
+          </div>
+      </div>
+      <div id="Ueditor" type="text/plain" ></div>
+    </div>      
+  </div>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/site/layout'],function(head,layoutList){
+	head.init('module006001003');
+	layoutList.init();
+  });
+</script>  

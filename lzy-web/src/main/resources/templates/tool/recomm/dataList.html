@@ -1,0 +1,170 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+        <div class="search">
+            <h3 class="manaicon search-head">查询</h3>
+            <div class="search-bar">
+              <label>标题名称</label><input name="keywords" placeholder="请输入名称" type="text" class="search_input js_search_input"/>
+              <label>位置</label>
+              <select class="js_position">
+              	<option value = "">请选择</option>
+              	<#if positionVos??>
+              		<#list positionVos as positionVo>
+              			<option value = "${(positionVo.id) !''}">${(positionVo.name) !''}</option>
+              		</#list>
+              	</#if>
+              </select>
+              <input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+            </div>
+        </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+      	<div class="data_table datatableheight" > 
+            <h3 class="manaicon table-head">列表<a class="addsceneryname  btn-small comBtn js_add_data" href="javascript:;" >添加</a></h3>
+			<div class="tableBox" id="positionData-list-content">
+				
+			</div>	
+		</div>
+    </div>
+    <!--分页-->
+    <div class="bottom js_pageDiv">
+      <div class="pageDiv"></div>
+    </div>
+  </div>
+    <script id="positionData-list" type="text/x-handlebars-template">
+        <table style="width:100%" border="0" cellspacing="0">
+            <thead>
+            <tr class="title">
+                <td width="20%">标题名称</td>
+                <td width="10%">位置</td>
+				<td width="5%">排序</td>
+                <td width="15%">描述内容</td>
+                <td width="20%">链接地址</td>
+                <td width="15%">更新时间</td>
+                <td width="15%">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if dataList}}
+            {{#each dataList}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{positionVo.name}}</td>
+				<td><input type="text" class="js_pos" dataId={{id}} value="{{pos}}"></td>
+                <td>{{content}}</td>
+                <td>{{url}}</td>
+                <td>{{formatDate modifyDate "default"}}</td>
+                <td class="operate">
+                    <span class="edit"><a href="javascript:;" class="js_edit_location" editId="{{id}}" positionId="{{positionId}}" dataType="{{dataType}}" name="{{name}}">编辑</a> |</span>
+                    <span class="del_data"><a href="javascript:void(0)" class="js_delete_row" deleteId="{{id}}" positionId="{{positionId}}" dataType="{{dataType}}" name="{{name}}">删除</a></span>
+                </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="5">暂无数据</td>
+            </tr>
+            {{/if}}
+            </tbody>
+        </table>
+    </script>
+<!--&lt;!&ndash;编辑备注弹窗&ndash;&gt;-->
+<!--<div class="popup js_popUpeditremark" id="editremark-save-content"> &nbsp; </div>-->
+<!--<script id="editremark-save" type="text/x-handlebars-template">-->
+    <!--<div class="popup_bg"></div>-->
+    <!--<div class="popup_box popupheight1">-->
+      <!--<div class="popup_bt">查看备注<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>-->
+      <!--<div class="popupform">-->
+        <!--<form id="addsiteform" name="addsiteform" method="post" >-->
+          <!--<p class="formfill"><label>古丽仙：</label><span class="question">温州导游证..？.</span></p>-->
+          <!--<p class="formfill clear"><label class="fl">备注内容：</label><textarea class="wordsarea"></textarea></p>-->
+          <!---->
+          <!--<div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit"/></div>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+<!--</script>-->
+  <!--添加数据弹窗-->
+<div class="popup js_popUpadddata" id="adddata-save-content"> &nbsp; </div>
+<script id="adddata-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight2">
+      <div class="popup_bt">添加数据<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form  method="post" >
+          <p class="formfill">
+              <!--<input id="id" type="hidden" value="{{id}}">-->
+              <!--<input id="positionId" type="hidden" value="{{positionId}}">-->
+              <label><span class="style1">*</span>标题名称：</label>
+              {{#if positionDataVoList}}
+                  {{#each positionDataVoList}}
+                      {{#if @first}}
+                          <input  type="text" class="commtext w600 js_titlename" name="titlename" value="{{name}}"/>
+                      {{/if}}
+                  {{/each}}
+              {{else}}
+                  <input  type="text" class="commtext w600 js_titlename" name="titlename"/>
+              {{/if}}
+          </p>
+          <p class="formfill">
+          	<label><span class="style1">*</span>选择站点：</label>
+             <select class="commtext" id="site" name="selectsite">
+                 <option value="">请选择</option>
+              </select>
+              <label><span class="style1">*</span>选择位置：</label>
+              <select class="commtext" id="position" name="selectoption">
+                  <option value="">请选择</option>
+              </select>
+          </p>
+         
+            <div class="formfill  clear">
+                <label class="fl" style="height:100px">上传图片：</label>
+                <!--图片-->
+                <div class="parentFileBox fl" >
+				<div class="typeCheck js_typeCheck">
+					<span><input type="radio" dataid="zdy" name="typecheck" checked>自定义</span>
+					<span><input type="radio" dataid="article" name="typecheck">选择文章</span>
+				</div>
+                  <ul class="fileBoxUl" id="datapicsortable">
+
+                      {{#each positionDataVoList}}
+                          {{#if icon}}
+                                <li  class="diyUploadHover  ui-state-default js_pic_List" dIndex="{{@index}}">
+                                    <input type="hidden" value="{{id}}" class="js_hidden_id">
+                                    <div class="diyCancel js_pic_DEL" dataId="{{id}}" index="{{@index}}"></div>
+                                    <div class="viewThumb">
+                                        <img  data-original='${base}/images/img/emma-watson-2.jpg' src="${(config.WebArticleCdnUrl)!''}{{icon}}"/>
+                                    </div>
+                                    <p style="margin-top:120px">
+                                        <input type="text" class="datainput js_link_input"  style="display:block" placeholder="请输入链接地址" value="{{url}}">
+                                        <input type="text" class="datainput js_con_input" style="display:block" placeholder="请输入描述内容" value="{{content}}">
+                                    </p>
+                                </li>
+                          {{/if}}
+                      {{/each}}
+
+                    <li class="diyUploadHover "><div id="datauploadpic"></div></li>
+                  </ul>
+                </div>
+ 				
+            </div>
+			 <div class="formfill js_articlebt clear" style="display:none">
+          			<label class="fl">文章标题：</label>
+					<div type="text" class="commtext js_articleList keyBox fl" /></div>
+					 
+                <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn datasave js_popUpSubmit" id="uploadsave"/></div>
+        </form>
+      </div>
+    </div>
+ </script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/recomn/datalist'],function(head,datalist){
+	head.init('module006004001');
+	datalist.init();
+  });
+</script>

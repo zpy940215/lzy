@@ -1,0 +1,133 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+
+ <link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/specialtygente.css" rel="stylesheet" type="text/css"> 
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+          <label>查询条件</label><input name="keywords" placeholder="请输入部门名称" type="text" class="search_input" id="keywords">
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button" id="deptselect"> 
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+         	<h3 class="manaicon table-head">列表
+         	<a class="addgenre btn-big comBtn fr js_genre_add" href="javascript:void(0)">添加部门</a>
+         	<a class="addgenre btn-big comBtn fr js_exportDeptExcel" href="javascript:void(0)">导出Excel</a>
+         	<a class="addgenre btn-big comBtn fr js_importDeptExcel" href="javascript:void(0)">导入Excel</a>
+         	<a class="addgenre btn-big comBtn fr" href="${config.WebUrl}appfile/ExcleTemplate/dept.xls">下载Excel模板</a>
+         	</h3>
+          	<div class="tableBox" style="margin-top:10px">
+	          	<div class="tabletitle">
+	           		<span style="width:35%">部门名称</span>
+	           		<span style="width:20%">等级</span>
+	           		<span style="width:30%">是否需要统计</span>
+	           		<span style="width:10%">操作</span>
+	         	</div>
+	            <div class="pms-tabletree js_pms-tabletree">
+	            </div>
+            </div>
+      	</div>
+    </div> 
+  </div>
+<div class="popup js_popUpgenreadd" id="genreadd-save-content"> &nbsp; </div>
+<div class="popup js_positionadd" id="positionadd-save-content"> &nbsp; </div>
+<div class="popup js_question_import" id="importQuestion">&nbsp;  </div>
+<script id="addquestion-import" type="text/x-handlebars-template">
+		  <div class="popup_bg"></div>
+		    <div class="popup_box questionbox">
+		      <div class="popup_bt"><span>导入问题</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+		      <div class="popupform">
+		        <form id="upfileform" name="upfileform" method="post" enctype="multipart/form-data">
+					<input type="file"  id="upfile" name="file">
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"><input type="button" value="导入" class="save formbtn" id="importRloe"></div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
+</script>
+
+<script id="genreadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">{{popUp.titleName}}<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form action="" method="post" >
+          <p class="formfill"><label><span class="style1">*</span>上级部门：</label>
+              <select class="commtext js_commtext" name="prevgenre">
+                  <option value="0_0" class="lvl_1">顶级模块</option>
+                  {{#each deptList}}
+                    {{#equals deptId ../popUp.upId}}
+                        <option value="{{deptId}}_{{lvl}}" selected="selected">{{nbsp}}{{name}}</option>
+                    {{else}}
+						{{#equals deptId ../popUp.deptId}}
+						 {{else}}
+                        <option value="{{deptId}}_{{lvl}}" class="lvl_{{lvl}}">{{nbsp}}{{name}}</option>
+						{{/equals}}
+                    {{/equals}}
+                  {{/each}}
+              </select>
+            <span class="errortip"></span>
+          </p>
+          <p class="formfill">
+				<label><span class="style1">*</span>部门名称：</label>
+				<input name="genrename" type="text" class="commtext" id="name" value="{{name}}">
+            	<span class="errortip js_errortip"></span>
+          </p>
+		  <p class="formfill">
+				<label><span class="style1">*</span>是否要统计</label>
+				<select class="commtext js_needStat" name="needStat">
+					<option value="Y" selected="selected">是</option>
+					<option value="N">否</option>
+				</select>
+            	<span class="errortip js_errortip"></span>
+          </p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="genresubmit"></div>
+        </form>
+      </div>
+    </div>
+</script>
+
+<script id="positionadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">{{popUp.titleName}}<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form action="" method="post" >
+          <p class="formfill"><label><span class="style1">*</span>所属部门：</label>
+              <select class="commtext js_positiontext" name="prevgenre">
+                  {{#each deptList}}
+                    {{#equals deptId ../popUp.deptid}}
+                        <option value="{{deptId}}" selected="selected">{{name}}</option>
+                    {{else}}
+                        <option value="{{deptId}}" class="lvl_{{lvl}}">{{name}}</option>
+                    {{/equals}}
+                  {{/each}}
+              </select>
+            <span class="errortip"></span>
+          </p>
+          <p class="formfill">
+				<label><span class="style1">*</span>职位名称：</label>
+				<input name="genrename" type="text" class="commtext" id="positionname" value="{{name}}"><span class="errortip js_errortip"></span>
+          </p>
+			<p class="formfill">
+				<label><span class="style1">*</span>职位等级：</label>
+				<input type="text" class="commtext" id="positionlvl" value="{{lvl}}"><span class="errortip js_errortip"></span>
+          </p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_positionSubmit" ></div>
+        </form>
+      </div>
+    </div>
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+	require(['common/head','prod/member/deptList'],function(head,typeList){
+		head.init('module005004004');
+		typeList.init();
+	  });
+</script>

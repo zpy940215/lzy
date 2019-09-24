@@ -1,0 +1,190 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="editbt">
+        <span class="js_editbt"></span>/
+            <!-- <span class="style2 " >编辑<span class="js_editbt"></span></span> -->
+            <span class="style2">添加<span class="js_editbt"></span></span>
+    </div>
+    <div class="editbox mt2">
+      <div class="editboxbt ">
+        <span class="editboxbtline active " dataattr="basicinfo">券信息</span>
+        <!-- <span class="editboxbtline" dataattr="nativeinfo">产品规格</span> -->
+      </div>
+      <form action="" >
+      <div class="editboxcon mb" id="basicinfo">
+       
+          <div class="formformat clear">
+            <input id="id" value="${(prodVo.id)!''}" type="hidden">
+            <input id="area" value="${(prodVo.areaId)!''}" type="hidden">
+            <input id="selectAreaId" type="hidden">
+            <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+            <input id="type" value="${(prodVo.prodChildTypeId)!''}" type="hidden">
+            <label><span class="style1">*</span>券名称：</label><input type="text" id="title" class="formoinputtext fl" name="productname" value="${(prodVo.name)!''}"/>
+            <span class="errortip producterrortip"></span>
+          </div>
+          <div class="formformat clear">
+          <label>副标题：</label><input type="text" id="title" class="formoinputtext fl" name="productname" value="${(prodVo.name)!''}"/>
+          </div>
+          <div class="formformat clear">
+          <label><span class="style1">*</span>上架状态：</label>
+          <span class="radiomargin"><input type="radio" value="" name="onsale">上架</span>
+          <span class="radiomargin"><input type="radio" value="" name="onsale">下架</span>
+          <span class="errortip producterrortip"></span>
+          </div>
+          <div class="formformat clear">
+          <label><span class="style1">*</span>是否可退:</label>
+          <span class="radiomargin"><input type="radio" value="" name="isrefound">可退</span>
+          <span class="radiomargin"><input type="radio" value="" name="isrefound">不可退</span>
+          <span class="errortip producterrortip"></span>
+          </div>
+          <div class="formformat clear">
+          <label><span class="style1">*</span>关联商户：</label>
+          <!-- <select class="formselect areaselect" name="selectarea"  id="selProvince"><option>请选择</option></select>
+          <select class="formselect areaselect" name="selectarea" id="selCity"><option>请选择</option></select> -->
+          <select class="formselect areaselect" name="selectarea" id="selectCountry"><option>请选择</option></select>
+          <span class="errortip areaerrortip"></span>
+          </div>
+          <div class="formformat clear">
+          <input id="type" value="${(prodVo.prodChildTypeId)!''}" type="hidden">
+          <label><span class="style1">*</span>券价格：</label>
+          <input type="text" id="title" class="formoinputtext fl" name="productname" value="" placeholder="销售价"/>
+          <input type="text" id="title" class="formoinputtext fl" name="productname" value="" placeholder="原价"/>
+          <input type="text" id="title" class="formoinputtext fl" name="productname" value="" placeholder="结算价"/>
+          <span class="errortip producterrortip"></span>
+          </div>
+          <div class="formformat clear">
+            <label><span class="style1">*</span>使用类型：</label>
+            <span class="radiomargin">
+            <input type="checkbox" value="" name="usetype">餐饮
+          	<input type="checkbox" value="" name="usetype">住宿
+          	</span>
+            <span class="errortip producterrortip"></span>
+          </div>
+          <div class="formformat clear">
+          <label>使用有效期：</label>
+          	 	<input  class="formoinputtext js_start_Date" readonly type="text"/>
+          	 	至
+	          	<input  class="formoinputtext js_end_Date" readonly type="text"/>
+          </div>
+          <div class="formformat clear">
+          <span class="radiomargin"><label>使用日期：</label>
+            <input type="checkbox" value="" name="usetype">全选
+          	<input type="checkbox" value="" name="usetype">周日
+          	<input type="checkbox" value="" name="usetype">周一
+          	<input type="checkbox" value="" name="usetype">周二
+          	<input type="checkbox" value="" name="usetype">周三
+          	<input type="checkbox" value="" name="usetype">周四
+          	<input type="checkbox" value="" name="usetype">周五
+          	<input type="checkbox" value="" name="usetype">周六
+          </span>
+            <span class="errortip producterrortip"></span>
+          </div>
+          <div class="formformat clear">
+          <label>可售库存：</label>
+          <input type="text" id="freenum" class="formoinputtext fl" value=""/>
+          </div>
+          <div class="formformat Ueditorbox  clear"><label class="fl">购买须知：</label><div class="ueditor" id="Ueditor" type="text/plain" ></div></div>
+          <div class="formformat   clear">
+              <label class="fl" >上传图片：</label> 
+              <input type="hidden" value="${(prodVo.icon)!''}" class="js_viewIcon" />
+              <div class="picmaterialcon  docs-pictures fl js_pic" id="sortable">
+                          <!-- <div class="picinsert fl ui-state-default">
+                              <div class="Cancel js_Cancel"></div>
+                              <img data-original="" src="" _src="" picId=""/>
+                          </div> -->
+                <div class="picupload fl js_picupload"></div>
+              </div>
+            </div>
+
+      </div>
+      </form>
+    </div>
+  </div>
+    <div class="page">
+        <div class="editsubmit"><input type="button" value="保存" class="save btn-small comBtn " id="producteditsubmit"/><input type="button" value="取消" class="btn-small comBtn btn-grey"/></div>
+    </div>
+  <!--选择图片弹窗-->
+  <div class="popup js_popUpuploadpic" id="uploadpic-save-content">
+     
+  </div>
+    <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+      <div class="popup_box popupheight3">
+          <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+          <div class="popupform">
+              <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+              <div class="picuploadbox" id="localupload">
+                  <div class="parentFileBox">
+                      <ul class="fileBoxUl" >
+                          <li class="diyUploadHover "><div id="uploadpic"></div></li>
+                      </ul>
+                  </div>
+                  <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+              </div>
+              <div class="picuploadbox clear" id="materialupload"  style="display:none">
+                  <form  action="" method="post" id="uploadmaterialform">
+
+                      <div class="materialbox clear" id="material-content">
+
+							
+						</div>
+                      <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+                  </form>
+              </div>
+          </div>
+      </div>
+            
+    </script>
+    <script id="material-save" type="text/x-handlebars-template">
+		<div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+           					 <ul class="materiallist clear">
+               					 {{#if dataList}}
+              					  {{#each dataList}}
+             					   <li>
+                  					  <span class="materiapic"><img src="{{filePath}}"/></span>
+                  					  <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+              					  </li>
+               				 {{/each}}
+              				  {{else}}
+              				  <div>暂无数据</div>
+              				  {{/if}}
+           					 </ul>
+          					  <!--分页-->
+          					  <div class="js_pageDiv">
+                				<div class="pageDiv">&nbsp;</div>
+            				  </div>
+   </script>
+    <script id="prodPriceList" type="text/x-handlebars-template">
+        {{#each prodPriceVoList}}
+            <tr  class="prodPrice" id="{{id}}">
+                <td><input type="text" class="routename js_marketPrice" style="width:70px; text-align: center;"  value="{{price}}"/></td>
+                <td><input type="text" class="routename js_discountPrice" style="width:70px; text-align: center;"  value="{{discountPrice}}"/></td>
+                <td><input type="text" class="routename js_freeNum" style="width:70px; text-align: center;"  value="{{freeNum}}"/></td>
+                <td><input type="text" class="routename js_param1" style="width:70px; text-align: center;"  value="{{param1Name}}"/></td>
+                <td><input type="text" class="routename js_value1" style="width:70px; text-align: center;"  value="{{param1Value}}"/></td>
+                <td><input type="text" class="routename js_param2" style="width:70px; text-align: center;"  value="{{param2Name}}"/></td>
+                <td><input type="text" class="routename js_value2" style="width:70px; text-align: center;"  value="{{param2Value}}"/></td>
+                <td><input type="text" class="routename js_param3" style="width:70px; text-align: center;"  value="{{param3Name}}"/></td>
+                <td><input type="text" class="routename js_value3" style="width:70px; text-align: center;"  value="{{param3Value}}"/></td>
+                <td><a class="js_delete_row" dataId="{{id}}" href="javascript:;">删除</a></td>
+            </tr>
+        {{/each}}
+    </script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/coupon/edit','common/area'],function(head,nativeList,area){
+	head.init('module007001003');
+    var description = "${(prodExtVo.description)!''}";
+	nativeList.init(description);
+    area.init();
+  });
+</script>

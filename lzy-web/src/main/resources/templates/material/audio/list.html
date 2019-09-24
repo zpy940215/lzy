@@ -1,0 +1,132 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >  
+    <div class="tablewrap pt">
+      <div class="search searchpositon"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+         <input name="keywords" placeholder="标题/摘要" type="text" class="search_input" id="js_name"/>
+          <input value="查询" class="comBtn btn-small searchbtn" type="button" id="do_search"/>
+        </div>
+      </div>
+      <div class="data_table datatableheight">
+	        <h3 class="manaicon table-head">列表</h3>
+      		<div class="tableBox">
+		        <div class="picmateriallist clear" id="resource-list">
+		        </div>
+	        <script id="resource-list-content" type="text/x-handlebars-template">
+         	 <table style="width:100%" border="0" cellspacing="0">
+            <thead>
+            <tr class="title">
+              <td width="5%"><input type="checkbox" class="checkall js_check_all" /></td>
+              <td width="15%">语音名称</td>
+              <td width="25%">音频播放</td>
+              <td width="15%">语音解说</td>
+              <td width="15%">更新日期</td>
+              <td width="10%">上传人</td>
+              <td width="15%">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if dataList}}
+            {{#each dataList}}
+            <tr>
+                <td><input type="checkbox" class="checkbox js_check_row"  dataId={{id}} /></td>
+                <td >{{name}}</td>
+                <td>
+                    <audio controls style="width:90%;">
+                        <source src="{{filePath}}" type="audio/mpeg"/>
+                    </audio>
+                </td>
+                <td>{{description}}</td>
+                <td>{{formatDate modifyDate "default"}}</td>
+                <td>py</td>
+                <td class="operate"><span class="edit"><a href="javascript:void(0)" class="js_audio_edit"  dataId={{id}} audioName={{name}} audioImgfile={{filePath}} audioDescription={{description}}>编辑</a> |</span><span class="del_minsu"  ><a href="javascript:void(0)" class="js_delete_row"  dataId={{id}}>删除</a></span></td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="9">暂无数据</td>
+            </tr>
+            {{/if}}
+            </tbody>
+          </table>
+
+        </script>
+		</div>
+      </div> 
+      <!--分页-->
+      <div class="bottom ">
+		  <div class="tableoperate" ><input type="button" value="删除" class="btn-small comBtn js_banch_delete" ><input type="button" value="本地上传" class="btn-big comBtn js_audio_upload"></div>
+	      <div class="js_pageDiv">
+
+	       </div> 
+       </div>
+    </div>           
+  </div>
+<!--语音上传-->
+<div class="popup js_popUpupuploadaudio" id="uploadaudio-save-content"> &nbsp; </div>
+<script id="audioupload-save" type="text/x-handlebars-template">
+  <div class="popup_bg"></div>
+  <div class="popup_box popupheight1">
+    <div class="popup_bt">本地上传<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+      <form id="addsiteform1" name="addsiteform" method="post" >
+		  <div class="formfill clear">
+		 	 <label class="fl">选择文件：</label>
+         	 <div class="parentFileBox fl">
+          		  <div class="fileBoxUl fileupload clear" >
+                     
+             		 <div id="" class="uploadpic fl"></div>
+           		 </div> 	
+             </div>
+		  </div>
+        <p class="formfill"><label>文件名称：</label><input name="filename" type="text" class="commtext " id="js_file_name"/></p>
+        <p class="formfill clear"><label class="fl">语音解说：</label><textarea class="textinput" id="js_description"></textarea></p>
+        <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn uploadSaveClass" id=""/></div>
+      </form>
+    </div>
+  </div>
+</script> 
+
+<!--语音编辑-->
+<div class="popup js_popUpuppicedit" id="audioedit-save-content"> &nbsp; </div>
+<script id="audioedit-save" type="text/x-handlebars-template">
+  <div class="popup_bg"></div>
+  <div class="popup_box popupheight1">
+    <div class="popup_bt">语音编辑<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+      <form id="addsiteform" name="addsiteform" method="post" >
+		<div class="formfill clear">
+		 	 <label class="fl">选择文件：</label>
+			 <div class="parentFileBox fl">
+          		  <div class="fileBoxUl fileupload clear" >
+                     <div class="editpicbox fl" id="audio_editpicbox" style="height:45px;">
+ 							<audio controls="controls" width="130">
+  								<source src="" type="audio/mp3" id="js_audio_source" />
+							</audio>
+						</div>
+             		 <div id="" class="uploadpic fl"></div>
+           		 </div> 	
+             </div>
+         	 
+		    </div>
+        <!--<p class="formfill"><label>文件名称：</label><span id="js_file_audio_name"></span></p>-->
+        <p class="formfill"><label>语音名称：</label><input name="filename" type="text" class="commtext " id="js_audio_name"/></p>
+        <p class="formfill clear"><label class="fl">语音解说：</label><textarea class="textinput" id="js_audio_description"></textarea></p>
+        <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存"  class="save formbtn uploadSaveClass" id=""  /></div>
+      </form>
+    </div>
+  </div>
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','material/audio/list'],function(head,audioList){
+	head.init('module004001002');
+	audioList.init();
+  });
+</script>

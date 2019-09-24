@@ -1,0 +1,92 @@
+  <#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+	    <div class="searchpositon searchpositonpd" >
+			<div class="search"> 
+			   <h3 class="manaicon search-head">查询</h3>
+			   <div class="search-bar">
+			     <!--  <label>会员来源</label><select><option>请选择</option><option>APP</option><option>PC</option></select> -->
+			      <label>用户名</label><input name="keywords"  type="text" class="search_input js_search_input"/>
+				   <label class="fl">注册时间：</label>
+				   <div class="fl">
+					   <input class="datecheck js_register_startDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870576">
+					   至
+					   <input class="datecheck js_register_endDate " value="" readonly="" type="text" placeholder="年/月/日" id="dp1512030870577">
+				   </div>
+			      <input value="搜索" class="comBtn btn-small searchbtn js_search" type="button"/>
+			  	  <input value="导出excel" class="comBtn searchbtn js_excel_btn" type="button"/>
+			   </div>
+			</div>
+	    </div>
+        <div class=" tablewrap tablewrapwidth pt" >
+	        <div class="data_table datatableheight" id="member-list-content">
+	         	<h3 class="manaicon table-head">列表</h3>
+	         	<div class="tableBox">
+			         <table style="width:100%" border="0" cellspacing="0"> 
+				         <thead>
+					           <tr class="title">
+								   <td width="5%"><input type="checkbox" class="checkall js_check_all"/></td>
+								   <td width="10%">id</td>
+								   <td width="10%">头像</td>
+								   <td width="10%">用户名</td>
+								   <td width="10%">昵称</td>
+								   <td width="10%">性别</td>
+								   <td width="10%">联系电话</td>
+								   <td width="10%">积分</td>
+								   <td width="10%">最后登录时间</td>
+								   <td width="5%">状态</td>
+								   <td width="10%">操作</td>
+					          </tr> 
+				         </thead>
+				         <tbody id="user-list-content">
+				         </tbody>
+			        </table>
+		        </div>
+	        </div> 
+        </div>
+	  <!--分页-->
+	  <div class="bottom">
+		  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn banchdel js_banch_delete" id="banchdeleterow"/></div>
+		  <div class="js_pageDiv">&nbsp;</div>
+	  </div>
+  </div>
+<script id="user-list" type="text/x-handlebars-template">
+		{{#if dataList}}
+		{{#each dataList}}
+		<tr dataId="{{id}}">
+			<td><input type="checkbox" class="checkbox js_check_row"/></td>
+			<td  class="wordbreak">{{id}}</td>
+			<td>
+				<div class="pro_pic fl">
+					<img src="${(config.WebArticleCdnUrl)!''}/{{icon}}"/>
+				</div>
+			</td>
+			<td>{{account}}</td>
+			<td>{{nick}}</td>
+			<td>{{#equals sex 'male'}}男{{/equals}}{{#equals sex 'female'}}女{{/equals}}</td>
+			<td>{{mobile}}</td>
+			<td>{{score}}</td>
+			<td>{{formatDate loginDate "default"}}</td>
+			<td>{{#equals status 'open'}}正常{{/equals}}{{#equals status 'disable'}}禁用{{/equals}}</td>
+			<td class="operate">
+				<span class="js_del"><a href="personStatDayList.html?userVo.uid={{uid}}" class="" uid="{{uid}}">积分统计</a></span>
+				<span class="js_del"><a href="consumeList.html?userVo.uid={{uid}}" class="" uid="{{uid}}">积分消费</a></span>
+			</td>
+		</tr>
+		{{/each}}
+		{{else}}
+		<tr>
+			<td colspan="5">暂无数据</td>
+		</tr>
+		{{/if}}
+</script>
+         
+  <#include "/common/foot.html">                              
+	<script type="text/javascript">
+		require(['common/head','prod/member/integralList'],function(head,memberList){
+			head.init('module005004002');
+			memberList.init();
+		  });
+	</script>

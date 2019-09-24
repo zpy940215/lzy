@@ -1,0 +1,93 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+        <div class="search">
+            <h3 class="manaicon search-head">查询</h3>
+            <div class="search-bar">
+              <label>查询条件</label><input name="keywords" placeholder="请输入名称" type="text" class="search_input js_search_input"/>
+              <input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+            </div>
+        </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+      	<div class="data_table datatableheight" > 
+            <h3 class="manaicon table-head">列表<a class="addsceneryname  btn-small comBtn js_add_data" href="javascript:;" >添加</a></h3>
+			<div class="tableBox" id="tagData-list-content">
+				
+			</div>	
+		</div>
+    </div>
+    <!--分页-->
+    <div class="bottom js_pageDiv">
+      <div class="pageDiv"></div>
+    </div>
+  </div>
+    <script id="tagData-list" type="text/x-handlebars-template">
+        <table style="width:100%" border="0" cellspacing="0">
+            <thead>
+            <tr class="title">
+                <td width="25%">标签名称</td>
+                <td width="35%">描述内容</td>
+                <td width="20%">创建时间</td>
+                <td width="20%">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if dataList}}
+            {{#each dataList}}
+            <tr>
+                <td>{{tagsName}}</td>
+                <td>{{description}}</td>
+                <td>{{formatDate createDate "default"}}</td>
+                <td class="operate">
+                    <span class="edit"><a href="javascript:;" class="js_edit_tag" editId="{{id}}">编辑</a> |</span>
+                    <span class="del_data"><a href="javascript:void(0)" class="js_delete_row" deleteId="{{id}}">删除</a></span>
+                </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="5">暂无数据</td>
+            </tr>
+            {{/if}}
+            </tbody>
+        </table>
+    </script>
+  <!--添加数据弹窗-->
+<div class="popup js_popUpadddata" id="adddata-save-content"> &nbsp; </div>
+<script id="adddata-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight4">
+      <div class="popup_bt">添加数据<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form  method="post" >
+          	<p class="formfill">
+              <label><span class="style1">*</span>标题名称：</label>
+              <input  type="text" class="commtext js_titlename" value="{{tagsName}}" name="titlename"/>
+          	</p>
+			<p class="formfill">
+			<label>描述：</label>
+            <input  type="text" class="commtext js_description" value="{{description}}" name="description"/>
+			</p>
+			<p class="formfill">
+              	<label><span class="style1"></span>排序：</label>
+              	<input  type="text" class="commtext js_pos" value="{{pos}}" name="pos"/>
+          	</p>
+          	<div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn datasave js_popUpSubmit" id="uploadsave"/></div>
+          	</div>
+          	</div>
+        </form>
+      </div>
+    </div>
+ </script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/tags/list'],function(head,datalist){
+	head.init('module006007002');
+	datalist.init();
+  });
+</script>

@@ -1,0 +1,34 @@
+<#include "/common/head.html">
+<link href="${base}/css/count.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon">
+<!--     <p class="commbt">会员注册统计</p>
+ -->    <div class="search"> 
+      <h3 class="manaicon search-head">查询</h3>
+      <div class="search-bar">
+        <select class="selectitem"><option>2016年</option></select><select class="selectitem"><option>08月</option></select><select class="selectitem"><option>18日</option></select>
+        <input value="查询" class="comBtn btn-small searchbtn" type="button"> 
+      </div>
+    </div>
+    <div class="pageviewtotal mt" >
+      <div class="diagramtab">
+        <ul>
+          <li ><a href="javascript:void(0)" dateattr="dayecharts"><span class="charticon"></span>日报表</a></li>
+          <li><a href="javascript:void(0)" dateattr="weekecharts"><span class="charticon"></span>周报表</a></li>
+          <li><a href="javascript:void(0)" dateattr="monthecharts"><span class="charticon"></span>月报表</a></li>
+          <li class="active"><a href="javascript:void(0)" dateattr="yearecharts"><span class="charticon"></span>年报表</a></li>
+        </ul>
+      </div>
+      
+      <div id="container" style="width:100%;height:100%">
+       <div id="containermap" style="width:100%;height:90%;"></div>
+      </div> 
+    </div>
+  </div>
+<#include "/common/foot.html">      
+<script type="text/javascript">
+	require(['common/head','index/member'],function(head,member){
+		head.init('module001001006');
+		member.init();
+	});
+</script>

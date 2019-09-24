@@ -1,0 +1,114 @@
+<#include "/common/head.html">
+<link href="${base}/css/base.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/timepicker/jquery-clockpicker.min.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+    <div class="editbt">
+      	<span class="js_editbt"> </span>/门票产品/
+        <span class="style2 " >价格设置：${(prodVo.name)!''}</span>
+    </div>
+    <div class=" tablewrap pt ">
+          <div class="search searchpositon">
+            <h3 class="manaicon search-head">查询
+                <input type="hidden" value="${(prodVo.id)!''}" id="prodId"/> 
+            	<input  class="datecheck js_price_startTime" value="" type="text" placeholder="年/月/日"/>至
+            	<input  class="datecheck js_price_endTime" value="" type="text" placeholder="年/月/日"/>
+            	<input value="搜索" class="comBtn btn-small searchbtn js_price_searchBtn" type="button"/>
+            </h3>
+            
+            <div class="search-bar search-price">
+	            <div class="fl">
+		          		<input  class="datecheck js_priceSet_startTime" value="" type="text" placeholder="年/月/日"/>至
+		          		<input  class="datecheck js_priceSet_endTime" value="" type="text" placeholder="年/月/日"/>
+		         </div>  
+		         <p class="type"><label>时间类型：</label>
+		         	<span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="all" checked="checked">每日</span>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="workDay">工作日票</span>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="weekend">双休日票</span>
+		            <span class="formradio"><input type="radio" name="priceType" class="js_price_type" value="intervalDay">区间票</span>
+	            </p>          	
+	          	<div class="fl"><label>门市价:</label>
+		            <input  class="datecheck price js_price_menshi" value="" type="text" placeholder="门市价"/>
+	            </div>
+	            <div class="fl"><label>销售价:</label>
+		            <input  class="datecheck price js_price_xiaoshou" value="" type="text" placeholder="销售价"/>
+	            </div>
+	            <div class="fl"><label>最小销售量:</label>
+		            <input  class="datecheck price js_price_param1Value" value="" type="text" placeholder="最小销售量"/>
+	            </div>
+	            <div class="fl"><label>最大销售量:</label>
+		            <input  class="datecheck price js_price_param2Value" value="" type="text" placeholder="最大销售量"/>
+	            </div>
+	            <div class="fl"><label>总库存/天:</label>
+		            <input  class="datecheck price js_price_totalNum" value="" type="text" placeholder="总库存"/>
+	            </div>
+	            <div class=""><label>剩余库存:</label>
+		            <input  class="datecheck price js_price_freeNum" value="" type="text" placeholder="剩余库存"/>
+	            </div>
+	            <div class="fl"><label>说明：</label>
+		            <input  class="datecheck desc js_price_param3Value" value="" type="text" placeholder="说明"/>
+	            </div>
+                <input value="新增" class="comBtn btn-small searchbtn js_priceSet_set" type="button"/>
+            </div>
+          </div>
+          <div class="data_table datatableheight" id="prodPrice-list-content">
+          	
+          </div>
+     </div>
+    <!--分页-->
+    <div class="bottom">
+			<div class="js_pageDiv">&nbsp;</div>
+	</div>
+    
+    <script id="prodPrice-list" type="text/x-handlebars-template">
+         <h3 class="manaicon table-head">列表</h3>
+          		<div class="formformat">
+				    <div class="routetable">
+				      <table width="100%" border="0" cellspacing="0" id="prodPrice_num">
+				        <thead>
+				          <tr class="title">
+				            <td width="15%">开始时间</td>
+				            <td width="15%">结束时间</td>
+				            <td width="10%">门市价/元</td>
+				            <td width="10%">销售价/元</td>
+                            <td width="10%">最小销售量</td>
+				            <td width="10%">最大销售量</td>
+				            <td width="10%">总库存/天</td>
+				            <td width="5%">剩余库存</td>
+                            <td width="10%">说明</td>
+				            <td width="5%">操作</td>
+				          </tr>
+				        </thead>
+				        {{#each dataList}}
+				                <tbody>
+				                  <tr>
+				                    <td><input type="text" class="pricetext beginTime_{{id}}"  value="{{formatDate beginTime "yyyy-MM-dd"}}"></td>
+				                    <td><input type="text" class="pricetext endTime_{{id}}"  value="{{formatDate endTime "yyyy-MM-dd"}}"></td>
+				                    <td><input type="text" class="pricetext oldPrice_{{id}}" value="{{price}}"></td>
+				                    <td><input type="text" class="pricetext price_{{id}}" value="{{discountPrice}}"></td>
+									<td><input type="text" class="pricetext param1Value_{{id}}" value="{{param1Value}}"></td>
+									<td><input type="text" class="pricetext param2Value_{{id}}" value="{{param2Value}}"></td>
+				                    <td><input type="text" class="pricetext totalNum_{{id}}" value="{{totalNum}}"></td>
+				                    <td><input type="text" class="pricetext freeNum_{{id}}" value="{{freeNum}}"></td>
+                                    <td><input type="text" class="pricetext param3Value_{{id}}" value="{{param3Value}}"></td>
+				                    <td><a class="js_price_changebtn" prodPriceId="{{id}}" href="javascript:void(0)">更新</a></td>
+				                  </tr>
+				                </tbody>
+			               {{/each}}
+				      </table>
+				    </div>
+				</div>
+
+    </script>
+    
+    
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prodnew/ticket/price'],function(head,ticketPrice){
+	head.init('module007001002');
+	ticketPrice.init();
+  });
+</script> 

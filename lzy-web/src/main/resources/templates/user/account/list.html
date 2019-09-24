@@ -1,0 +1,69 @@
+<#include "/common/head.html">
+<link href="${base}/css/usermana.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="manacon clear" >
+    <div class="navigator fl">
+        <p class="user_set"><span class="manaicon usericon"></span>用户设置</p>
+        <p class="accountedit"><a href="javascript:;" class="active"><span class="manaicon accounticon"></span>账号信息</a></p>
+        <p class="editpwd"><a href="../editpwd/edit.html"><span class="manaicon pwdicon"></span>修改密码</a></p>
+    </div>  
+    <div class="data_table_wrap tablewrap fl">
+        <div class="userbox clear">
+          <div class="userbox_left clear">
+            <div class="user_pic">
+              <img src="${base}/images/pic.jpg">
+            </div>
+            <div class="user_info">
+              <p class="welcome">欢迎您，温州旅游网(超级管理员)</p>
+              <p class="sceneryspots">总50个景区，100个景点</p>
+            </div>
+          </div>
+          <div class="userbox_right">
+<!--      <a href="javascript:void(0)" class="editaccount"><span class="manaicon editicon"></span>编辑信息</a>
+ -->       </div>
+        </div>  
+        <div class="usertable">
+          <div class="data_table">
+          	<div class="tableBox">
+	             <table style="width:100%" border="0" cellspacing="0"> 
+		             <thead>
+		               <tr class="title"> 
+		                 <td width="20%">用户名</td>
+		                 <td width="15%">姓名</td>
+		                 <td width="15%">角色</td> 
+		                 <td width="10%">性别</td> 
+		                 <td width="20%">所属站点</td>
+		                 <td width="20%">最近登录时间</td>
+		              </tr> 
+		             </thead>
+		             <tbody id="sortable">
+		              <tr class="ui-state-default">
+		                <td>refee</td>
+		                <td>周笑</td>
+		                <td>管理员</td>
+		                <td>女</td>
+		                <td>河南旅游网</td>
+		                <td>2016-08-22 16:14:15</td>
+		              </tr>
+		              <tr class="ui-state-default">
+		                <td>refee</td>
+		                <td>周笑</td>
+		                <td>内容发布</td>
+		                <td>男</td>
+		                <td>河南旅游网</td>
+		                <td>2016-08-22 16:14:15</td>
+		              </tr>
+		             </tbody>
+	            </table>
+            </div>
+          </div> 
+        </div>
+    </div>           
+  </div>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head'],function(head){
+	head.init('module001');
+  });
+</script>                             
+

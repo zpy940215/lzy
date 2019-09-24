@@ -1,0 +1,70 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+  <!--右侧内容区-->
+  <input type="hidden" id="printName">
+  <div class="rightcon clear" >
+    <div class="editbt">
+        <span class="js_editbt">订单管理</span>/订单详情
+    </div>
+    <div class="editbox mt2 pb0">
+      	<div class="editboxbt ">
+        	<span class="editboxbtline active " dataattr="basicinfo">订单信息</span>
+      	</div>
+      	<div class="editboxcon orderinfocon" >
+      		<table cellspacing="0" cellpadding='0'>
+      			<tbody id="itemList">
+      			</tbody>
+      		</table>
+        </div>
+    </div>
+    <div class="editbox mt pb0">
+      	<div class="editboxbt ">
+        	<span class="editboxbtline active " dataattr="basicinfo">配货清单</span>
+      	</div>
+      	<div class="editboxcon orderinfocon" >
+      		<div id="div1">
+      		<table cellspacing="0" cellpadding='0'>
+      			<tbody id="orderList">
+      				
+      			</tbody>
+      		</table>
+      		</div>
+      		<div class="ordertotal">
+      			<span >总数量:<b id="totalNum"><b></span>
+      			<span >总金额:<b id="totalFee"><b></span>
+      			<a href="javascript:;" class="btn-big comBtn bgcolor1 js_print js_hid">打印配货单</a>
+      		</div>
+        </div>
+    </div>
+    <div class="page">
+    	 <div>
+    	 	<input type="button" value="返回" class="btn-small comBtn btn-grey" onclick="window.location.href='list.html'"/>
+   	 		<input type="button" value="配货完成" class="btn-big comBtn bgcolor1 js_hid js_finishgoods" />
+   	 		<input type="button" value="重新入库" class="btn-big comBtn bgcolor1 js_hid js_storage" />
+   	 		<input type="button" value="确认收货" class="btn-big comBtn bgcolor1 js_hid js_success" />
+   	 	</div>
+    </div>
+  </div>
+  
+  
+   <div class="popup js_printpopup" id="printcon" >
+   	<div class="popup_bg"></div>
+    <div class="popup_box Userbox">
+    	<div class="popup_bt"><span>提示</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+        <div class="popupform js_printcon">
+	       
+        </div>
+    </div>
+   </div>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/order/orderinfo'],function(head,orderinfo){
+	head.init('module005002001');
+	orderinfo.init();
+  });
+</script>

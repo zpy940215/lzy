@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+.chartsales .bigBox{height: 130%;width: 100%;position: relative;}
+.chartsales .part1{height: 300px;position: absolute;width: 100%;top: 0;left: 0;z-index: 2;}
+.chartsales .part2{height: 100%;min-height: 100px;position: relative;padding-top: 300px;}
+.chartsales .part2 .box{height: 100%;position: relative;background: #fff;}
+.chartsales .part1.h1{height: 190px;}
+.chartsales .part2.h1{padding-top: 200px;}
+.chartsales .part1 .wrap{position: absolute;left: 0;top:0;width: 100%;height: 140px;}
+.chartsales .part1 .filterBox{height:100%;padding-top: 150px;}
+.chartsales .part1 ul li{float: left;width: 33.33%;padding-right: 15px;height: 140px;}
+.chartsales .part1 ul li:last-child{padding-right:0;}
+.chartsales .part1 ul li .list{background: #fff;padding:5px;height: 100%;position: relative;}
+.chartsales .part1 ul li .list.bgcolor1{background: #7297db;}
+.chartsales .part1 ul li .list.bgcolor2{background: #66cda7;}
+.chartsales .part1 ul li .list.bgcolor3{background: #f3c562;}
+.chartsales .part1 ul li .list .info{height: 100px;color: #fff;text-align: center;padding: 5px 0;position: absolute;width: 100%;top: 50%;left:0;margin-top: -50px;}
+.chartsales .part1 ul li .list .info .info_l{float: left;width: 50%;border-right: 1px solid rgba(255,255,255,.4);}
+.chartsales .part1 ul li .list .info .info_r{float: right;width: 50%;}
+.chartsales .part1 ul li .list .info .tit,.chartsales .part1 ul li .list .info .txt{font-size: 12px;line-height: 24px;height: 24px;}
+.chartsales .part1 ul li .list .num{font-size: 18px;line-height: 40px;height: 40px;}
+.chartsales .filterBox .filter{background: #fff;min-height: 140px;}
+.chartsales .filterBox .filter.h1{min-height: 40px;height: 40px;}
+.chartsales .filterBox .filter .barBox{background: #fff;}
+.chartsales .filterBox .filter .search-bar{margin: 14px 0;padding: 0 24px;}
+.chartsales .filterBox .filter .search-bar input.datecheck{height: 28px;width: 120px;border: 1px solid #eee;text-align: center;}
+.chartsales .filterBox .filter label{display:inline-block;margin-right: 10px;}
+.chartsales .filterBox .filter .search-bar>span{display: inline-block;padding: 0 10px;border: 1px solid #eee;height: 28px;line-height: 26px;margin-right: 10px;cursor: pointer;}
+.chartsales .filterBox .filter span.m1{margin-right: 5px;}
+.chartsales .filterBox .filter span.active{background-color: #7297db;color: #fff;}
+.chartsales .part2 .tit{height: 40px;line-height: 40px;border-bottom: 1px solid #e4e4e4;padding:0 12px 0 24px;font-size: 12px;z-index: 1;position: relative;}
+.chartsales .part2 .tit span{color: #666;display: inline-block;height: 28px;line-height: 28px;padding: 0 10px;margin-right: 10px;cursor: pointer;}
+.chartsales .part2 .tit span.active{color: #fff;background: #7297db;}
+.chartsales .part2 .tit .iconDownload{float: right;display: inline-block;width: 20px;height: 20px;background: #eee;margin-top: 10px;cursor: pointer;background: url(../images/work.png) no-repeat; background-position:-120px -486px;}
+.chartsales .part2 .chartCon{position:absolute;top: 0;left: 0;width: 100%;height: 100%;padding-top: 40px;}
+.chartsales .part2 .chartCon .wrap1{width: 55%;float: left;}
+.chartsales .part2 .chartCon .wrap2{width: 45%;float: left;}
+.chartsales .part2 .chartCon .wrap1.h1,.chartsales .part2 .chartCon .wrap2.h1{height: 100%;}
+.search-head{position: relative;}
+.search-head i{display:inline-block;background: url(../images/work.png) no-repeat;width: 20px;height: 20px;position: absolute;right: 10px;top:10px;cursor: pointer;}
+.search-head i.arrowUp{background-position: -120px -439px;}
+.search-head i.arrowDown{background-position:-120px -458px;}
+.page-form{ display: inline-block;position: relative;background: #fff;}
+.chartsales .part1 .filterBox .page-form ul>li {width: 39px;padding:0;height: 24px;line-height: 24px;text-align: center;cursor: pointer;}
+.chartsales .part1 .filterBox .page-form ul>li.disabled{color: #bbb; cursor: not-allowed;}
+.chartsales .part1 .filterBox .page-form ul>li.selected{font-weight: bold;}
+.jo-date-list{overflow: hidden;background: #fff;border: 1px solid #eee;}
+.jo-date{display: none;}
+.chartsales .filterBox .filter .page-form,.monthbox{display: none;}
+.daybox{display: inline-block;}
+.chartsales .filterBox .filter .page-form label{margin-right: 5px;position: relative;}
+.chartsales .filterBox .filter .page-form label:last-child{margin-right: 0;}
+.btn-small{vertical-align: middle;}
+.rightcon{ overflow-y: auto;padding-bottom: 18px;}

@@ -1,0 +1,110 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+	<!--右侧内容区aaa-->
+	<div class="rightcon clear" >
+		<div class="treewrap dataModle fl">
+			<ul id="themetreeDemo" class="ztree"> </ul> 
+		</div> 
+		<div class="data_table_wrap tablewrap pt fr">
+			<div class="searchwrap searchpositon">
+				<div class="search"> 
+					<h3 class="manaicon search-head">查询</h3>
+					<div class="search-bar">
+						<label>发布人</label><select><option>请选择</option></select>
+						<label>是否推荐</label><select id="isrecommend"><option>请选择</option><option value="Y">是</option><option value="N">否</option></select>
+						<label>是否发布</label><select id="ispush"><option>请选择</option><option value="open">已发布</option><option value="close">未发布</option></select>
+						<!-- <label>审核状态</label><select id="ischecked"><option>请选择</option><option>审核通过</option><option>待审核</option><option>审核驳回</option></select> -->
+						<span style="display:inline-block;"><label>标题关键词</label><input name="keywords" placeholder="请输入标题关键词" type="text" class="search_input">
+						<input value="搜索" class="comBtn btn-small searchbtn"  id="do_search" type="button"/> </span>
+					</div>
+				</div>
+			</div>
+	        <div class="data_table datatableheight" >
+         		<h3 class="manaicon table-head">列表<a class="addsceneryname btn-small comBtn js_addArticleBtn"  >新增</a></h3>
+	        	<div class="tableBox" id="article-list-content">
+	        	</div>
+	        </div>
+				
+          	</div>
+			<!-- 咨询列表模板 -->
+		 <script id="article-list" type="text/x-handlebars-template">
+         <table style="width:100%" border="0" cellspacing="0" > 
+         <thead>
+           	<tr class="title"> 
+				<td width="5%"><input type="checkbox" class="checkall js_check_all"></td>
+				<td width="11%">标题</td>
+				<td width="15%">所属栏目</td>
+				<td width="10%">标签</td> 
+				<td width="12%">是否推荐</td>
+				<td width="12%">发布时间</td> 
+				<td width="15%">发布状态</td>
+				<td width="5%">排序</td>
+				<td width="15%">操作</td> 
+			</tr> 
+         </thead>
+         <tbody id="sortable">
+		 {{#if dataList}}
+         {{#each dataList}}
+          <tr class="ui-state-default" pos="{{pos}}" aId="{{id}}" dIndex="{{@index}}" >
+            <td ><input type="checkbox" class="checkbox js_check_row"></td>
+			<input class="id" type="hidden" value="{{id}}" viewid="{{viewId}}" status={{status}}/>
+            <td >{{subject}}</td>
+            <td>{{categoryname}}</td>
+            <td>{{tagsname}}</td>
+			<td>
+				<input class="js_Recommend" type="radio" {{#equals isRecommend 'Y'}}checked{{/equals}}  dataId="{{id}}" name="commend_{{articleId}}">是&nbsp;&nbsp;&nbsp;<input type="radio" class="js_NoRecommend"  dataId="{{id}}" {{#equals isRecommend 'N'}}checked{{/equals}} name="commend_{{articleId}}">否</td>
+ 			<td>{{formatDate publishDate}}</td>    
+			   
+ 			<td>{{#equals status 'open'}}已发布{{/equals}}{{#equals status 'close'}}未发布{{/equals}}</td> 
+			<td ><input   value="{{pos}}" articleId="{{articleId}}" pos="{{pos}}" vitulId="{{id}}"  type="text" class="jspos tabletext"/></td>
+            <td class="operate"><span class="edit"><a href="edit.html?articleVo.articleId={{articleId}}&categoryId={{categoryIds}}" target="blank">编辑</a> |</span>
+				<span><a class="info_row_delete" dataId="{{id}}" href="javascript:;" >删除</a> </span>
+				{{#equals needAudit "Y"}}{{#equals status "auditing"}} |<span><a class="info_row_audit" dataId="{{id}}" auditDesc="{{auditDesc}}" href="javascript:;" >审核</a> </span>{{/equals}}{{/equals}}</td>
+          </tr>
+         {{/each}}
+		{{else}}
+			<tr>
+				<td colspan="9">暂无数据</td>
+			</tr>	
+		{{/if}}
+         </tbody>
+        </table>
+         
+
+        </script>
+			<!--分页-->
+			<div class="bottom"> 
+			    <div class="tableoperate ml2">
+					<input type="button" value="删除" class="btn-small comBtn js_bance_delete" id="banchdeleterow">
+					<!-- <input type="button" value="排序上升" class="btn-big comBtn js_sort_Up">
+					<input type="button" value="排序下降" class="btn-big comBtn js_sort_Down">  -->
+					<!--<input type="button" value="保存排序" class="btn-big comBtn savesort">-->
+					<input type="button" value="发布" class="btn-small comBtn js_theme_publish" id="publish">
+					<input type="button" value="取消发布" class="btn-big comBtn js_quit_publish" id="cancelpublish">
+				</div>
+				<div class="js_pageDiv"> &nbsp; </div>
+			</div>
+		</div>
+	</div>
+	<!--文章审核弹窗-->
+	<div class="popup js_popUpuparticle" id="article-examine-content"> </div>
+	<script id="articleexamine-save" type="text/x-handlebars-template">
+		<div class="popup_bg"></div>
+		<div class="popup_box popupheight4 popupwidth4">
+			<div class="popup_bt">文章审核<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+			<div class="popupform">
+				<form id="addsiteform" name="addsiteform" method="post" >
+					<p class="formfill"><textarea class="articlearea js_reason"></textarea></p>
+					<div class="formsubmit"><input type="button" value="不通过" class="quit formbtn nopass js_nopass"><input type="button" value="通过" class="save formbtn pass js_popUpSubmit"></div>
+				</form>
+			</div>
+		</div>
+	</script>
+<#include "/common/foot.html">               
+<script type="text/javascript">
+	require(['common/head','info/list'],function(head,infoList){
+	head.init('module003001001');
+	infoList.init();
+   });
+</script>
+

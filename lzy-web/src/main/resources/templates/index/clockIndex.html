@@ -1,0 +1,53 @@
+<#include "/common/head.html">
+<link href="${base}/css/base.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" type="text/css" href="${base}/css/clockIndex.css"/>
+<div class="rightcon pt clear pt3" >
+		<div class="con_box">
+			<div class="bx_lf">
+				<div class="bx_top">
+					<input type="text" id="stattime" placeholder="开始日期" readonly="readonly"/>
+					<span>至</span>
+					<input type="text" id="endtime" placeholder="结束日期" readonly="readonly"/>
+					<!-- <input type="text" id="attrname" placeholder="输入景点"/> -->
+					<select id="viewList">
+						<option value="">请选择景点</option>
+					</select>
+					<button class="check_btn js_search">查询</button>
+				</div>
+				<div class="bx_chat" id="trend1">
+					
+				</div>
+			</div>
+			<div class="bx_rig">
+				<div class="bx_message">
+					<h3>最新消息</h3>
+					<div class="messagebox messagebox1">
+						<ul id="clockList">
+							<!-- <li><p>2019年1月1日【雁荡山】景区【攒钱的骚年】打卡成功</p></li> -->
+						</ul>
+					</div>
+					<h3>登录消息</h3>
+					<div class="messagebox messagebox2">
+						<ul id="loginList">
+							<!-- <li><p>  2019年1月1日10：01登入</p></li> -->
+						</ul>
+					</div>
+					<h3>待处理消息</h3>
+					<div class="messagebox messagebox3">
+						<ul id="messageList">
+							<!-- <li><p>  2019年1月1日10：01登入</p></li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+ <#include "/common/foot.html">
+ <script type="text/javascript">
+require(['common/head','index/clockIndex'],function(head,clockIndex){
+	head.init('module001001009');
+	clockIndex.init();
+  });
+</script> 

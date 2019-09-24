@@ -1,0 +1,208 @@
+
+<#include "/common/head.html">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+
+ <div class="rightcon pt clear" >
+   	 <div class="editbt">
+		 <span class="js_editbt">专题编辑/添加</span>
+   	 </div>
+   	  <div class="editbox pb">
+     	 <div class="editboxbt"><span class="editboxbtline active style2">基本信息</span></div>
+     	 <div class="editboxcon">
+     	 <form action="" id="">
+     	 	<input type="hidden" id="icon" value="${(specialVo.icon)!''}">
+             <input id="js_subjectId" value="${(specialVo.id)!''}" type="hidden"/>
+             <input id="js_specialId" value="${(specialVo.specialId)!''}" type="hidden"/>
+         	 <div class="formformat"><label><span class="style1">*</span>标题名称：</label><input type="text" class="formoinputtext" id="subject" name="" value="${(specialVo.subject)!''}">
+                <span class="errortip js_errortip"> &nbsp; </span>
+             </div>
+             
+			<div class="formformat clear">
+				 <label class="fl"><span class="style1">*</span>选择站点：</label>
+				 <div class="columnsetbox ">
+						<#list siteList as site>
+							<span class="markcheck">
+								<input type="radio" name="siteList" class="sitecheck"  value="${(site.siteId)!''}" />
+								${(site.name)!''}
+							</span>
+						</#list>
+					<span class="errortip js_errortip"> &nbsp; </span>
+				</div>
+			</div>
+			
+			<div class="formformat clear">
+				 <label class="fl"><span class="style1">*</span>选择栏目：</label>
+				 <div class="columnsetbox" id="">
+				 		<#if categorylist?? && ( categorylist.size() > 0)>
+							<#list categorylist as category>
+								<span class="markcheck">
+									<input type="radio" name="categoryidList" siteIdval="${(category.siteId)!''}" value="${(category.categoryId)!''}" 
+									<#if
+								specialVo.categoryIds?? && specialVo.categoryIds=category.categoryId> checked="checked" </#if> />${(category.name)!''}
+								</span>
+							</#list>
+						</#if>
+					<span class="errortip js_errortip"> &nbsp; </span>
+				</div>
+				
+			</div>
+			
+             
+			 <div class="formformat">
+         		 <label>是否发布：</label><select class="formselect" id="ispublish">
+         	  		<option value="open"
+         	  		<#if
+							specialVo.status?? && specialVo.status=="open">selected="selected"</#if>>发布</option>
+         	  		<option value="close"
+         	  		<#if
+							specialVo.status?? && specialVo.status=="close">selected="selected"</#if>>不发布</option>
+         	  	</select></div>
+         	  	
+          	 <div class="formformat">
+          	 	<label>是否推荐：</label>
+          	 	<select class="formselect" id="isrecommend" >
+          	 		<option value="N"
+                    <#if specialVo.isRecommend?? && specialVo.isRecommend=="N">selected="selected"</#if>>否</option> 
+                    <option value="Y"
+                     <#if specialVo.isRecommend?? && specialVo.isRecommend=="Y">selected="selected"</#if>>是
+                    </option>
+                 </select> 
+             </div>
+             
+			 <div class="formformat recommend_date">
+          	 	<label>起止日期：</label>
+          	 	<input  class="formoinputtext js_start_Date" readonly type="text" <#if specialVo.beginDate??>value="${specialVo.beginDate?string('yyyy-MM-dd')}"</#if>/>
+          	 	至
+	          	<input  class="formoinputtext js_end_Date" readonly type="text" <#if specialVo.endDate??>value="${specialVo.endDate?string('yyyy-MM-dd')}"</#if>/>
+             </div>
+             
+           	<div class="formformat"><label>阅读量：</label><input type="text" class="formoinputtext"  id="viewNum" value="${(specialVo.viewNum)!0}"/></div>
+         	
+        	<!-- <div class="formformat"><label>展现形式：</label>
+	           	<span class="formradio"><input type="radio" class="tab1" name="displayform" checked="true" value="" data-index="tab1"/>自定义</span>
+	          	<span class="formradio"><input type="radio" class="tab2" name="displayform"  value="" data-index="tab2"/>外链</span>
+          	</div> -->
+         	
+         	<div class="formtabbox">
+         		<div class="formformat link_ipt"><label>外链地址：</label><input type="text" class="formoinputtext" id="outlinkval" value=""/></div>
+	         	<div class="formformat Ueditorbox clear"><label class="fl">概述内容：</label><div class="ueditor" id="js_description" type="text/plain" value=""></div></div>
+	         	<div class="formformat Ueditorbox  clear"><label class="fl">详情内容：</label><div class="ueditor" id="js_content" type="text/plain" value=""></div></div>
+						<div class="formformat   clear">
+			                <label class="fl" >上传图片：</label>
+			                <input type="hidden" value="${(specialVo.icon)!''}" class="js_viewIcon" />
+			                <div class="picmaterialcon picuploadbox1 docs-pictures  fl" id="custom_pic">
+			                 	  <#if specialVo.picList??&&specialVo.picList.size() gt 0>
+									<#list specialVo.picList as pic>
+										<div class="picinsert js_picinsert fl">
+											<div class="Cancel js_Cancel old"></div>
+											<#if pic.picUrl?contains("http") >
+												<img  _src="${(pic.picUrl)!''}" src="${(pic.picUrl)!''}" picId="${(pic.id)!''}">
+											<#else>
+												<img  _src="${(pic.picUrl)!''}" src="${(config.WebArticleCdnUrl)!''}${(pic.picUrl)!''}" picId="${(pic.id)!''}">
+											</#if>
+											<#if specialVo.icon == pic.picUrl>
+											<em  class="setcover title " >封面图</em>
+											<em  class="js_Cancel" ></em>
+											
+											<#else>
+											<em  class="setcover" >设为封面</em>
+											<em  class="js_Cancel" ></em>
+											</#if>
+										</div>
+									</#list>
+									</#if>
+			                 	 <div class="picupload basicupload fl js_picupload custom_picupload"></div>
+			                </div>
+		              	</div>
+			            <p style="color:red">注：建议图片比例4:3，图片大小不超过2M</p>
+	       	  	</div>
+         	
+          	 <div class="page">
+           	 <div class=""><input type="button" value="保存" class="save btn-small comBtn articlesave" id="basicinfosave"/><input type="button" value="返回" class="btn-small comBtn btn-grey" onclick="window.location.href='features_list.html'"/></div>
+           </div>
+			
+        </form>
+     	 
+      </div>
+ </div>
+ 
+  <!--选择图片弹窗-->
+  <div class="popup js_popUpuploadpic" id="uploadpic-save-content"> &nbsp; </div>
+  <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+    <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+  	    <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+        <div class="picuploadbox" id="localupload">
+          <div class="parentFileBox">
+            <ul class="fileBoxUl" >
+              <li class="diyUploadHover "><div id="uploadpic"></div></li>
+            </ul> 	
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+        </div>
+        <div class="picuploadbox clear" id="materialupload"  style="display:none">
+          <form  action="" method="post" id="uploadmaterialform">
+			<div class="materialbox clear" id="material-content">
+
+
+            </div>
+            <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+  
+         </form>
+        </div>
+      </div>
+    </div>
+</script>
+
+<script id="material-save" type="text/x-handlebars-template">
+    <div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+    <ul class="materiallist clear">
+      {{#if dataList}}
+      {{#each dataList}}
+      <li>
+        <span class="materiapic"><img src="{{filePath}}"/></span>
+        <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+      </li>
+      {{/each}}
+      {{else}}
+      <div>暂无数据</div>
+      {{/if}}
+    </ul>
+    <!--分页-->
+    <div class="js_pageDiv">
+      <div class="pageDiv">&nbsp;</div>
+    </div>
+  </script>
+  
+<div class="popup  js_continueaddcolumn" id="continueaddcolumn"></div>
+<script id="" type="text/x-handlebars-template">
+	<div class="popup_bg">&nbsp;</div>
+	<div class="popup_box continueaddcolumnbox">
+		<div class="popup_bt">提示<a class="popupclose js_popUpClose" href="javascript:void(0)">&nbsp;</a></div>
+		<div class="popupform">
+			<p class="formfill">保存成功<p>
+			<div class="formsubmit">
+				<input type="button" value="确定" class="quit formbtn "/>
+				<input type="button" value="继续添加" class="save formbtn "/>
+			</div>
+		</div>
+	</div>
+</script>
+<#include "/common/foot.html">               
+<script type="text/javascript">
+	require(['common/head','info/featuresEdit'],function(head,infoList){
+	head.init('module003001003');
+    var   articleVoDescription = "${(specialVo.description)!''}";
+    var   articleExtVoContent  = "${(specialVo.content)!''}";
+	infoList.init(articleVoDescription,articleExtVoContent);
+   });
+</script>

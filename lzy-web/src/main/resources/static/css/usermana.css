@@ -1,0 +1,29 @@
+/*用户设置页面*/
+.manacon{width:95%;margin:0 auto; padding-top: 75px;height:100%;}
+.manacon .data_table_wrap{background-color: #fff;}
+.navigator{padding:15px;background-color: #fff;width: 16%;min-height: 100%; border: solid 1px #e4e4e4; border-radius: 5px;
+    box-sizing: border-box;margin-right: 15px;color: #333}
+.navigator p.user_set{font-size: 18px;}
+.navigator p.user_set .usericon{display: inline-block;width:25px;height:26px; position: relative;top:5px;margin-right: 10px; background-position: 0px -696px;}
+.navigator p.editpwd,p.accountedit {padding-left: 35px;font-size: 12px;margin-top: 15px;}
+.navigator p a.active{color:#7297db !important;}
+.navigator p.editpwd a,p.accountedit a{color: #333;}
+.navigator p.editpwd .pwdicon{display: inline-block; width:15px;height:17px;position: relative;top:2px;margin-right:8px;background-position: -46px -704px;}
+.navigator p.accountedit .accounticon{display: inline-block;width:15px;height:17px;position: relative;top:2px;margin-right: 8px;background-position: -89px -705px;}
+.userbox{width:98%;height:155px;border-bottom: 1px solid #f7f7f7; margin:0 auto;}
+.userbox_left{width:60%; float: left;}
+.userbox_left .user_pic{width:100px;height:100px;margin-top: 27px; overflow:hidden; border-radius: 100px; float: left}
+.userbox_left .user_pic img{width: 100%;min-height: 100%}
+.userbox_left .user_info{float: left;margin-top:30px;margin-left:10px;}
+.userbox_left .user_info p{font-size: 16px;color: #444;margin-top: 20px;}
+.userbox_left .user_info p.sceneryspots{color: #666}
+.userbox_right{width: 40%;float: right;}
+.userbox_right .editaccount{display: block;color: #fff;text-align: center;margin:60px  auto;line-height: 36px; width:200px;height:36px;background-color: #7297db}
+.userbox_right .editaccount span.editicon{display: inline-block; width:20px;height:20px;position: relative;top:5px;margin-right: 5px; background-position:-133px -702px;}
+.usertable .data_table{border: none;}
+.usermanatit{width:98%;height:45px;line-height:45px;border-bottom: 1px solid #f7f7f7;color:#666; font-size:16px;margin:0 auto;}
+.formbox{width:98%;height:auto;margin:0 auto;}
+.formbox .formfill{margin-top:20px;}
+.formbox .formfill span{display: inline-block; width:70px;color:#444; }
+.formbox .formfill .commtext{width:205px;height:30px;text-indent: 5px;border: 1px solid #bbbbbb}
+.formbox .submit{padding:40px 0px 0px 68px;}

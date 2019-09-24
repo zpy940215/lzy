@@ -1,0 +1,72 @@
+<#include "/common/head.html">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+    <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+          <label>数据类型</label><select><option>请选择</option><option>文章</option><option>专题</option><option>景点热点</option><option>住宿热点</option></select>
+          <label>查询条件</label><input name="keywords" placeholder="请输入酒店/民宿名称" type="text" class="search_input"/>
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button"/> 
+        </div>
+      </div>
+    </div>
+      <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+        	<h3 class="manaicon table-head">列表</h3>
+	        <div class="tableBox">
+	         	 <table style="width:100%" border="0" cellspacing="0"> 
+			         <thead>
+			           	<tr class="title"> 
+			            	<td width="10%"><input type="checkbox" class="js_check_all"/></td>
+			             	<td width="30%">名称</td>
+			             	<td width="15%">数据类型</td>
+			             	<td width="15%">删除时间</td> 
+			             	<td width="15%">删除人</td> 
+			             	<td width="15%">操作</td> 
+			            </tr> 
+			         </thead>
+			         <tbody>
+				          <tr>
+				            <td ><input type="checkbox" class="checkbox js_check_row"/></td>
+				            <td></td>
+				            <td>资讯</td>
+				            <td>2016-08-22 16:14:51</td>
+				            <td></td>
+				            <td class="operate"><span><a href="javascript:void(0)" class="js_recover_data">恢复数据</a> |</span><span class="del_data"><a href="javascript:void(0)" class="js_delete_row">删除</a></span></td>
+				          </tr>
+				          <tr>
+				            <td ><input type="checkbox" class="checkbox js_check_row"/></td>
+				            <td></td>
+				            <td>资讯</td>
+				            <td>2016-08-22 16:14:51</td>
+				            <td></td>
+				            <td class="operate"><span><a href="javascript:void(0)" class="js_recover_data">恢复数据</a> |</span><span class="del_data"><a href="javascript:void(0)" class="js_delete_row">删除</a></span></td>
+				          </tr>
+			         </tbody>
+	        	</table>
+	      </div>  
+	      <!--分页-->
+	      <div class="bottom">
+			  <div class="tableoperate fl "><input type="button" value="批量删除" class="btn-big comBtn js_banch_delete" id="banchdeleterow"/></div>
+		      <div class="pageDiv">
+					<span class="disabled">&lt;上一页</span>
+					<span class="pageCur">1</span>
+					<span class="disabled">下一页&gt;</span>
+					<span class="pageTotal">共1页</span>
+					<span class="countYe">
+						        到第<input type="text" value="1" maxlength="1"/>页
+						  <a href="javascript:;" class="turnDown">确定</a>
+						  <span> </span>
+					</span>
+		      </div>  
+	      </div>         
+     	</div>   
+  </div>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/recycle/list'],function(head,recyclelist){
+	head.init('module006005');
+	recyclelist.init();
+  });
+</script>

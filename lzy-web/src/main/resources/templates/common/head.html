@@ -1,0 +1,92 @@
+<!doctype html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>线上游客服务中心</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=10;IE=9;IE=8;IE=7;IE=EDGE">
+	<meta name="renderer" content="webkit">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta name="renderer" content="webkit">
+	<meta name="MobileOptimized" content="320">
+	<link type="image/x-icon" rel="shortcut icon" href="/images/favicon.ico">
+	<link href="/css/base.css" rel="stylesheet" type="text/css">
+	<link href="/css/popup.css" rel="stylesheet" type="text/css">
+	<link title="default" href="/css/default.css" rel="stylesheet" type="text/css" disabled="disabled">
+	<link title="green" href="/css/green.css" rel="stylesheet" type="text/css" disabled="disabled" >
+	<link title="black" href="/css/black.css" rel="stylesheet" type="text/css" disabled="disabled" >
+</head> 
+<script type="text/javascript" src="/js/lib/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="/js/lib/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/js/common/cookiestyle.js"></script>
+<body> 
+	 <div class="loading load" >
+	 	<div class="loadbg"> </div>
+	 	<div class="loadcon">
+	 		<span class="loadicon"><img src="/images/load.gif"></span>正在读取数据，请稍后...
+	 	</div>
+	 </div>
+	<div class="Menu_bar js_user_menu">
+		<div class="logo">
+			<a href="sitemana.html"><img  src="/images/logo.png" width="117"></a>
+		</div>
+		<div class="menulist" id="head-menutop-content">
+			
+		</div>
+		<div class="right_bar" id="head-user-content"> </div> 
+	</div>
+
+	<!--左侧导航-->
+	<div class="leftcon js_user_menu" id="head-menu-content">
+	</div>
+	<div class="popup js_set_Pwd" id="setPwd">&nbsp;  </div>
+	
+	<!--顶部用户设置模板-->
+	<script id="head-user" type="text/x-handlebars-template">
+		<div class="user">Welcome:{{user.account}}</div>
+		<div class="user modify_pwd"  >修改密码<!--修改密码--></div>
+		<div class="manaicon set-btn js_user_setUp"><!--设置--></div>
+		<div class="manaicon link-btn js_user_loginOut"><!--退出--></div>
+		<div class="stylebox js_user_stylebox">
+			<span class="style-border">
+				<span class="style-borderbg"> </span>
+			</span>
+			<p class="styleboxtit">风格颜色</p>
+			<div class="themebg js_user_styleChange">
+				<span  dataid="green" class="themestyle themestyle1"> </span>
+				<span  dataid="black" class="themestyle themestyle2"> </span>
+				<span  dataid="default" class="themestyle themestyle3"> </span>
+			</div>
+		</div>
+	</script>
+	<script id="head-menutop" type="text/x-handlebars-template">
+		  <ul>
+             {{#each data}}
+		        <li datanname="{{moduleId}}"><a href="../{{url}}">{{name}}</a></li>
+		       
+              {{/each}}
+		  </ul>
+	</script>
+	
+<script id="modify-pwd-pop" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">修改密码<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form action="" method="post" >
+          <p class="formfill">
+				<label><span class="style1">*</span>原密码：</label>
+				<input name="genrename" type="text" class="commtext" id="oldPwd" ><span class="errortip js_errortip"></span>
+          </p>
+			<p class="formfill">
+				<label><span class="style1">*</span>新密码：</label>
+				<input type="text" class="commtext" id="newPwd" "><span class="errortip js_errortip"></span>
+          </p>
+			<p class="formfill">
+				<label><span class="style1">*</span>再次输入新密码：</label>
+				<input type="text" class="commtext" id="newPwdAgain" ><span class="errortip js_errortip"></span>
+          </p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn js_setPwd_submit" ></div>
+        </form>
+      </div>
+    </div>
+</script>

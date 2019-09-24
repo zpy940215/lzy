@@ -1,0 +1,472 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        
+        <input type="hidden" id="isAirPay" value="${(isAirPay)!''}">
+        
+        <div class="search-bar">
+        	<div class="searchcon clear">
+	          	<label class="fl">下单时间：</label>
+	          	<div class="ordertab fl">
+	          		<ul>
+	          			<li class="js_select js_select_date" dataType="date" dataValue="0">今天</li>
+	          			<li class="js_select js_select_date" dataType="date" dataValue="1">昨天</li>
+	          			<li class="js_select js_select_date" dataType="date" dataValue="7">最近7天</li>
+	          			<li class="js_select js_select_date" dataType="date" dataValue="30">最近30天</li>
+	          		</ul>
+	          	</div>
+	          	<div class="fl">
+	          		<input  class="datecheck js_order_startDate" value=""  readonly type="text" placeholder="年/月/日"/>
+	          		至
+	          		<input  class="datecheck js_order_endDate" value=""  readonly type="text" placeholder="年/月/日"/>
+	          	</div>
+          	</div>
+          	<div class="searchcon clear" style="display: none;">
+          		<label class="fl">订单类型：</label>
+          		<div class="ordertab fl">
+          			<input type="hidden" value="piaowu" class="js_value_type" />
+	          		<ul>
+	          			<li dataValue="" dataType="type" class="active js_select js_select_type">全部</li>
+	          			<li dataValue="jiudian" dataType="type" class="js_select js_select_type"><!-- <i class="icon newicon"></i> -->酒店订单</li>
+	          			<li dataValue="piaowu" dataType="type" class="js_select js_select_type">门票订单</li>
+	          			<li dataValue="shangcheng" dataType="type" class="js_select js_select_type">商城订单</li>
+	          		</ul>
+	          	</div>
+          	</div>
+          	<!-- <div class="searchcon">
+          		<label>订单状态：</label>
+          			<select class="js_value_status js_select_select">
+          				<option value="">请选择</option>
+          				<option value="create">创建</option>
+          				<option value="shoppingcart">购物车</option>
+          				<option value="pay">已支付</option>
+          				<option value="cancel">已取消</option>
+          				<option value="close">订单关闭</option>
+          				<option value="delivering">发货中</option>
+          				<option value="delivered">已发货</option>
+          				<option value="success">已检票</option>
+          				<option value="refunded">已退款</option>
+          				<option value="refundapply">申请退款</option>
+          				<option value="refunding">退款中</option>
+          				<option value="refundrefuse">拒绝退款</option>
+          			</select> -->
+          		<!-- <label>支付状态：</label>
+          			<select class="js_value_status_pay js_select_select">
+          				<option value="">请选择</option>
+          				<option value="success">已支付</option>
+          				<option value="create">未支付</option>
+          			</select> -->
+          		<!-- <label>检票状态：</label>
+          			<select class="js_value_status_use js_select_select">
+          				<option value="">请选择</option>
+          				<option value="success">已检票</option>
+          				<option value="create">未检票</option>
+          			</select>
+          		<label>终端类型：</label>
+          			<select class="js_value_status_use js_select_client">
+          				<option value="">请选择</option>
+          				<option value="wap">手机wap站</option>
+          				<option value="web">PC中文站</option>
+          				<option value="web_en">PC英文站</option>
+          				<option value="weixin">微信</option>
+          				<option value="all_in_one Pc">一体机</option>
+          				<option value="pad">pad</option>
+          				<option value="app">手机客户端</option>
+          				<option value="ios">手机客户端IOS版</option>
+          				<option value="android">手机客户端android版</option>
+          				<option value="xcx">小程序</option>
+          			</select>
+          		<label>支付方式：</label>
+          			<select class="js_value_status_use js_select_payType">
+          				<option value="">请选择</option>
+          				<option value="ali">支付宝</option>
+          				<option value="weixin">微信</option>
+          			</select> -->
+          	</div>
+          	<div class="searchcon">
+          		 <label>查询：</label><input autocomplete="off" name="keywords" placeholder="请输入订单号、手机号、预订人姓名" type="text" class="search_input js_value_keywords"/>
+          		 <label>发货状态：</label>
+        			<select class="js_value_status_use js_select_select">
+        				<option value="">请选择</option>
+        				<option value="delivered">已发货</option>
+        				<option value="pay">未发货</option>
+        			</select>
+          		 <input value="搜索" class="comBtn btn-small searchbtn js_select_btn" type="button"/> 
+          		 <!-- <input value="导出excel" class="comBtn searchbtn js_excel_btn" type="button"/> -->
+          	</div>
+        </div>
+      
+    </div>
+    <div class="tablewrap tablewrapwidth pt ptop" id="order-list-content">
+      <!--订单列表-->
+    </div>
+    <div class="bottom">
+			<div class="js_pageDiv">&nbsp;</div>
+	</div>
+    <!--退款处理-->
+	<div class="popup js_popUprefund" id="refund-look-content"> &nbsp; </div>
+	<script id="refund-look" type="text/x-handlebars-template">
+    <div class="popup_bg"> &nbsp; </div>
+		<div class="popup_box refundbox">
+			<div class="popup_bt">退款处理<a class="popupclose js_popUpClose" href="javascript:; "> &nbsp; </a></div>
+			<div class="popupform">
+				<form id="addsiteform" name="addsiteform" method="post" >
+					<input id="id" type="hidden" value="{{complainVo.id}}">
+                    <p class="formfill">
+						<textarea class="wordsarea"  placeholder="处理备注"></textarea>
+					</p> 
+					<div class="formsubmit">
+						<input type="button" value="拒绝退款" class="quit formbtn">
+						<input type="button" value="同意退款" class="save formbtn">
+					</div>
+				</form>
+			</div>
+		</div>
+	</script>
+	  <!--发货弹窗-->
+	<div class="popup js_popUpsendgoods" id="sendgoods-save-content"> &nbsp; </div>
+	<script id="sendgoods-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box goodsbox">
+      <div class="popup_bt">发货<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addsiteform" name="addsiteform" method="post" >
+         	<p class="formfill">
+				<label>快递名称：</label>
+				<input id="delivername" class="commtext" type="text" value="{{name}}">
+				<span class="errortip js_errortip"> &nbsp; </span>
+		 	</p>
+          	<p class="formfill"><label>快递单号：</label>
+				<input id="deliverno" type="text" class="commtext " value="{{no}}">
+				<span class="errortip js_errortip"> &nbsp; </span>
+		 	</p>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+				<input type="button" value="确认" class="goods_deliver_save formbtn" id="editgoods">
+			</div>
+        </form>
+      </div>
+    </div>
+	</script>
+	
+	<!-- 订单列表 -->
+	<script id="order-list" type="text/x-handlebars-template">
+	<div class="data_table datatableheight">
+    <h3 class="manaicon table-head">订单列表</h3>
+    <div class="tableBox">
+        <table style="width:100%" border="0" cellspacing="0"> 
+	         <thead>
+	           <tr class="title"> 
+			             <td width="17%">订单号</td>
+			             <td width="17%">奖品信息</td>
+						 <td width="6%">姓名</td>
+						 <td width="10%">联系方式</td>
+						 <td width="20%">地址</td>
+			             <td width="10%">下单时间</td>
+						 <td width="10%">订单状态</td>
+			             <td width="10%">操作</td> 
+			          </tr>
+	         </thead>
+	         <tbody id="sortable">
+                {{#if dataList}}
+				{{#each dataList}}
+	          	<tr class="ui-state-default">
+		            <td>
+		            	{{orderNo}}
+					</td>
+		            <td>
+					{{#compare bizType}}
+						{{#each orderItemVoList}}
+		               <div class="pro_info fl">
+		               		<div class="pro_Name">奖品名称：{{../subject}}</div>
+		               		<p class="price_Info">价格：{{discountPrice}}积分</p>
+		               </div>
+						{{/each}}
+					{{else}}
+						<div class="pro_info fl">
+		               		<div class="pro_Name">{{../subject}}</div>
+		               		<p class="price_Info">价格：￥{{discountFee}}&nbsp;&nbsp;数量：{{itemNum}}</p>
+		                </div>
+					{{/compare}}
+		            </td>
+		            <td>
+						<p>{{orderPersonVo.name}}</p>
+					</td>
+		            	<td>
+		            		<p>{{orderPersonVo.mobile}}</p>
+		            </td>
+					<td>
+		            	<p>{{userAddressVo.address}}</p>
+		            </td>
+					<td><p>{{formatDate createDate "default"}}</p></td>	
+		            <td>
+		            	{{#equals status "pay"}}待发货{{/equals}}
+					{{#equals status "delivered"}}已发货{{/equals}}
+					{{#equals status "close"}}已关闭{{/equals}}
+					{{#equals status "create"}}创建{{/equals}}
+		            </td>
+					<td class="operate">
+						{{#equals status "pay"}}
+							<span><a class="js_send_goods" orderNo={{orderNo}} href="javascript:void(0)">发货</a></span>
+						{{/equals}}
+						{{#equals status "delivered"}}
+							<span><a class="js_see_goods" orderNo={{orderNo}} remarks={{remarks}} href="javascript:void(0)">查看</a></span>
+						{{/equals}}
+					</td>
+	          	</tr>
+	          	
+	          	
+                  {{/each}}
+                 {{/if}}
+	         </tbody>
+       </table>
+    </div>
+ </div> 
+    </script>	
+    
+    <!-- 订单详情 商城 -->
+    <div class="popup js_popUpShangchengDetail" id="shangcehng-detail-content"> &nbsp; </div>
+	<script id="order-detail-shangcheng" type="text/x-handlebars-template">
+     <div class="popup_bg"></div>
+     <div class="popup_box orderdetail">
+      <div class="popup_bt">商城订单详情<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+			<div class="tablebox">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody><tr class="title"><td colspan="4">订单信息</td></tr>
+                        <tr>
+                            <td width="15%">订单名称</td>
+                            <td width="35%">{{subject}}</td>
+                            <td width="15%">订单号</td>
+                            <td width="35%">{{orderNo}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">收货人信息</td></tr>
+                        <tr>
+                            <td width="15%">收货人</td>
+                            <td width="35%">{{orderPersonVo.name}}</td>
+                            <td width="15%">收货人电话</td>
+                            <td width="35%">{{orderPersonVo.mobile}}</td>
+						</tr>
+						<tr>
+							<td width="15%">收货地址</td>
+                            <td colspan="3" width="35%">{{deliveryAddress userAddressVo.countryId userAddressVo.provinceId userAddressVo.cityId userAddressVo.address}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">订单明细</td></tr>
+						{{#each orderItemVoList}}
+						<tr>
+                            <td width="15%">商品名称</td>
+                            <td width="35%">{{prodVo.name}}</td>
+                            <td width="15%">数量</td>
+                            <td width="35%">{{prodNum}}</td>
+						</tr>
+						<tr>
+							<td width="15%">原价</td>
+                            <td width="35%">{{prize}}</td>
+							<td width="15%">优惠价</td>
+                            <td width="35%">{{discountPrice}}</td>
+                        </tr>
+						{{/each}}
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">订单小计</td></tr>
+						<tr>
+                            <td width="15%">商品总价</td>
+                            <td width="35%">{{totalPrice}}</td>
+                            <td width="15%">优惠价</td>
+                            <td width="35%">0</td>
+						</tr>
+						<tr>
+							<td width="15%">邮费</td>
+                            <td width="35%">{{subtract totalFee totalPrice}}</td>
+							<td width="15%">订单总价</td>
+                            <td width="35%">{{totalFee}}</td>
+                        </tr>
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">时间</td></tr>
+						<tr>
+                            <td width="15%">创建时间</td>
+                            <td width="35%">{{formatTime orderTime.create}}</td>
+                            <td width="15%">付款时间</td>
+                            <td width="35%">{{formatTime orderTime.pay}}</td>
+						</tr>
+						<tr>
+							<td width="15%">发货时间</td>
+                            <td colspan="3" width="35%">{{formatTime orderTime.delivered}}</td>
+                        </tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+			</div>
+      </div>
+    </div>
+	</script>
+	
+	<!-- 订单详情 票务 -->
+    <div class="popup js_popUpPiaoWuDetail" id="piaowu-detail-content" > &nbsp; </div>
+	<script id="order-detail-piaowu" type="text/x-handlebars-template">
+     <div class="popup_bg"></div>
+     <div class="popup_box orderdetail">
+      <div class="popup_bt">门票订单详情<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+		<div class="tablebox">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody><tr class="title"><td colspan="4">订单信息(<span style="color: red">{{ticketOrderStatus status}}</span>)</td></tr>
+                        <tr>
+                            <td width="15%">订单名称</td>
+                            <td width="35%">{{subject}}</td>
+                            <td width="15%">订单号</td>
+                            <td width="35%">{{orderNo}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">预定人信息</td></tr>
+                        <tr>
+                            <td width="15%">预定人</td>
+                            <td width="35%">{{orderPersonVo.name}}</td>
+                            <td width="15%">预定人电话</td>
+                            <td width="35%">{{orderPersonVo.mobile}}</td>
+						</tr>
+						<tr>
+							<td width="15%">身份证</td>
+                            <td colspan="2" width="35%"><input id="idcard" type="text" value="{{orderPersonVo.idcard}}"></td>
+                            <td class="operate"><a class="js_edit_idcard" orderNo={{orderNo}} href="javascript:void(0)">提交</a></td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">订单明细</td></tr>
+						{{#each orderItemVoList}}
+						<tr>
+                            <td width="15%">商品名称</td>
+                            <td width="35%">{{prodName}}</td>
+                            <td width="15%">数量</td>
+                            <td width="35%">{{prodNum}}</td>
+						</tr>
+						<tr>
+							<td width="15%">原价</td>
+                            <td width="35%">{{price}}</td>
+							<td width="15%">优惠价</td>
+                            <td width="35%">{{discountPrice}}</td>
+                        </tr>
+						{{/each}}
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">订单小计</td></tr>
+						<tr>
+                            <td width="15%">商品总价</td>
+                            <td width="35%">{{totalPrice}}</td>
+                            <td width="15%">优惠价</td>
+                            <td width="35%">0</td>
+						</tr>
+						<tr>
+							<td width="15%">订单总价</td>
+                            <td colspan="3" width="35%">{{totalFee}}</td>
+                        </tr>
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">时间</td></tr>
+						<tr>
+                            <td width="15%">创建时间</td>
+                            <td width="35%">{{formatTime orderTime.create}}</td>
+                            <td width="15%">付款时间</td>
+                            <td width="35%">{{formatTime orderTime.pay}}</td>
+						</tr>
+						<tr>
+							<td width="15%">游玩时间</td>
+                            <td colspan="3" width="35%">{{formatTime occDate}}</td>
+                        </tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+		<div class="cancle">
+			{{#equal status 'create'}}<input type="button" value="取消" orderNo="{{orderNo}}" clientType="{{clientType}}" class="quit formbtn js_Cancel_order">{{/equal}}
+			<#if isSyncAgent?? && isSyncAgent=="Y">
+				<#if isAirPay?? && isAirPay=="Y">
+					{{#equal status 'pay'}}<input type="button" value="退款" orderNo="{{orderNo}}" clientType="{{clientType}}" class="quit formbtn js_agent_refund">{{/equal}}
+				<#else>	
+	           	 	{{#equal status 'pay'}}<input type="button" value="取消" orderNo="{{orderNo}}"  class="quit formbtn js_agent_apply">{{/equal}}
+		  	   		{{#equal status 'refunding'}}<input type="button" value="退款" orderNo="{{orderNo}}" clientType="{{clientType}}" class="quit formbtn js_agent_refund">{{/equal}}
+				</#if>
+			</#if>
+		</div>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+			</div>
+      </div>
+    </div>
+	</script>
+	
+	<!-- 订单详情 酒店 -->
+    <div class="popup js_popUpJiuDianDetail" id="jiudian-detail-content"> &nbsp; </div>
+	<script id="order-detail-jiudian" type="text/x-handlebars-template">
+     <div class="popup_bg"></div>
+     <div class="popup_box orderdetail">
+      <div class="popup_bt">酒店订单详情<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+			<div class="tablebox">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody><tr class="title"><td colspan="4">订单信息</td></tr>
+                        <tr>
+                            <td width="15%">订单名称</td>
+                            <td width="35%">{{subject}}</td>
+                            <td width="15%">订单号</td>
+                            <td width="35%">{{orderNo}}</td>
+                        </tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">房间预定信息</td></tr>
+                        <tr>
+                            <td width="15%">预定人</td>
+                            <td width="35%">{{orderPersonVo.name}}</td>
+                            <td width="15%">预定人电话</td>
+                            <td width="35%">{{orderPersonVo.mobile}}</td>
+						</tr>
+						<tr>
+                            <td width="15%">入住开始日期</td>
+                            <td width="35%">{{formatTime startDate}}</td>
+                            <td width="15%">入住结束日期</td>
+                            <td width="35%">{{formatTime endDate}}</td>
+						</tr>
+                    	</tbody>
+						<tbody><tr class="title"><td colspan="4">订单小计</td></tr>
+						<tr>
+                            <td width="15%">商品总价</td>
+                            <td width="35%">{{totalPrice}}</td>
+                            <td width="15%">优惠价</td>
+                            <td width="35%">0</td>
+						</tr>
+						<tr>
+							<td width="15%">订单总价</td>
+                            <td colspan="3" width="35%">{{totalFee}}</td>
+                        </tr>
+						</tbody>
+						<tbody><tr class="title"><td colspan="4">时间</td></tr>
+						<tr>
+                            <td width="15%">创建时间</td>
+                            <td colspan="3" width="35%">{{formatTime orderTime.create}}</td>
+						</tr>
+						</tbody>
+					</table>
+                </div>
+            </div>
+            <div class="formsubmit">
+				<input type="button" value="关闭" class="quit formbtn js_popUpClose">
+			</div>
+        </form>
+      </div>
+    </div>
+	</script>
+	
+  </div>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/prizeOrder/list'],function(head,orderList){
+	head.init('module005003004');
+	orderList.init();
+  });
+</script>
+

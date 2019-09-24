@@ -1,0 +1,106 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+    <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+          <label>选择酒店</label>
+          <select id="searchProdId">
+          <option value="">请选择</option>
+          </select>
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button" id="search"/>
+        </div>
+      </div>
+    </div>
+     <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+        	<h3 class="manaicon table-head">列表  <a class="comBtn btn-big js_add_notice fr" >新增</a></h3>
+        	<div class="tableBox">
+	         	<table style="width:100%" border="0" cellspacing="0"> 
+		         	<thead>
+			           	<tr class="title">
+				            <td width="20%">关联酒店</td>
+				            <td width="20%">通知人姓名</td>
+				            <td width="20%">通知人联系方式</td>
+				            <td width="20%">说明</td>
+				            <td width="20%">操作</td>
+			          	</tr>
+		         	</thead>
+			        <tbody  id="notice_show">
+			        
+			        </tbody>
+	        	</table>
+        	</div>
+      	</div>   
+      	<!--分页-->
+       <div class="bottom js_pageDiv">
+	      <div class="pageDiv">
+			&nbsp;
+	      </div>
+      </div>     
+    </div>  
+  </div>
+  <!--新增成员-->
+<div class="popup js_popUpSaveNotice" id="notice-save-content"> &nbsp; </div>
+<script id="notice-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">新增/编辑<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="" name="addsiteform" method="post" >
+          <p class="formfill">
+			<label>关联酒店：</label>
+			<select class="commtext prod_select">
+			{{#if prodVoList}}
+			{{#each prodVoList}}
+			<option value="{{id}}">{{name}}</option>
+			{{/each}}
+			{{else}}
+			<option value="">请选择</option>
+			{{/if}}
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>通知姓名：</label>
+			<input  type="text" class="commtext notice_name"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>通知电话：</label>
+			<input  type="text" class="commtext notice_mobile"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>说明：</label>
+			<input  type="text" class="commtext notice_description"/>
+		  </p>
+          <div class="formsubmit">
+			<input type="button" value="取消" class="quit formbtn js_popUpClose">
+			<input type="button" value="保存" class="save formbtn" id="addNoticeSave"/>
+		  </div>
+        </form>
+      </div>
+    </div>
+</script>
+<script id="notice_list" type="text/x-handlebars-template">
+	{{#each dataList}}
+	<tr>
+		<td>{{prodVo.name}}</td>
+		<td>{{smsNoticeVo.name}}</td>
+		<td>{{smsNoticeVo.mobile}}</td>
+		<td>{{description}}</td>
+		<td class="operate"><span ><a href="javascript:;" class="js_edit_notice" id="{{id}}">编辑 </a> | 
+		<a  class="js_delete_row" id="js_delete_row" dataId="{{id}}" href="javascript:;" >删除</a></td>
+	</tr>
+	{{/each}}
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/smsNotice/list'],function(head,managerlist){
+	head.init('module005001004');
+	managerlist.init();
+  });
+</script>

@@ -1,0 +1,106 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="editbt">
+        <span class="js_editbt">订单管理</span>/订单详情
+    </div>
+    <div class="editbox mt2">
+      	<div class="editboxbt ">
+        	<span class="editboxbtline active " dataattr="basicinfo">订单信息</span>
+      	</div>
+      	<div class="editboxcon orderinfocon" >
+      		<table cellspacing="0" cellpadding='0'>
+      			<tbody>
+      				<tr>
+      					<th width='10%'>订单号</th>
+      					<td width='40%'>WT201707260000031872</td>
+      					<th width='10%'>检票状态</th>
+      					<td width='40%'>WT201707260000031872</td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>订单状态</th>
+      					<td width='40%'>新建单 (2017-07-26 13:21)</td>
+      					<th width='10%'>检票时间</th>
+      					<td width='40%'>2017-09-29 18:00</td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>支付状态</th>
+      					<td width='40%'>已支付 (2017-07-26 13:21)</td>
+      					<th width='10%'>检票人员</th>
+      					<td width='40%'>张三</td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>订单来源</th>
+      					<td width='40%'>WAP端</td>
+      					<th width='10%'></th>
+      					<td width='40%'></td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>预订产品</th>
+      					<td width='40%'>微官网成人票，200元/张  </td>
+      					<th width='10%'></th>
+      					<td width='40%'></td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>数量</th>
+      					<td width='40%'>2张  </td>
+      					<th width='10%'></th>
+      					<td width='40%'></td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>日期</th>
+      					<td width='40%'>2017-08-07</td>
+      					<th width='10%'></th>
+      					<td width='40%'></td>
+      				</tr>
+      				<tr>
+      					<th width='10%'>订单金额</th>
+      					<td width='40%'>总计420.0，优惠200，实付220.00元</td>
+      					<th width='10%'></th>
+      					<td width='40%'></td>
+      				</tr>
+      			</tbody>
+      		</table>
+        </div>
+    </div>
+    <div class="editbox mt">
+      	<div class="editboxbt ">
+        	<span class="editboxbtline active " dataattr="basicinfo">预订人信息</span>
+      	</div>
+      	<div class="editboxcon orderinfocon" >
+      		<table cellspacing="0" cellpadding='0'>
+      			<tbody>
+      				<tr>
+      					<th width='10%'>预订人姓名</th>
+      					<td cospan='3' width='90%'>张月</td>
+      					
+      				</tr>
+      				<tr>
+      					<th width='10%'>手机号</th>
+      					<td cospan='3' width='90%'>15578947898</td>
+      					
+      				</tr>
+      			
+      			</tbody>
+      		</table>
+        </div>
+    </div>
+    <div class="page">
+    	 <div ><input type="button" value="返回" class="btn-small comBtn btn-grey" onclick="window.location.href='list.html'"/></div>
+    </div>
+  </div>
+   
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/native/edit'],function(head,nativeList){
+	head.init('module005002001');
+    var description = "${(prodExtVo.description)!''}";
+	nativeList.init(description);
+  });
+</script>

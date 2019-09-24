@@ -1,0 +1,190 @@
+
+/* table */
+.rightcon{padding-top: 75px !important;}
+.rightcon p a:hover{color:#fff;}
+.pms-tabletreetit{width:100%;height:40px;line-height: 40px; text-indent:10px; background-color: #f2f2f2}
+.pms-tabletree{background-color: #fff;border: 1px solid #dedede;border-radius: 2px;}
+.pms-tablebody {
+	overflow: hidden;
+}
+
+.pms-tablebody .pms-table-header {
+	overflow: hidden;
+	width: 100%;
+	padding: 20px;
+	margin: 0 -20px;
+}
+
+.pms-tablebody .pms-table-sheet {
+	overflow: hidden;
+	width: 100%;
+	margin-right: -2px;
+}
+
+.pms-tablebody .pms-table-sheet table {
+	width: 100%;
+	border-top: 1px solid #ddd;
+	box-shadow: 0 1px 0 #fff inset;
+}
+
+.pms-tablebody .pms-table-sheet table tr {
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.pms-tablebody .pms-table-sheet table tr.table-data-header {
+	background: #f0f0f0;
+}
+
+.pms-tablebody .pms-table-sheet table td {
+	height: 36px;
+	font: 12px/36px "";
+	border-right: 1px solid #e0e0e0;
+	padding-left: 8px;
+}
+
+.pms-tablebody .pms-table-sheet table td.td-checkbox {
+	width: 36px;
+	text-align: center;
+	padding: 0;
+}
+
+.pms-tablebody .pms-table-sheet table th {
+	height: 28px;
+	font: bold 12px/28px "";
+	border-right: 1px solid #e0e0e0;
+	padding-left: 8px;
+}
+
+.pms-tablebody .pms-table-sheet table tbody tr:hover {
+	background: #fffbee;
+}
+
+.pms-tablebody .pms-table-sheet table td div.order-name {
+	padding: 10px 0 !important;
+	font: 12px/20px "" !important;
+}
+
+.pms-toolbar {
+	padding: 20px 0px;
+}
+
+.pms-operationbar {
+	padding: 0 20px 20px;
+}
+
+.pms-pager-line {
+	height: 42px;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	background: #fafafa;
+	border-top: 1px solid #ddd;
+	box-shadow: 0 1px 0 #fff inset;
+	width: 100%;
+}
+
+.pms-pager-table {
+	margin: 6px 20px 0 0 !important;
+	text-align: right;
+	width: 75%;
+}
+
+
+.pms-tabletree ul {
+	width: 100%;
+	font: 12px/40px "";
+	color: #333;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+.pms-tabletree ul > div {
+	height: 40px;
+	overflow: hidden;
+}
+
+.pms-tabletree ul > div:hover {
+	background: #fbfbf2;
+}
+
+.pms-tabletree ul li {
+	padding-left: 18px;
+	margin-right: -18px;
+	width: 100%;
+}
+
+.pms-tabletree ul a {
+	display: inline-block;
+	margin-right: 10px;
+	font: 12px/40px "";
+	color: #333;
+	margin-left: 10px;
+}
+
+.pms-tabletree ul a.pms-folder {
+}
+
+.pms-tabletree ul a.pms-folder span {
+	width: 16px;
+}
+
+.pms-tabletree ul a.pms-normal {
+	padding-left: 30px;
+}
+
+a.pms-add {
+	text-decoration: none;
+}
+
+a.pms-add span {
+	width: 16px;
+}
+
+a.pms-edit {
+	text-decoration: none;
+}
+
+a.pms-edit span {
+	width: 16px;
+}
+
+a.pms-delete {
+	text-decoration: none;
+}
+
+a.pms-delete span {
+	width: 16px;
+}
+
+a.pms-setup {
+	text-decoration: none;
+}
+
+a.pms-setup span {
+	width: 16px;
+}
+
+a.pms-view {
+	text-decoration: none;
+}
+
+a.pms-view span {
+	width: 16px;
+}
+
+.pms-listorder {
+	width: 60px;
+	margin-top: 5px;
+}
+
+
+/* from */
+.pms-formbody {
+	padding: 30px;
+	overflow: hidden;
+}
+.pms-toolbar h3{font-size: 16px;}
+.btn{background-color: #22d3c5;color:#fff;}
+.btn:hover{background-color: #0fcdbe !important;color:#fff !important;}

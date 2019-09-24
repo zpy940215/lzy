@@ -1,0 +1,161 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+    <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+          <label>选择省份</label><select id="search_Area"><option value="">请选择</option></select>
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button" id="search"/>
+           <!-- <label>查询条件</label><input name="keywords" placeholder="请输入姓名" type="text" class="search_input" id="roleName"/> -->
+        </div>
+      </div>
+    </div>
+     <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+        	<h3 class="manaicon table-head">列表  <a class="comBtn btn-big js_add_people fr" >新增邮费</a></h3>
+        	<div class="tableBox">
+	         	<table style="width:100%" border="0" cellspacing="0"> 
+		         	<thead>
+			           	<tr class="title">
+				            <td width="20%">模板</td>
+				            <td width="15%">省份</td>
+				            <td width="15%">城市</td>
+				            <td width="15%">地区</td>
+				            <td width="15%">费用</td>
+				            <td width="20%">操作</td>
+			          	</tr>
+		         	</thead>
+			        <tbody  id="user_show">
+			        
+			        </tbody>
+	        	</table>
+        	</div>
+      	</div>   
+      	<!--分页-->
+       <div class="bottom js_pageDiv">
+	      <div class="pageDiv">
+			&nbsp;
+	      </div>
+      </div>     
+    </div>  
+  </div>
+  <!--新增成员-->
+<div class="popup js_popUpaddpeople" id="addpeople-save-content"> &nbsp; </div>
+<script id="addpeople-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">添加邮费<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="" name="addsiteform" method="post" >
+          <p class="formfill">
+			<label>选择模板：</label>
+			<select class="commtext templateSelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+          <p class="formfill">
+			<label>省份：</label>
+			<select class="commtext provinceSelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>城市：</label>
+			<select class="commtext citySelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>地区：</label>
+			<select class="commtext countrySelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>费用：</label>
+			<input  type="text" class="commtext money"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+          <div class="formsubmit">
+			<input type="button" value="取消" class="quit formbtn js_popUpClose">
+			<input type="button" value="保存" class="save formbtn" id="addUserSave"/>
+		  </div>
+        </form>
+      </div>
+    </div>
+</script>
+<!--编辑邮费-->
+<div class="popup js_popUpeditpeople" id="editpeople-save-content"> &nbsp; </div>
+<script id="editpeople-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">编辑邮费<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addsiteform" name="addsiteform" method="post" >
+            <p class="formfill">
+			<label>选择模板：</label>
+			<select class="commtext templateSelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+          <p class="formfill">
+			<label>省份：</label>
+			<select class="commtext provinceSelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>城市：</label>
+			<select class="commtext citySelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>地区：</label>
+			<select class="commtext countrySelect" >
+			<option>请选择</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  <p class="formfill">
+			<label>费用：</label>
+			<input  type="text" class="commtext money"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+       		<div class="formsubmit">
+				<input type="button" value="取消" class="quit formbtn js_popUpClose">
+				<input type="button" value="保存" class="save formbtn" />
+			</div>
+             
+		</form>
+      </div>
+    </div>
+</script>
+<script id="user_list" type="text/x-handlebars-template">
+	{{#each dataList}}
+	<tr>
+		<td>{{templateName}}</td>
+		<td>{{provinceName}}</td>
+		<td>{{cityName}}</td>
+		<td>{{countryName}}</td>
+		<td>{{money}}</td>
+		<td class="operate"><span ><a href="javascript:;" class="js_edit_people" id="{{id}}">编辑 </a> |</span><span class="del_minsu"><a  class="js_delete_row" id="js_delete_row" dataId="{{id}}" href="javascript:;" >删除</a></td>
+	</tr>
+	{{/each}}
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/postage/postMgr'],function(head,managerlist){
+	head.init('module006006002');
+	managerlist.init();
+  });
+</script>

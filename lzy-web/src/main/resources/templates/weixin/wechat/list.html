@@ -1,0 +1,174 @@
+<#include "/common/head.html">
+<link rel="stylesheet" href="${(base)!''}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="${(base)!''}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${(base)!''}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link rel="stylesheet" href="${(base)!''}/css/popup.css" type="text/css">
+
+	<!--右侧内容区-->
+	<div class="rightcon clear" >
+		<div class="tablewrap pt">
+			<div class="searchpositon">
+				<div class="search"> 
+					<h3 class="manaicon search-head">查询</h3>
+					<div class="search-bar">
+						<label>公众号类型</label>
+						<select value="all" class="js_search_type">
+							<option>全部</option>
+							<option value="service">服务号</option>
+							<option value="subscribe">订阅号</option>
+						</select>
+						<span style="display:inline-block;">
+							<label>名称关键词</label>
+							<input name="keywords" placeholder="请输入标题关键词" type="text" class="search_input js_search_keywords">
+							<input value="搜索" class="comBtn btn-small searchbtn"  id="js_doSearch" type="button"/> 
+						</span>
+					</div>
+				</div>
+			</div>
+	        <div class="data_table datatableheight" >
+				<h3 class="manaicon table-head">列表<a class=" btn-big comBtn fr js_add_weixin" href="javascript:;" target="blank" >新增</a></h3>
+	       		<div class="tableBox"  id="weixin-list-content">
+	  			
+	  			</div>
+          	</div>
+		</div>
+		<!--分页-->
+		<div class="bottom"> 
+			<div class="js_pageDiv"> &nbsp; </div>
+		</div>
+	</div>
+	<!--列表-->
+	<script id="weixin-list" type="text/x-handlebars-template">
+		<table style="width:100%" border="0" cellspacing="0"> 
+			<thead>
+				<tr class="title"> 
+					<td width="15%"><input type="checkbox" class="checkall">全选</td>
+					<td width="12%">名称</td>
+					<td width="5%">类型</td>
+					<td width="5%">状态</td>
+					<td width="10%">微信号</td> 
+					<td width="15%">icon</td>
+					<td width="12%">创建时间</td> 
+					<td width="15%">操作</td> 
+				</tr> 
+			</thead>
+			<tbody  id="sortable">
+				{{#if dataList}}
+         		{{#each dataList}}
+				<tr class="ui-state-default">
+					<td><input type="checkbox" class="checkbox">{{weixinId}}</td>
+					<td>{{name}}</td>
+					<td>{{#equals type 'service'}}服务号{{/equals}}{{#equals type 'subscribe'}}订阅号{{/equals}}</td>
+					<td>{{#equals status 'open'}}已审核{{/equals}}{{#equals type 'nopass'}}未审核{{/equals}}</td>
+					<td>{{wechatid}}</td>
+					<td><img class="icon" src="{{#equals icon ''}}${(base)!''}/images/default.jpg{{else}}${(config.WebuePicUrl)!''}{{icon}}{{/equals}}" /></td>
+					<td>{{formatDate createDate}}</td>
+					<td class="operate">
+						<span class="edit_article js_examine_article"><a href="javascript:;" dataId="{{weixinId}}" class="js_edit_weixin" >编辑</a> |</span>
+						<span class="del_article"><a href="javascript:void(0)" dataId="{{id}}" class="deleterow js_delete_row">删除</a></span>
+					</td>
+				</tr>
+				{{/each}}
+				{{else}}
+					<tr>
+						<td colspan="9">暂无数据</td>
+					</tr>	
+				{{/if}}
+			</tbody>
+		</table>
+	</script>
+	<!--复制成功-->
+    <div class="copysucc">
+        <img src="${base}/images/copysucc.png">复制成功
+    </div>
+	<!--删除弹窗-->
+	<div class="popup js_popUpuparticle" id="article-examine-content"> </div>
+	<script id="articleexamine-save" type="text/x-handlebars-template">
+		<div class="popup_bg"></div>
+		<div class="popup_box popupheight4 popupwidth4">
+			<div class="popup_bt">微信公众号删除<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+			<div class="popupform">
+				<form id="addsiteform" name="addsiteform" method="post" >
+					<p class="formfill"><textarea class="articlearea"></textarea></p>
+					<div class="formsubmit"><input type="button" value="取消" class="quit formbtn nopass"><input type="button" value="确定" class="save formbtn pass js_popUpSubmit"></div>
+				</form>
+			</div>
+		</div>
+	</script>
+	<!--添加,编辑站点弹窗-->
+	<div class="popup js_popUpaddweixin" id="addweixin-save-content"> &nbsp; </div>
+	<script id="addweixin-save" type="text/x-handlebars-template">
+	    <div class="popup_bg"></div>
+	    <div class="popup_box popupheight3">
+	    <div class="popup_bt"><span>添加公众号</span><a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+	    <div class="popupform">
+	    	<form action="" id="submit_weixinEditform" method="post">
+	    		<input type="hidden"  class="commtext js_weixin_id" name="weixinVo.id" value="{{id}}"/>
+				<p class="formfill">
+					<label><span class="mark">*</span>名称：</label>
+						<input name="weixinVo.name"  value="{{name}}" type="text"  class="commtext js_weixin_name"/>
+					<label><span class="mark">*</span>类型：</label>
+						<select name="weixinVo.type" class="commselect js_weixin_type"><option value="service">服务号</option><option value="subscribe">订阅号</option></select>
+						<select name="weixinVo.status" class="commselect js_weixin_status"><option value="open">已认证</option><option value="nopass">未认证</option></select>
+				</p>
+				<p class="formfill">
+					<label><span class="mark">*</span>微信号：</label>
+						<input name="weixinVo.wechatid" value="{{wechatid}}" type="text" class="comminput js_weixin_wechatid"/ >
+		        </p>
+				<p class="formfill">
+					<label><span class="mark">*</span>AppId：</label>
+						<input name="weixinVo.appId" value="{{appId}}" type="text" class="comminput js_weixin_appId" >
+						<input type="button" value="复制" class="comBtn btn-big copylinkbtn"/>
+		        </p>
+				<p class="formfill">
+					<label><span class="mark">*</span>AppSecret：</label>
+						<input name="weixinVo.appSecret" value="{{appSecret}}"  type="text" class="comminput js_weixin_appSecret" >
+						<input type="button" value="复制" class=" comBtn btn-big copylinkbtn"/>
+		        </p>
+				<p class="formfill" >
+					<label><span class="mark">*</span>可控token：</label>
+					<input name="weixinVo.tokenControl" {{#equals tokenControl '1'}}checked="checked"{{/equals}} value="1" type="radio" class="js_weixin_token_control"/>是
+					<input name="weixinVo.tokenControl" {{#equals tokenControl '0'}}checked="checked"{{/equals}} value="0" type="radio" class="js_weixin_token_control"/>否
+					<input name="weixinVo.sourceTokenUrl" value="{{sourceTokenUrl}}" type="text" class="comminput js_weixin_source_token_url" >
+					<input type="button" value="复制链接" class="comBtn btn-big copylinkbtn js_copy_link"/>
+					<span class="errortip js_errortip" style="display:block"></span>	
+		        </p>
+				<p class="formfill" >
+					<label><span class="mark">*</span>开放token：</label>
+					<input name="weixinVo.tokenOpen" {{#equals tokenOpen '1'}}checked="checked"{{/equals}} value="1" type="radio" class="js_weixin_token_open"/>是
+					<input name="weixinVo.tokenOpen" {{#equals tokenOpen '0'}}checked="checked"{{/equals}} value="0" type="radio" class="js_weixin_token_open" />否
+					<input name="weixinVo.openTokenUrl" value="{{openTokenUrl}}" type="text" class="comminput js_weixin_token_open_url" >
+					<input type="button" value="复制链接" class="comBtn btn-big copylinkbtn js_copy_link"/>
+					<span class="errortip js_errortip" style="display:block"></span>	
+		        </p>
+		        <input name="enrollVo.icon" type="hidden"  class="commtext js_weixin_icon" value="{{icon}}"/>
+		    </form>
+			<div class="formfill  clear">
+               <label class="fl" style="height:100px">图标：</label>
+               <!--图片-->
+               <div class="parentFileBox fileboxheight fl" >
+                 <ul class="fileBoxUl">
+                     {{#if icon}}
+                         <li>
+                             <div class="editpicbox"><img id="js_img_file_name" data-original="${(base)!''}/images/img/emma-watson-2.jpg" src="${(config.WebuePicUrl)!''}{{icon}}"/></div>
+                         </li>
+                     {{/if}}
+                   <li class="diyUploadHover "><div id="uploadpic"></div></li>
+                 </ul>
+               </div>
+            </div>
+            <p class="formfill js_result_tip" ><span class="errortip js_errortip" style="display:block"></span>	</p>
+			<div class="formsubmit">
+				<input type="button" value="取消" class="quit formbtn js_popUpClose">
+				<input type="button" id="addcolumnbtn" value="保存" class="save formbtn js_popUpSubmit">
+			</div>
+	    </div>
+	</script> 
+	 
+	<#include "/common/foot.html">               
+	<script type="text/javascript">
+		require(['common/head','weixin/wechat/list'],function(head,wechatList){
+			head.init('module008001001');
+			wechatList.init();
+	   	});
+	</script>

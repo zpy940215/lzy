@@ -1,0 +1,68 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" type="text/css" href="${base}/css/rule.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="editbt">
+        <span class="js_editbt"></span>/
+            <span class="style2">编辑<span class="js_editbt"></span></span>
+    </div>
+    <div class="editbox mt2">
+      <div class="editboxbt ">
+        <span class="editboxbtline active " dataattr="basicinfo">积分规则</span>
+        <!-- <span class="editboxbtline" dataattr="nativeinfo">产品规格</span> -->
+      </div>
+      <form action="" >
+      <div class="editboxcon mb" id="basicinfo">
+       
+       <div class="formformat clear">
+		<div class="iteminfo">
+			<span>* </span>分享文章<input class="pointinput"  type="text" id="shareNumber" value="${(integralRule.shareNumber)!''}">次可以获得<input class="pointinput" type="text" id="shareSource" value="${(integralRule.shareSource)!''}">分
+		</div>
+		<div class="iteminfo">
+			<span>* </span>分享有效次数为<input class="pointinput" type="text" id="maxShareTime" value="${(integralRule.maxShareTime)!''}">次
+		</div>
+		<div class="iteminfo">
+			<span>* </span>每<input class="pointinput" type="text" id="readNumber" value="${(integralRule.readNumber)!''}">个阅读量可以获得<input class="pointinput" type="text" id="readSource" value="${(integralRule.readSource)!''}">分
+		</div>
+		<!-- <div>
+			<span>* </span>成功邀请<input type="text" id="inviteNumber" value="${(integralRule.inviteNumber)!''}">人可以获得<input type="text" id="inviteSource" value="${(integralRule.inviteSource)!''}">分
+		</div>
+		<div>
+			<span>* </span>被邀请人分享文章<input type="text" id="secoundShareNumber" value="${(integralRule.secoundShareNumber)!''}">次
+			可以获得<input type="text" id="secoundShareSource" value="${(integralRule.secoundShareSource)!''}">分
+		</div>
+		<div>
+			<span>* </span>被邀请人<input type="text" id="secoundReadNumber" value="${(integralRule.secoundReadNumber)!''}">个阅读量
+			可以获得<input type="text" id="secoundReadSource" value="${(integralRule.secoundReadSource)!''}">分
+		</div>
+		<div>
+			<span>* </span>每<input type="text" id="sourceNumber" class="pointinput" value="${(integralRule.sourceNumber)!''}">积分可以抵
+			<input type="text" id="sourceMoney" class="pointinput" value="${(integralRule.sourceMoney)!''}">元
+		</div> -->
+    </div> 
+    
+	<div class="formformat Ueditorbox  clear"><span class="fl tit" style="margin-left:30px;">积分说明：</span><div class="ueditor" id="js_articleVodescription" type="text/plain" value="${(integralRule.description)!''}"></div></div>
+      </div>
+      </form>
+    </div>
+  </div>
+    <div class="page">
+        <input type="button" value="保存" class="save btn-small comBtn " id="ruleeditsubmit"/><input type="button" value="取消" class="btn-small comBtn btn-grey"/>
+    </div>
+  
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/member/integralRule','common/area'],function(head,integralRule){
+	head.init('module005004003');
+	var articleVoDescription = "${(integralRule.description)!''}";
+	integralRule.init(articleVoDescription);
+  });
+</script>

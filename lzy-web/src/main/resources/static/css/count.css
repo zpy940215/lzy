@@ -1,0 +1,47 @@
+.data_table{height:auto; background: #fff;margin-top: 10px; border: none;padding:0px;}
+.data_table tr td {border-bottom:1px solid #f2f2f2;text-align: left;padding-left: 5px; border-left:1px solid #f2f2f2;color: #333;height: 40px;font-size: 12px;background: #fff;}
+.data_table tr td:last-child{border-right:1px solid #f2f2f2;}
+.data_table tr.title td {background: #f2f2f2;font-size: 14px;height:40px;color: #333;border-bottom: 1px solid #e4e4e4; border-top:1px solid #e4e4e4;border-left:1px solid #e4e4e4; }
+.data_table tr.title td:last-child{border-right:1px solid #f2f2f2;}
+/*首页统计*/
+.rightcon .date_time{margin-bottom:15px;color:#333;font-size: 16px;}
+.commcount{width:68.5%;height:340px;    border-radius: 5px;overflow: hidden; min-height: 225px; margin-right:15px;background-color: #fff;border: 1px solid #e4e4e4;float: left}
+ .count_tit{ height:40px;line-height: 40px;text-indent:12px;border-bottom:1px solid #e4e4e4;}
+.operatelink{width:30%;height:340px;    border-radius: 5px;overflow: hidden; min-height: 225px;background-color: #fff;border: 1px solid #e4e4e4;float: left;}
+.operatelinklist{padding:20px 55px;}
+.operatelinkcon{width:56px;text-align: center;position: relative; float: left;margin:20px;}
+@media(max-width: 1450px){.operatelinkcon{margin:20px 15px;}.operatelinklist{padding:20px 50px;}}
+@media(max-width: 1400px){.operatelinkcon{margin:20px 15px;}.operatelinklist{padding:20px 45px;}}
+@media(max-width: 1300px){.operatelinkcon{margin:20px 12px;}.operatelinklist{padding:20px 22px;}}
+
+.operatelinkcon:last-child{margin-right: 0px;}
+
+.operatelinkcon span.reviewnum{display: block;background-color: #ff0000;letter-spacing: -1.2px; position: absolute;top:1px;right:1px; width:18px;height:18px;border-radius: 50px;font-size: 12px;color:#fff;text-align: center;line-height:18px;}
+.pubarticlebg{width:56px;height:56px;display: block; border-radius:8px; background:#9b89b6 url(../images/article.png) no-repeat center;}
+.operatelinkcon a{color:#333;}
+.operatelinkcon p{line-height: 30px;font-size: 16px;}
+.reviewbg{width:56px;height:56px;display: block; border-radius:8px; background:#f9c232 url(../images/edit.png) no-repeat center;}
+.neworderbg{width:56px;height:56px;display: block; border-radius:8px; background:#45a6f7 url(../images/order.png) no-repeat center;;}
+
+#interviewsitemap{width:100%;height:90%;}
+/*页面浏览量*/
+.commbt{line-height: 25px;color:#333;text-indent: 10px; margin-bottom:10px;font-size: 16px; border-left: 5px solid #7297db;}
+.pageviewtotal{height:78%;border: 1px solid #e4e4e4;background-color: #fff;border-radius: 5px;}
+.interviewcon{min-height:480px;padding:10px;border: 1px solid #e4e4e4; background-color: #fff;}
+.mark{width:220px;height:10px;}
+.markwidth{width:180px;height:100%;display: inline-block;background-color: #e4e4e4;}
+.markbg{height:10px;display: block;background: -ms-linear-gradient(top, #e6e5ed,  #0e37e4);background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e6e5ed), to(#0e37e4));      /* Safari 4-5, Chrome 1-9*/
+background: -webkit-linear-gradient(top, #e6e5ed, #0e37e4);   background: -o-linear-gradient(top, #e6e5ed, #0e37e4); }
+/*会员注册统计*/
+.dateselect{padding:15px 20px;}
+.dateselect .selectitem{width:80px;height:35px;border: 1px solid #e4e4e4;margin-right: 15px;border-radius: 3px;}
+.dateselect .searchbtn{width:70px;height:35px;border: 1px solid #bcbcbc;cursor: pointer; background-color: #f2f2f2;border-radius: 3px;}
+.diagramtab{top:10px;right: 5%; position: relative;z-index:99;}
+.diagramtab ul li{height:30px;text-align: center;cursor: pointer; line-height: 30px;margin-right: 10px; display: block; float:right; }
+.diagramtab ul li a{display: block;width: 100%;height:100%;color:#ccc;font-size: 12px;}
+.charticon{display: inline-block;width:24px;height:14px;margin-right: 5px; position: relative;top:2px; background-color: #ccc;border-radius: 3px;}
+.diagramtab ul li:hover a{color: #e0e0e0}
+.diagramtab ul li:hover .charticon{background-color: #e0e0e0}
+.diagramtab ul li.active a{color:#333;}
+.diagramtab ul li.active .charticon{background-color: #45a6f7;}
+.load{display:none}

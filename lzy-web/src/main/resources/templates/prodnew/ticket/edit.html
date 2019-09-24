@@ -1,0 +1,310 @@
+<#include "/common/head.html">
+<link rel="stylesheet" type="text/css" href="${base}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link href="${base}/css/base.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/timepicker/jquery-clockpicker.min.css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+<link rel="stylesheet" href="${base}/js/plugin/assets/css/viewer.css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+    <div class="editbt">
+      <span class="js_editbt"></span>/
+      <#if prodVo.id??>
+        <span class="style2 " >编辑<span class="js_editbt"></span></span>
+        <#else>
+          <span class="style2">添加<span class="js_editbt"></span></span>
+      </#if>
+    </div>
+    <div class="editbox ">
+      <div class="editboxbt ">
+        <span class="editboxbtline active " dataattr="basicinfo">基本信息</span>
+        <span class="editboxbtline" dataattr="attachedinfo">附属信息</span>
+        <span class="editboxbtline" dataattr="businessinfo" style="display: none;">产品规格</span>
+        <span class="editboxbtline" dataattr="sceneryinfo">图片上传</span>
+      </div>
+       <form action="" >
+      <!--基本信息-->
+      <div class="editboxcon mb" id="basicinfo">
+          <input id="id" value="${(prodVo.id)!''}" type="hidden">
+          <div class="formformat clear">
+            <label><span class="style1">*</span>主标题：</label><input type="text" class="formoinputtext" name="maintitle" id="title" value="${(prodVo.name)!''}"/>
+            <span class="errortip"></span>
+          </div>
+          <div class="formformat clear">
+          	<label><span class="style1">*</span>关联景区：</label>
+          	<select class="formselect" name="ticket"  id="selTicket">
+            <#if viewVoList??>
+            <#list viewVoList as viewVo>
+            <option value="${(viewVo.viewId)!''}">${(viewVo.name)!''}</option>
+            </#list>
+            <#else>
+            <option value="">请选择</option>
+            </#if>
+            </select>
+          </div>
+          <div class="formformat clear">
+            <label>副标题：</label><input type="text" class="formoinputtext" id="subTitle" value="${(prodVo.subTitle)!''}"/>
+          </div>
+        <div class="formformat clear">
+          <label>门市价：</label><input type="text" class="formoinputtext" id="prodPrice" value="${(prodVo.price)!''}"/>
+        </div>
+        <div class="formformat clear">
+          <label>优惠价：</label><input type="text" class="formoinputtext" id="preferentialPrice" value="${(prodVo.preferentialPrice)!''}"/>
+        </div>
+        <div class="formformat clear">
+          <label>总库存：</label><input type="text" class="formoinputtext" id="freeNum" value="${(prodVo.freeNum)!''}"/>
+        </div>
+        <div class="formformat clear">
+          <label>产品编码：</label><input type="text" class="formoinputtext" id="outProdCode" value="${(prodVo.outProdCode)!''}"/>
+        </div>
+          <div class="formformat clear">
+
+            <label class="fl marktitle">是否上架：</label>
+            <div class="markbox fl">
+              <span class="markcheck"><input type="radio" <#if prodVo.status??&&prodVo.status == 'open'> checked </#if> name="onsale" value="open"/>上架</span>
+              <span class="markcheck"><input type="radio" <#if prodVo.status??&&prodVo.status == 'close'> checked </#if> name="onsale" value="close"/>下架</span>
+            </div>
+          </div>
+          <div class="formformat Ueditorbox  clear"><label class="fl">产品简介：</label><div class="ueditor" id="Ueditor" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">产品详情：</label><div class="ueditor" id="Ueditor2" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">费用说明：</label><div class="ueditor" id="Ueditor3" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">预订说明：</label><div class="ueditor" id="Ueditor4" type="text/plain" ></div></div>
+          <div class="formformat Ueditorbox clear"><label class="fl">其他内容：</label><div class="ueditor" id="Ueditor5" type="text/plain" ></div></div>
+      </div>
+      <!--附属信息-->
+      <div class="editboxcon " id="attachedinfo">
+          <div class="formformat fl formwidth">
+   
+            <p class="clear">
+            	<label><span class="style1">*</span>预订时间：</label><input type="checkbox" name="noordertime" class="noordertime"/>无需提前预订 
+            </p>
+            <p class="orderstatuscheck"><input type="text"     placeholder="提前预订时间" id="ordertime" name="ordertime" /></p>
+
+            <p class="clear"><label class="fl"><span class="style1">*</span>入园方式：</label><textarea class="formarea" name="parkway" id="wayOfAdmission" required></textarea>
+              <label for="parkway" class="error ml"></label>
+            </p>
+
+            <div class="sceneryitems">
+
+              <#if viewVoList?? && (viewVoList?size > 0)>
+                <#list viewVoList as vo>
+                 <#if vo_index==viewVoList?size-1>
+                  <div class="sceneryconn clear">
+                    <label class="fl"><span class="style1">*</span>关联景点：</label>
+	                    <div class="connectscenery fl">
+	                      <input type="text" class="formoinputtext js_scenery_match" name="connectscenery" value="${(vo.name)!''}" id="${(vo.viewId)!''}">
+	                    </div>
+                    	<!--<a class="removescenery" href="javascript:void(0)">删除</a>-->
+                    	<a class="addscenery" href="javascript:void(0)">+增加景点</a>
+                  </div>
+                  <#else>
+                  <div class="sceneryconn clear">
+                    <label class="fl"><span class="style1">*</span>关联景点：</label>
+	                    <div class="connectscenery fl">
+	                      <input type="text" class="formoinputtext js_scenery_match" name="connectscenery" value="${(vo.name)!''}" id="${(vo.viewId)!''}">
+	                    </div>
+                    	<a class="removescenery" href="javascript:void(0)">删除</a>
+                  </div>
+                  </#if>
+                </#list>
+              	<#else>
+                <div class="sceneryconn clear">
+                 	<label class="fl"><span class="style1">*</span>关联景点：</label>
+                  	<div class="connectscenery fl">
+                    	<input type="text" class="formoinputtext js_scenery_match" name="connectscenery">
+                  	</div>
+                  	<a class="addscenery" href="javascript:void(0)">+增加景点</a>
+                </div>
+              </#if>
+
+              	<!--模糊匹配窗口-->
+                <div id="scenic_matchs" class="scenery_matchs"></div>
+            </div>
+
+            <p><label>退票规则：</label><span class="formradio"><input class="refundrule" type="radio" name="refundrule" dataid="canrefund" value="y">可退</span><span class="formradio"><input type="radio" class="refundrule" name="refundrule" dataid="norefund" value="n">不可退</span>&nbsp&nbsp&nbsp&nbsp
+            </p>
+            <p class="supportrefund" style="display:none"><label class="labelwidth">是否支持部分可退：</label><span class="formradio"><input type="radio" name="partrefund" dataid="yes" value="y">是</span><span class="formradio"><input type="radio" name="partrefund" dataid="no" value="n">否</span>&nbsp&nbsp&nbsp&nbsp
+            </p>
+          </div>
+          <div class="formformat fl formwidth">
+  
+            <p class="clear"><label><span class="style1">*</span>时间类型：</label>
+            <span class="formradio"><input type="radio" name="ticket" id="all" value="all">全部</span>
+            <span class="formradio"><input type="radio" name="ticket" id="workDay" value="workDay">日常票</span>
+            <span class="formradio"><input type="radio" name="ticket" id="weekend" value="weekend">周末票</span>
+            <span class="formradio"><input type="radio" name="ticket" id="allDay" value="allDay">通用票</span>
+            </p>
+            <p><label><span class="style1">*</span>生效时间：</label><input type="text"   class="formoinputtext " placeholder="预订成功后几个小时可以使用"  id="effectiveTime"/>
+            </p>
+            <p class="clear"><label class="fl"><span class="style1">*</span>使用期限：</label><span class="dateform fl">&nbsp&nbsp<input type="text"   class="dateinput js_start_Date" />至&nbsp&nbsp<input type="text" class="dateinput js_end_Date" ></span>
+            </p>
+            <p class="clear"><label><span class="style1">*</span>支付方式：</label><span class="formradio"><input type="radio" name="payway" id="onLine" value="onLine">线上支付</span><span class="formradio"><input type="radio" name="payway" id="payOnArea" value="payOnArea">景区到付</span>&nbsp&nbsp&nbsp&nbsp
+            </p>
+            <p class="clear">
+              <label><span class="style1">*</span>入园时间：</label>
+              <span class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input type="text" class="datetimetext" name="staytime" id="admissionStartTime">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+                </span>
+              </span>
+              <span class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input type="text" class="datetimetext" name="staytime" id="admissionEndTime">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+                </span>
+              </span>
+            </p>
+            <p><label>取票地址：</label><input type="text" class="formoinputtext" placeholder="请输入详细的取票地址" id="address"/></p>
+           
+          </div>
+          <div class="clear"></div>
+      </div>
+      <!--库存与价格-->
+      <div class="editboxcon" id="businessinfo">
+          <div class="formformat">
+            <div class="routetable">
+              <table width="100%" border="0" cellspacing="0" id="prodPrice_num">
+                <thead>
+                  <tr class="title">
+                    <td width="12%">最小预定量</td>
+                    <td width="12%">最大预定量</td>
+                    <td width="12%">门市价/元</td>
+                    <td width="12%">销售价/元</td>
+                    <td width="12%">总库存</td>
+                    <td width="12%">剩余库存</td>
+                    <td width="12%">门票类型</td>
+                    <td width="12%">操作</td>
+                  </tr>
+                </thead>
+                <#if prodPriceVoList??>
+	                <#list prodPriceVoList as prodPriceVo>
+		                <tbody>
+		                  <tr>
+		                    <input type="hidden" class="pricetext prodPriceId"  value="${(prodPriceVo.id)!''}">
+		                    <td><input type="text" class="pricetext personNum"  value="${(prodPriceVo.param1Value)!''}"></td>
+		                    <td><input type="text" class="pricetext childNum" value="${(prodPriceVo.param2Value)!''}"></td>
+		                    <td><input type="text" class="pricetext oldPrice" value="${(prodPriceVo.price)!''}"></td>
+		                    <td><input type="text" class="pricetext price" value="${(prodPriceVo.discountPrice)!''}"></td>
+		                    <td><input type="text" class="pricetext totalNum" value="${(prodPriceVo.totalNum)!''}"></td>
+		                    <td><input type="text" class="pricetext freeNum" value="${(prodPriceVo.freeNum)!''}"></td>
+		                    <td><input type="text" class="pricetext desc" value="${(prodPriceVo.param3Value)!''}"></td>
+		                    <td><a class="js_radio_itemremove" href="javascript:void(0)">移除</a></td>
+		                  </tr>
+		                </tbody>
+	                </#list>
+                </#if>
+          
+              </table>
+            </div>
+          </div>
+          
+      <div class="clear routeadd"><a class="addnewroute manaicon fr js_radio_itemadd" href="javascript:void(0)">新增</a></div>
+          
+      </div>
+      <!--退改规则-->
+      <!--图片上传-->
+         <div class="editboxcon scenerypicbox" id="sceneryinfo">
+         <input type="hidden" value="${(prodVo.icon)!''}" class="js_viewIcon" />
+           <div class="formformat  picmaterialcon docs-pictures clear js_pic" id="sortable">
+             <#if picList?? && (picList?size > 0) >
+               <#list picList as map>
+                 <div class="picinsert fl ui-state-default">
+                   <div class="Cancel js_Cancel"></div>
+                   <img data-original='${base}/images/img/emma-watson-1.jpg' src="${(config.WebArticleCdnUrl)!''}${map.url!''}" _src="${map.url!''}" picId="${map.picId!''}"/>
+                 </div>
+               </#list>
+             </#if>
+             <div class="picupload fl js_picupload"></div>
+           </div>
+         </div>
+     </form>
+    </div>
+    <div class="page">
+        <div class="editsubmit">
+        	<!--<input type="button" value="下一步" class="btn-small comBtn"/>-->
+       		<input type="button" value="保存" class="save btn-small comBtn js_infosubmit"/>
+       		<input type="button" value="取消" class="btn-small comBtn btn-grey" onclick="location.href='list.html'"/>
+       	</div>
+    </div>
+  </div>
+  <!--选择图片弹窗-->
+  <div class="popup js_popUpuploadpic" id="uploadpic-save-content">
+
+  </div>
+  <!--图片列表-->
+  <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+      <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span><span class="pictabtit " dataattr="materialupload">素材库</span></div>
+        <div class="picuploadbox" id="localupload">
+          <div class="parentFileBox">
+            <ul class="fileBoxUl" >
+              <li class="diyUploadHover "><div id="uploadpic"></div></li>
+            </ul>
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn" id="uploadsave"/></div>
+        </div>
+        <div class="picuploadbox clear" id="materialupload"  style="display:none">
+          <form  action="" method="post" id="uploadmaterialform">
+
+            <div class="materialbox clear" id="material-content">
+
+
+            </div>
+            <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn js_popUpSubmit" id="addmaterialpic"/></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!--编辑图片-->
+  <script id="material-save" type="text/x-handlebars-template">
+    <div class="materrialsearch"><input type="text" class="searchtext js_name"/><input type="button" value="搜索" class="comBtn btn-small js_search"/></div>
+    <ul class="materiallist clear">
+      {{#if dataList}}
+      {{#each dataList}}
+      <li>
+        <span class="materiapic"><img src="{{filePath}}"/></span>
+        <p class="materiapicname clear">{{name}}<input type="checkbox" class="checkpic fr"/></p>
+      </li>
+      {{/each}}
+      {{else}}
+      <div>暂无数据</div>
+      {{/if}}
+    </ul>
+    <!--分页-->
+    <div class="js_pageDiv">
+      <div class="pageDiv">&nbsp;</div>
+    </div>
+  </script>
+   
+
+  <!--全部景点-->
+  <script id="scenic_list" type="text/x-handlebars-template">
+    {{#each viewVoList}}
+    <p class="scenery_item" id="{{viewId}}" type={{type}}>{{name}}</p>
+    {{/each}}
+  </script>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prodnew/ticket/edit'],function(head,ticketEdit){
+	head.init('module007001002');
+    var description = "${(prodExtVo.description)!''}";
+    var content = "${(prodExtVo.content)!''}";
+    var costExplain = "${(prodExtVo.costExplain)!''}";
+    var bookedExplain = "${(prodExtVo.bookedExplain)!''}";
+    var othersExplain = "${(prodExtVo.othersExplain)!''}";
+    var param = '${(prodExtVo.paramVal)!""}';
+    var viewId = "${(prodVo.viewId)!''}"
+	ticketEdit.init(description,content,costExplain,bookedExplain,othersExplain,param,viewId);
+  });
+</script> 

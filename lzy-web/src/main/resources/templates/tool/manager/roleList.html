@@ -1,0 +1,98 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+    <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+          <label>查询条件</label><input name="keywords" placeholder="请输入角色名称" type="text" class="search_input" id="roleName"/>
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button" id="search"/> 
+        </div>
+      </div>
+    </div>
+      <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+	        <h3 class="manaicon table-head">列表 <a  class="comBtn btn-big js_add_role fr" type="button" href="javascript:;" >新增角色</a></h3>
+        	<div class="tableBox">
+	         	<input type="hidden" id="mainId">
+	         	<input type="hidden" id="addId">
+	         	<input type="hidden" id="editId">
+	         	<table style="width:100%" border="0" cellspacing="0"> 
+		         	<thead>
+			           	<tr class="title"> 
+				            <td width="25%">角色名称</td>
+				            <td width="25%">角色描述</td>
+				            <td width="25%">最近登录时间</td> 
+				            <td width="25%">操作</td>
+			          	</tr> 
+		        	</thead>
+		         	<tbody id="role_show">
+		
+		         	</tbody>
+	        	</table>
+	        </div>
+      </div> 
+      <!--分页-->
+	      <div class="bottom js_pageDiv">
+              <div class="pageDiv">
+		      </div>
+	      </div>     
+      </div>    
+  </div>
+  <!--角色新增弹窗-->
+<div class="popup js_popUpaddrole" id="addrole-save-content"> &nbsp; </div>
+<script id="addrole-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">新增角色<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addsiteform" name="addsiteform" method="post" >
+          <p class="formfill"><label>角色名称：</label><input name="sitename" id="addName" type="text" autocomplete="off" class="commtext "></p>
+          <p class="formfill"><label>角色描述：</label><input name="sitename" id="description" type="text" autocomplete="off" class="commtext "></p>
+          <div class="roletreelist">
+            <ul id="addroletree" class="ztree"></ul> 
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn" id="addRloe"></div>
+        </form>
+      </div>
+    </div>
+</script>
+  <!--角色编辑弹窗-->
+<div class="popup js_popUpeditpower" id="editpower-save-content"> &nbsp; </div>
+<script id="editpower-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">编辑角色<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addsiteform" name="addsiteform" method="post" >
+          <p class="formfill"><label>角色名称：</label><input name="sitename" id="editName" type="text" class="commtext "></p>
+          <p class="formfill"><label>角色描述：</label><input name="sitename" id="editDescription" type="text" class="commtext "></p>
+          <div class="roletreelist">
+            <ul id="editroletree" class="ztree"></ul> 
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn" id="editRloe"></div>
+        </form>
+      </div>
+    </div>
+</script>
+<script id="role_list" type="text/x-handlebars-template">
+	{{#each dataList}}
+	<tr>
+		<td>{{name}}</td>
+		<td>{{description}}</td>
+		<td>{{formatDate createDate}}</td>
+        {{#equals type 'manager'}}
+		<td class="operate"><span ><a href="javascript:;" class="js_edit_role" roleId="{{roleId}}" mainId="{{id}}">编辑 </a> |</span><span class="del_minsu"><a  class="js_delete_row" id="js_delete_row" dataId="{{id}}" roleId="{{roleId}}" href="javascript:;" >删除</a></td>
+        {{/equals}}
+	</tr>
+	{{/each}}
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/manager/rolelist'],function(head,rolelist){
+	head.init('module006003002');
+	rolelist.init();
+  });
+</script>

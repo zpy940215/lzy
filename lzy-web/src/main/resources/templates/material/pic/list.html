@@ -1,0 +1,112 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/diyUpload/css/diyUpload.css"> 
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+      
+    <div class=" tablewrap pt ">
+	      <div class="search searchpositon"> 
+		        <h3 class="manaicon search-head">查询</h3>
+		        <div class="search-bar">
+		         	<input name="keywords" placeholder="标题/摘要" type="text" class="search_input" id="js_name"/>
+		          	<input value="查询" class="comBtn btn-small searchbtn" type="button" id="do_search"/>
+		        </div>
+	      </div>
+	      <div class="data_table datatableheight">
+	        <h3 class="manaicon table-head clear">列表</h3>
+	      	<div class="tableBox">
+		        <div class="picmateriallist clear" id="resource-list">
+		
+		        </div>
+	        </div> 
+	        <script id="resource-list-content" type="text/x-handlebars-template">
+            {{#each dataList}}
+            <div class="picmaterialbox">
+              <div class="picoperate clear">
+                <span class="picmaterialcheck"><input type="checkbox" class="js_check_row" dataId={{id}} /></span>
+                <a class="picdel operrateicon manaicon js_pic_delete"   dataId={{id}}></a>
+                <a class="picedit operrateicon manaicon js_pic_edit" picName="{{name}}"  picImgfile="{{filePath}}" dataId={{id}} href="javascript:void(0)"></a>
+              </div>
+              <div class="picbox">
+                <img src="{{filePath}}"/>
+              </div>
+              <p>图片名称：{{name}}</p>
+              <p>图片尺寸：{{width}}X{{high}}</p>
+              <p>图片大小：{{fileSize}}K</p>
+            </div>
+            {{/each}}
+          </script>
+	      
+      </div>
+      <!--分页-->
+        <div class="bottom ">
+            <div class="tableoperate"><input type="button" value="删除" class="btn-small comBtn js_banch_delete" id="delepicmaterial"><input type="button" value="本地上传" class="btn-big comBtn js_uploadpic"></div>
+            <div class="js_pageDiv"></div>
+
+       </div>
+    </div>           
+  </div>
+  <!--图片素材编辑弹窗-->
+  <div class="popup js_popUpuppicedit" id="picedit-save-content"> &nbsp; </div>
+  <script id="picedit-save" type="text/x-handlebars-template">
+  <div class="popup_bg"></div>
+  <div class="popup_box popupheight1">
+    <div class="popup_bt">图片编辑<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+      <form id="addsiteform" name="addsiteform" method="post" >
+		<div class="formfill clear">
+		 	 <label class="fl">选择文件：</label>
+         	 <div class="parentFileBox fl">
+          		  <ul class="fileBoxUl" >
+					 <li>
+              			<div class="editpicbox"><img id="js_img_file_name" data-original='${base}/images/img/emma-watson-2.jpg' src="${base}/images/img/thumbnails/emma-watson-2.jpg"/></div>
+					 </li>
+             		 <li class="diyUploadHover "><div  class="uploadpic"></div></li>
+           		 </ul> 	
+             </div>
+	     </div>
+        <p class="formfill"><label>图片名称：</label><input name="sitename" type="text" class="commtext " id="js_pic_name"></p>
+
+        <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn uploadSaveClass" id="" /></div>
+      </form>
+    </div>
+  </div>			
+  </script>
+  <!--图片上传弹窗-->
+  <div class="popup js_popUpupLoadpic metailpicupload" id="uploadpic-save-content"></div>
+  <script id="uploadpic-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+    <div class="popup_bt">选择图片<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+  	    <div class="picseltab"><span class="pictabtit active" dataattr="localupload">本地上传</span></div>
+		 <p class="formfill"><label>类型：</label>
+	        	<select class="commtext js_resource_type">
+					<option value="">普通素材</option>
+	        		<option value="route">线路</option>
+	        		<option value="show">演出</option>
+	        		<option value="photo">摄影作品</option>
+	        	</select>
+	    </p></br>
+        <div class="picuploadbox" id="localupload">
+          <div class="parentFileBox">
+            <ul class="fileBoxUl" >
+              <li class="diyUploadHover "><div  class="uploadpic"></div></li>
+            </ul>
+          </div>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"/><input type="button" value="保存" class="save formbtn uploadSaveClass" id=""  /></div>
+        </div>
+
+      </div>
+    </div>
+</script>
+<#include "/common/foot.html">                     
+<script type="text/javascript">
+require(['common/head','material/pic/list'],function(head,picList){
+	head.init('module004001001');
+	picList.init();
+});
+</script>
+

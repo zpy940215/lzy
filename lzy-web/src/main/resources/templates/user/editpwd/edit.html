@@ -1,0 +1,28 @@
+<#include "/common/head.html">
+<link href="${base}/css/usermana.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="manacon clear" >
+    <div class="navigator fl">
+        <p class="user_set"><span class="manaicon usericon"></span>用户设置</p>
+        <p class="accountedit"><a href="../account/list.html" ><span class="manaicon accounticon"></span>账号信息</a></p>
+        <p class="editpwd"><a href="javascript:;" class="active"><span class="manaicon pwdicon"></span>修改密码</a></p>
+    </div>  
+    <div class="data_table_wrap tablewrap fl">
+      <p class="usermanatit">修改密码</p>
+      <div class="formbox">
+        <form action="" id="signupForm">
+          <p class="formfill"><span>原密码</span><input type="password" class="commtext" name="oldpassword"/> <label for="oldpassword" class="error"></label></p>
+          <p class="formfill"><span>新密码</span><input type="password" class="commtext" name="password"/> <label for="password" class="error"></label></p>
+          <p class="formfill"><span>确认密码</span><input type="password" class="commtext" name="confirm_password"/> <label for="confirm_password" class="error"></label></p>
+          <p class="submit"><input type="submit" value="确认" class="btn-big comBtn"></p>
+        </form>
+      </div>
+    </div>     
+  </div>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','user/edit.html'],function(head,editlist){
+	head.init('module001');
+	editlist.init();
+  });
+</script>

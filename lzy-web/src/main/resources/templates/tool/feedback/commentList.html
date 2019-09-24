@@ -1,0 +1,151 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<!--右侧内容区-->
+<div class="rightcon clear">
+	<div class="searchpositon searchpositonpd">
+		<div class="search">
+			<h3 class="manaicon search-head">查询</h3>
+			<div class="search-bar">
+			<input name="keywords" id="js_name" placeholder="请输入用户名" type="text" class="search_input">
+				<input value="查询" class="comBtn btn-small" type="button" id="js_doSearch"> 
+				<!-- <label>是否审核</label> <select>
+					<option>请选择</option>
+					<option>已审核</option>
+					<option>未审核</option>
+				</select>  -->
+			</div>
+		</div>
+	</div>
+	<div class=" tablewrap tablewrapwidth pt" >
+		<div class="data_table datatableheight" >
+			<h3 class="manaicon table-head">列表</h3>
+			<div class="tableBox" id="comment-list-content">
+				
+			</div>	
+		</div>
+	</div>
+	<!--分页-->
+	<div class="bottom">
+		<div class="tableoperate fl  ">
+			<input type="button" value="批量删除" class="btn-big comBtn js_banch_delete" id="banchdeleterow">
+		</div>
+		<div class="js_pageDiv"> &nbsp; </div>
+	</div>
+</div>
+<!--评论列表-->
+<script id="comment-list" type="text/x-handlebars-template">
+		<table style="width:100%" cellspacing="0"> 
+			<thead>
+			 <tr class="title">
+ 				 <td width="5%"><input type="checkbox" class="js_check_all"></td>
+            	 <td width="10%">模块</td>
+			 <td width="10%">名称</td>
+            	 <td width="10%">用户名</td>
+            	 <td width="15%">创建时间</td> 
+            	 <td width="15%">评论内容</td> 
+				 <td width="10%">审核状态</td> 
+             	 <td width="10%">排序</td> 
+             	 <td width="10%">操作</td> 
+			</tr> 
+			</thead>
+			<tbody id="sortable">
+				{{#if dataList}}
+				{{#each dataList}}
+					<tr class="ui-state-default" pos="{{pos}}" aId="{{id}}" dIndex="{{@index}}" >
+						<td><input type="checkbox" class="checkbox js_check_row" class="js_check_row" dataId={{id}}></td>
+						<td>
+							{{#equal bizType "info_article"}}资讯_文章{{/equal}}<!-- 后面写的人可以继续加  -->
+							{{#equal bizType "view_scenic"}}旅游_景区{{/equal}}
+							{{#equal bizType "view_spots"}}旅游_景点{{/equal}}
+							{{#equal bizType "view_subspots"}}旅游_子景点{{/equal}}
+							{{#equal bizType "view_food"}}旅游_美食{{/equal}}
+							{{#equal bizType "view_shop"}}旅游_购物{{/equal}}
+							{{#equal bizType "view_hotel"}}旅游_住宿{{/equal}}
+							{{#equal bizType "view_disport"}}旅游_娱乐{{/equal}}
+							{{#equal bizType "prod_hotel"}}产品_住宿{{/equal}}
+							{{#equal bizType "prod_line"}}产品_线路{{/equal}}
+							{{#equal bizType "prod_ticket"}}产品_门票{{/equal}}
+						</td>
+						<td>{{bizName}}</td>
+						<td>{{uname}}</td>
+						<td>{{formatDate createDate "default"}}</td>
+                        <td>{{content}}</td>
+						<td ><input   value="{{pos}}" commentId="{{commentId}}" pos="{{pos}}" comId="{{id}}"  type="text" class="jspos tabletext"/></td>
+                        <td>
+                  			
+                  			{{#equal status "finish"}}已审核{{/equal}}
+                  			{{#equal status "auditing"}}审核中{{/equal}}
+                            {{#equal status "nopass"}}未通过审核{{/equal}}
+ 						</td>
+
+					   <td class="operate">
+                     {{#equal status "finish"}} 
+                          <span class="del_minsu"><a class="js_comment_delete"  dataId="{{id}}" href="javascript:;">删除</a></span>
+                     {{/equal}}
+
+                     {{#equal status "nopass"}}
+                        <span class="del_minsu"><a class="js_comment_delete"  dataId="{{id}}" href="javascript:;">删除</a></span>
+                      {{/equal}}
+                     {{#equal status "auditing"}}
+                        <span class="del_minsu"><a class="js_comment_audit" dataId="{{commentId}}" href="javascript:;">审核</a></span>
+                      {{/equal}}
+                           
+						</td>
+					</tr>
+				{{/each}}
+
+				{{else}}
+					<tr>
+						<td colspan="8">暂无数据</td>
+					</tr>
+				{{/if}}
+			</tbody>
+		</table>
+<!--分页-->
+        <div class="bottom">
+            <div class="js_pageDiv">
+                <span class="disabled">&lt;上一页</span>
+                <span class="pageCur">1</span>
+                <span class="disabled">下一页&gt;</span>
+                <span class="pageTotal">共1页</span>
+                <span class="countYe">
+					        到第<input type="text" value="1" maxlength="1"/>页
+					  <a href="javascript:;" class="turnDown">确定</a>
+					  <span> </span>
+				</span>
+            </div>
+        </div>
+		
+	</script>
+	 <!--评论审核弹窗-->
+  <div class="popup  js_examinepopup" id="examinepopup">&nbsp;  </div>
+  <script id="examine-list" type="text/x-handlebars-template">
+   <div class="popup_bg"> &nbsp; </div>
+		<div class="popup_box  popupheight4 popupwidth4">
+			<div class="popup_bt">{{popUp.titleName}}<a class="popupclose js_popUpClose" href="javascript:; "> &nbsp; </a></div>
+			<div class="popupform">
+				<form id="addsiteform" name="addsiteform" method="post" >
+					<input id="id" type="hidden" value="{{commentVo.id}}">
+					<p class="formfill">
+						<label style="left: -10px;">评论内容：</label>
+						<span class="question">{{commentVo.content}}</span>
+						<!--<input id="content"   readonly="true" type="text" class="commtext" value="{{complainVo.content}}">-->
+						</p>
+					<div class="formsubmit">
+						<input type="button" id="not" value="不通过" class="quit formbtn ">
+						<input type="button" value="通过" class="save formbtn js_popUpSubmit">
+					</div>
+				</form>
+			</div>
+		</div>
+</script>
+
+<#include "/common/foot.html">
+<script type="text/javascript">
+	require([ 'common/head', 'tool/feedback/commentlist' ], function(head,
+			commentlist) {
+		head.init('module006002001');
+		commentlist.init();
+	});
+</script>
+

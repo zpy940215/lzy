@@ -1,0 +1,149 @@
+<#include "/common/head.html">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+    <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+
+        <div class="search-bar">
+          <label>状态</label><select id="searchIsFree"><option value="">请选择</option><option value="open">启用</option><option value="close">禁用</option></select>
+          <label>名称</label><input name="keywords" placeholder="请输入名称" type="text" class="search_input" id="tempName"/>
+
+          
+          <input value="搜索" class="comBtn btn-small searchbtn" type="button" id="search"/>
+
+          
+          <input value="生成二维码" class="comBtn btn-big" type="button" id="createQrcode"/>
+          <input value="下载二维码" class="comBtn btn-big" type="button" id="downloadQrcode"/>
+        </div>
+
+
+      </div>
+    </div>
+     <div class="tablewrap tablewrapwidth pt" >
+        <div class="data_table datatableheight">
+        	<h3 class="manaicon table-head">列表  <a class="comBtn btn-big js_add_people fr" >新增渠道</a>
+        		<#if isNeedSyncJy??> 
+         			 <#if isNeedSyncJy=="Y"> 
+         			 	<a class="addgenre btn-big comBtn fr js_sync_jy" href="javascript:void(0)">同步总仓库</a>
+         			 </#if>
+         		</#if>
+        	</h3>
+        	<div class="tableBox">
+	         	<table style="width:100%" border="0" cellspacing="0"> 
+		         	<thead>
+			           	<tr class="title">
+				            <td width="10%">渠道id</td>
+				            <td width="25%">渠道名称</td>
+				            <td width="20%">商家类型</td>
+				            <td width="15%">描述信息</td>
+				            <!-- <td width="10%">折扣</td> -->
+				            <td width="5%">状态</td>
+				            <td width="15%">操作</td>
+			          	</tr>
+		         	</thead>
+			        <tbody  id="user_show">
+			        
+			        </tbody>
+	        	</table>
+        	</div>
+      	</div>   
+      	<!--分页-->
+       <div class="bottom js_pageDiv">
+	      <div class="pageDiv">
+			&nbsp;
+	      </div>
+      </div>     
+    </div>  
+  </div>
+  <!--新增渠道-->
+<div class="popup js_popUpaddpeople" id="addpeople-save-content"> &nbsp; </div>
+<script id="addpeople-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">添加渠道<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="" name="addsiteform" method="post" >
+		  <p class="formfill">
+			<label>渠道名称：</label>
+			<input  type="text" class="commtext name"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+         <p class="formfill">
+			<label>描述信息：</label>
+			<input  type="text" class="commtext moneyType"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+          <p class="formfill">
+			<label>状态：</label>
+			<select class="commtext isfree" >
+			<option value="open">启用</option>
+			<option value="close">禁用</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		  
+          <div class="formsubmit">
+			<input type="button" value="取消" class="quit formbtn js_popUpClose">
+			<input type="button" value="保存" class="save formbtn" id="addUserSave"/>
+		  </div>
+        </form>
+      </div>
+    </div>
+</script>
+<!--编辑渠道-->
+<div class="popup js_popUpeditpeople" id="editpeople-save-content"> &nbsp; </div>
+<script id="editpeople-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+      <div class="popup_bt">编辑邮费<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form id="addsiteform" name="addsiteform" method="post" >
+           <p class="formfill">
+			<label>渠道名称：</label>
+			<input  type="text" class="commtext name"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+         <p class="formfill">
+			<label>描述信息：</label>
+			<input  type="text" class="commtext moneyType"/>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+          <p class="formfill">
+			<label>状态：</label>
+			<select class="commtext isfree" >
+			<option value="open">启用</option>
+			<option value="close">禁用</option>
+			</select>
+			<span class="errortip js_errortip"> &nbsp; </span>
+		  </p>
+		 
+       		<div class="formsubmit">
+				<input type="button" value="取消" class="quit formbtn js_popUpClose">
+				<input type="button" value="保存" class="save formbtn" />
+			</div>
+             
+		</form>
+      </div>
+    </div>
+</script>
+<script id="user_list" type="text/x-handlebars-template">
+	{{#each dataList}}
+	<tr>
+		<td>{{sourceId}}</td>
+		<td>{{name}}</td>
+		<td>{{sourceType}}</td>
+		<td>{{description}}</td>
+		<td class="js_isfree" id="isfree_{{id}}">{{status}}</td>
+		<td class="operate"><span ><a href="javascript:;" class="js_edit_people" id="{{id}}">编辑 </a> |</span><span class="del_minsu"><a  class="js_delete_row" id="js_delete_row" dataId="{{id}}" href="javascript:;" >删除</a> |</span><span class="del_minsu"><a  class="js_download" id="" dataId="{{id}}" sourceCode="{{sourceCode}}" href="javascript:;" >下载</a></span></td>
+	</tr>
+	{{/each}}
+</script>
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','prod/source/list'],function(head,managerlist){
+	head.init('module005005001');
+	managerlist.init();
+  });
+</script>

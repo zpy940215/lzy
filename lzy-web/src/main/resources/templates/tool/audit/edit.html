@@ -1,0 +1,76 @@
+<#include "/common/head.html">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+
+  <!--右侧内容区-->
+  <div class="rightcon pt clear" >
+	    <div class="editbt">资源审核/<span class="style2">审核</span></div>
+	    <div class="editbox pb" >
+		      <div class="editboxbt ">
+		        <span class="editboxbtline active" dataattr="basicinfo">审核信息</span>
+		      </div>
+				<input id="dataBind" dataId='${auditVo.dataId!}' dataType='${auditVo.dataType!}' auditId='${auditVo.id!}'  type="hidden" />
+				<#if auditVo.dataType == 'complain_refer'>
+					<div class="editboxcon" id="suggestcon">
+						<div class="formformat clear"><label>标题：${(complainVo.subject)!''}</label></div>
+						<div class="formformat clear">
+							<label class="fl"><span class="style1">*</span>内容：</label>
+							<textarea class="commarea" placeholder='${complainVo.content!}'></textarea>
+							<span class="errortip"></span>
+						</div>
+						<div class="formformat"><label>服务电话：</label><input type="text" class="formoinputtext" value="${complainVo.mobile!}"></div>
+						<div class="formformat"><label>联系人：${(complainVo.uname)!''}</label></div>
+					</div>
+				<#elseif auditVo.dataType=='comment'>
+		      		<div class="editboxcon" id="commentcon">
+		          <div class="formformat"><label>评论人：</label>${(commentVo.uname)!''}</div>
+		          <div class="formformat clear">
+		          		<label >评论时间：</label><span class="forminfo">${commentVo.createDate?date}</span>
+		         	</div>
+						<div class="formformat"><label>评论标题：</label>${(commentVo.subject)!''}</div>
+						<div class="formformat"><label>评分：</label>${(commentVo.score)!''}</div>
+
+						<div class="formformat clear">
+		          		<label>评论内容：</label>
+		          		<div class="commentinfo">
+							${(commentVo.content)!''}
+		          		</div>
+		         	</div>
+		      </div>
+				<#elseif auditVo.dataType=='travel_agency'	>
+		      		<div class="editboxcon" id="travelanget">
+						<br />
+		          <div class="formformat"><label>评论人：</label><span class="forminfo">${travelAgencyVo.uname!}</span></div>
+		          <div class="formformat clear">
+		          		<label >联系人：</label><span class="forminfo">${travelAgencyVo.linkName!}</span>
+		         	</div>
+		         	<div class="formformat clear">
+		          		<label>手机号：</label><span class="forminfo">${travelAgencyVo.linkPhoneNum!}</span>
+		         	</div>
+		         	<div class="formformat clear">
+		          		<label>旅行社名称：</label><span class="forminfo">${travelAgencyVo.angentName!}</span>
+		         	</div>
+		         	<div class="formformat clear">
+		          		<label>经营资质证书编号：</label><span class="forminfo">${travelAgencyVo.aptitudesNum!}</span>
+		         	</div>
+		         	<div class="formformat clear">
+		          		<label>经营资质证书扫描件：${travelAgencyVo.aptitudesFile}</label>
+		          		<img width="200" height='200' src="${(config.WebArticleCdnUrl)!''}${travelAgencyVo.aptitudesFile}" />
+		         	</div>
+		      </div>
+		      <#elseif auditVo.dataType=='resource_pic'	>
+		      	<a href="${resourceVo.filePath}" target="_blank"><img src="${resourceVo.filePath}" style="width:30%;height:auto; margin:1%;"/></a>
+				</#if>
+			<div class="page">
+				<div class="editsubmit"><input type="button" value="审核通过" class="save  comBtn " id="pass"><input type="button" value="审核不通过" class="comBtn btn-grey" id="nopass"></div>
+			</div>
+	    </div>
+  </div>
+<#include "/common/foot.html">
+<script type="text/javascript">
+	require([ 'common/head', 'tool/audit/edit'], function(head,editList) {
+		head.init('module006002003');
+		editList.init()
+
+	});
+</script>
+

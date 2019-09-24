@@ -1,0 +1,152 @@
+<#include "/common/head.html">
+<link href="${base}/css/tool.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/popup.css" rel="stylesheet" type="text/css">
+<link href="${base}/css/edit.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/date/css/smoothness/jquery.ui.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${base}/js/plugin/date/css/css.css"/>
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+  
+    	<div class="treewrap dataModle fl treeCon">
+		<ul class="treeCon ">
+			<li>
+				<p class="tit">
+					<i class="iCon tree_parent"></i><a class="active"
+						href="questionnaire.html">全部问卷</a>
+				</p>
+				<ul id="question_name_show">
+				</ul>
+			</li>
+		</ul>
+	</div>
+	
+ <div class="data_table_wrap tablewrap pt fr">
+    	<div class="searchwrap searchpositon">
+		      <div class="search"> 
+		        <h3 class="manaicon search-head">查询</h3>
+		        <div class="search-bar">
+		          <label>查询条件</label><input name="keywords" placeholder="请输入问题" type="text" class="search_input"/>
+         		 <input value="搜索" class="comBtn btn-small searchbtn" type="button" id="search"/>
+		        </div>
+		      </div>
+      	</div>
+      	
+    <div class="data_table datatableheight" id="view-list-content">
+
+		<h3 class="manaicon table-head">列表
+			<a class="btn-big comBtn js_add_questionnaire fr" href="javascript:;">添加问卷</a>
+		</h3>
+		<table style="width: 100%" border="0" cellspacing="0">
+			<thead>
+				<tr class="title">
+					<td width="5%">选项</td>
+					<td width="5%">序号</td>
+					<td width="15%">标题</td>
+					<td width="15%">时间</td>
+					<td width="10%">参与人数</td>
+					<td width="15%">添加时间</td>
+					<td width="15%">排序</td>
+					<td width="10%">操作</td>
+				</tr>
+			</thead>
+		<tbody id="question_show">
+
+
+		</tbody>
+		</table>
+</div>
+	
+	
+	
+
+<!--分页  -->
+    </div>   
+       <div class="bottom js_pageDiv">
+	      <div class="pageDiv"></div>
+      </div>
+  </div>
+  	<!--添加问卷弹窗-->
+<div class="popup js_questionnaireAdd_popup" id="addquestionnaire-save-content">&nbsp;</div>
+	<script id="addQuestion-save" type="text/x-handlebars-template">
+	  <div class="popup_bg"></div>
+	    <div class="popup_box questionnairebox">
+	      <div class="popup_bt">添加问卷<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+	      <div class="popupform">
+		        <form id="addquestionform" name="addquestionform" method="post" >
+		          <p class="formfill"><label>问卷标题：</label><input id="name" name="name"  type="text" class="commtext name" placeholder="请输入问卷标题"><span class="errortip js_errortip"> &nbsp; </span></p>
+		          <p class="formfill"><label>开始时间：</label><input id="opentime" class="commtext startDate dateinput js_start_Date" type="text" placeholder="年/月/日"></p>
+	        	  <p class="formfill"><label>结束时间：</label><input id="bussinesstime" class="commtext endDate js_end_Date" type="text" placeholder="年/月/日"></p>
+		          <p class="formfill"><label class="fl">问卷描述：</label><textarea id="description" name="description"  type="textarea" class="commtext description" value=""></textarea></p>   
+				  <p class="formfill"><label>排序：</label><input name="pos"  type="text" class="commtext pos" placeholder="请输入排序序号"></p>
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn" id="saveQuestion"></div>
+		        </form>
+		      </div>
+	    </div>
+  </script>
+  <!-- 问卷列表 -->
+  <script id="questionnaire-list" type="text/x-handlebars-template">
+     {{#if dataList}}
+         {{#each dataList}}
+		<tr class="ui-state-default" >
+		<td><input type="checkbox" class="checkbox js_check_row" class="js_check_row" id={{id}} pos={{pos}} status={{status}}>
+		</td>
+		<td>{{addOne @index}}</td>
+		<td>{{name}}</td>
+		<td>开始：{{formatDate startDate "default"}}
+			结束：{{formatDate endDate "default"}}
+		</td>
+        <td>{{totalPerson}}</td>
+		<td>{{formatDate createDate "default"}}</td>
+		<td><input id="sortnum" type="text" class="tabletext" value={{pos}} /></td>
+		<td class="operate">
+			<span class="edit_question"><a href="javascript:;" class="js_edit_questionnaire" id="{{id}}" >编辑</a> |</span>
+			<span class="del_question"><a href="javascript:void(0)" class="js_delete_row" id="{{id}}">删除</a></span>
+		</td>
+	</tr>
+         {{/each}}
+	{{else}}
+				<tr>
+					<td colspan="9">暂无数据</td>
+				</tr>
+  	{{/if}}
+	
+ </script>
+ <!-- 左侧列表 -->
+ <script id="questionnaire-name-list" type="text/x-handlebars-template">
+     					{{#if dataList}}
+         					{{#each dataList}}
+								<li><i class="iCon tree_child"></i><a href="question.html?questionVo.id={{id}}" id={{id}} pos={{pos}} status={{status}}>{{name}}</a></li>
+         					{{/each}}
+						{{else}}
+								暂无数据
+  						{{/if}}
+ </script>
+<!--编辑问卷--><!-- readonly -->
+<div class="popup js_questionnaireEdit_popup" id="editquestionnaire-edit-content"> &nbsp; </div>
+<script id="editQuestion-edit" type="text/x-handlebars-template">
+	  <div class="popup_bg"></div>
+	    <div class="popup_box questionnairebox">
+	      <div class="popup_bt">编辑问卷<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+	      <div class="popupform">
+        <form id="editquestionform" name="editquestionform" method="post" >
+				  <p class="formfill"><label>问卷标题：</label><input id="name" name="name" value="{{name}}" type="text" class="commtext"></p>
+		          <p class="formfill"><label>开始时间：</label><input id="startDate" name="startDate" value="{{formatDate startDate 'default'}}" class="commtext startDate js_start_Date dateinput " type="text" placeholder="年/月/日"></p>
+	        	  <p class="formfill"><label>结束时间：</label><input id="endDate" name="endDate"  value="{{formatDate endDate 'default'}}" class="commtext endDate js_end_Date" type="text" placeholder="年/月/日"></p>
+		          <p class="formfill"><label class="fl">问卷描述：</label><textarea id="description"  type="textarea" class="commtext" name="description" >{{description}}</textarea></p>
+				  <p class="formfill"><label>排序：</label><input id="pos" name="pos" value="{{pos}}" type="text" class="commtext"></p>   
+		          <div class="formsubmit"><input type="button" value="关闭" class="quit formbtn js_popUpClose"><input type="button" value="保存" class="save formbtn" id="editQuestion"></div>
+		</form>
+      </div>
+    </div>
+</script>
+<#include "/common/foot.html">      
+<script type="text/javascript">
+require([ 'common/head', 'tool/feedback/questionnaire' ],function(head, questionnaire) {
+		head.init('module006002004');
+		questionnaire.init();
+});
+
+	/* var handleHelper = Handlebars.registerHelper("addOne",function(index){
+	    return index+1;
+	  }); */
+</script>

@@ -1,0 +1,167 @@
+<#include "/common/head.html">
+<link href="${base}/css/tool.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${base}/js/plugin/ztree/zTreeStyle/zTreeStyle.css" type="text/css">
+  <!--右侧内容区-->
+  <div class="rightcon clear" style="padding:70px 20px 10px 180px;">
+    <div class="treewrap dataModle fl">
+
+      <ul id="treeDemo" class="ztree"></ul> 
+      <div id="rMenu">
+        <ul>
+          <li id="m_add"  class="js_edit_TreeNode"><span class="editicon"></span>修改</li>
+          <li id="m_del"  class="js_add_TreeNode"> <span class="addcolumnicon"></span>新建子栏目</li>
+        </ul>
+      </div>
+    </div>  
+    <div class=" fr" style="margin-bottom:0px">
+      <div class="data_table columnedittable" style="margin-top:0px">
+        <p class="columntitle">编辑栏目</p>
+        <form  action="" method="post"  id="columnedittable">
+          <p class="formfill">
+            <label><span class="style1">*</span>上级栏目：</label><select disabled="disabled" class="commtext"><option>去哪儿|TRAVEL</option></select>
+            <label class="labelwidth"><span class="style1">*</span>栏目名称：</label><input name="columnname" type="text" class="commtext " required>
+            <label for="columnname" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label><span class="style1">*</span>数据类型：</label><select  class="commtext " name="datatype" required><option value="资讯">资讯</option><option value="酒店">酒店</option><option value="景区">景区</option><option value="景点">景点</option><option value="路线">路线</option><option selected="" value="自定义">自定义</option></select>
+            <label class="labelwidth">访问路径：</label><input  type="text" class="commtext " >
+          </p>
+          <p class="formfill">
+            <label>Meta标题：</label><input name="sitename" type="text" class="commtext ">
+            <label class="labelwidth">Keywords：</label><input type="text" class="commtext ">
+          </p>
+          <p class="formfill clear">
+            <label  class="fl">Meta描述：</label><textarea class="textinput"></textarea>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>打开方式：</label>
+            <span class="radiostyle"><input type="radio" name="paytype" required>新窗口打开</span>
+            <span class="radiostyle"><input type="radio" name="paytype">当前窗口打开</span>
+            <label for="paytype" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>评论权限：</label>
+            <span class="radiostyle"><input type="radio" name="power" required>游客评论</span>
+            <span class="radiostyle"><input type="radio" name="power">登录评论</span>
+            <span class="radiostyle"><input type="radio" name="power">关闭评论</span>
+            <span class="radiostyle"><input type="radio" name="power">购买评论</span>
+            <label for="power" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>审核：</label>
+            <span class="radiostyle"><input type="radio" name="examine" required>无需审核</span>
+            <span class="radiostyle"><input type="radio" name="examine">需要审核</span>
+            <label for="examine" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>展示终端：</label>
+            <span class="radiostyle"><input type="radio" name="displayterminal" required>wap</span>
+            <span class="radiostyle"><input type="radio" name="displayterminal">web</span>
+            <span class="radiostyle"><input type="radio" name="displayterminal">一体机</span>
+            <span class="radiostyle"><input type="radio" name="displayterminal">微信</span>
+            <label for="displayterminal" class="error"></label>
+          </p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn">
+           <input type="submit" value="保存" class="save formbtn "></div>
+        </form>
+      </div>
+    </div>           
+  </div>
+   <!--添加站点弹窗-->
+<div class="popup js_popUpsiteadd" id="siteadd-save-content"> &nbsp; </div>
+<script id="siteadd-save" type="text/x-handlebars-template">
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight1">
+    <div class="popup_bt">添加站点<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+    <div class="popupform">
+      <form  action="" method="post" id="addsitepopup">
+        <p class="formfill">
+          <label>站点名称：</label><input name="sitename" type="text" class="commtext ">
+          <label class="labelwidth"><span class="style1">*</span>是否开启注册/登录：</label>
+          <span class="radiostyle"><input type="radio" name="isopen">否</span>
+          <span class="radiostyle"><input type="radio" name="isopen">是</span>
+          <label for="isopen" class="error" ></label>
+        </p>
+        <p class="formfill">
+          <label>域名链接：</label><input name="sitename" type="text" class="commtext ">
+          <label class="labelwidth">Favicon.ico：</label><input type="file">
+        </p>
+        <p class="formfill">
+          <label>大图尺寸：</label><input name="sitename" type="text" class="commtext ">
+          <label class="labelwidth">中图尺寸：</label><input name="sitename" type="text" class="commtext ">
+        </p>
+        <p class="formfill">
+          <label >小图尺寸：</label><input name="sitename" type="text" class="commtext ">
+        </p>
+        <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose"><input type="submit" value="保存" class="save formbtn js_popUpSubmit" id="addcolumnbtn"></div>
+      </form>
+    </div>
+    </div>
+  </div>
+</script>
+<div class="popup js_popUpcolumnadd" id="columnadd-save-content"> &nbsp; </div>
+<script id="columnadd-save" type="text/x-handlebars-template">
+  <!--添加子栏目-->
+    <div class="popup_bg"></div>
+    <div class="popup_box popupheight3">
+      <div class="popup_bt">添加子栏目<a class="popupclose js_popUpClose" href="javascript:void(0)"></a></div>
+      <div class="popupform">
+        <form  action="" method="post"  id="columneditform">
+          <p class="formfill clear">
+            <label><span class="style1">*</span>上级栏目：</label><select disabled="disabled" class="commtext"><option>去哪儿|TRAVEL</option></select>
+            <label class="labelwidth"><span class="style1">*</span>栏目名称：</label><input name="columnname" type="text" class="commtext " required>
+            <label for="columnname" class="error" style="float:right;margin-right:175px;"></label>
+          </p>
+          <p class="formfill">
+            <label><span class="style1">*</span>数据类型：</label><select  class="commtext " name="datatype" required><option value="资讯">资讯</option><option value="酒店">酒店</option><option value="景区">景区</option><option value="景点">景点</option><option value="路线">路线</option><option selected="" value="自定义">自定义</option></select>
+            <label class="labelwidth">访问路径：</label><input  type="text" class="commtext " >
+          </p>
+          <p class="formfill">
+            <label>Meta标题：</label><input name="sitename" type="text" class="commtext ">
+            <label class="labelwidth">Keywords：</label><input type="text" class="commtext ">
+          </p>
+          <p class="formfill clear">
+            <label  class="fl">Meta描述：</label><textarea class="textinput"></textarea>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>打开方式：</label>
+            <span class="radiostyle"><input type="radio" name="paytype" required>新窗口打开</span>
+            <span class="radiostyle"><input type="radio" name="paytype">当前窗口打开</span>
+            <label for="paytype" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>评论权限：</label>
+            <span class="radiostyle"><input type="radio" name="power" required>游客评论</span>
+            <span class="radiostyle"><input type="radio" name="power">登录评论</span>
+            <span class="radiostyle"><input type="radio" name="power">关闭评论</span>
+            <span class="radiostyle"><input type="radio" name="power">购买评论</span>
+            <label for="power" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>审核：</label>
+            <span class="radiostyle"><input type="radio" name="examine" required>无需审核</span>
+            <span class="radiostyle"><input type="radio" name="examine">需要审核</span>
+            <label for="examine" class="error"></label>
+          </p>
+          <p class="formfill">
+            <label ><span class="style1">*</span>展示终端：</label>
+            <span class="radiostyle"><input type="radio" name="displayterminal" required>wap</span>
+            <span class="radiostyle"><input type="radio" name="displayterminal">web</span>
+            <span class="radiostyle"><input type="radio" name="displayterminal">一体机</span>
+            <span class="radiostyle"><input type="radio" name="displayterminal">微信</span>
+            <label for="displayterminal" class="error"></label>
+          </p>
+          <div class="formsubmit"><input type="button" value="取消" class="quit formbtn js_popUpClose">
+           <input type="submit" value="保存" class="save formbtn js_popUpSubmit"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+ <#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','tool/site/siteEdit'],function(head,siteEditList){
+	head.init('module006001001');
+	siteEditList.init();
+  });
+</script>  

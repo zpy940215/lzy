@@ -1,0 +1,137 @@
+<#include "/common/head.html">
+  <!--右侧内容区-->
+  <div class="rightcon clear" >
+    <div class="searchpositon searchpositonpd" >
+      <div class="search"> 
+        <h3 class="manaicon search-head">查询</h3>
+        <div class="search-bar">
+		  <input id="selectAreaId" type="hidden">
+		  <input id="rootAreaId" value="${(rootAreaId)!''}" type="hidden">
+		  <div class="formformat clear">
+          <label>券类型</label>
+          <span class="radiomargin">
+          	<input type="checkbox" value="" name="usetype">全选
+            <input type="checkbox" value="" name="usetype">餐饮
+          	<input type="checkbox" value="" name="usetype">住宿
+          </span>
+          </div>
+          <br/>
+          <div class="formformat clear">
+          <label>条件查询</label><input name="keywords" placeholder="请输入名称" type="text" class="search_input js_search_input">
+          <input value="搜索" class="comBtn btn-small searchbtn js_searchbtn" type="button"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap tablewrapwidth pt" >
+		<div class="data_table datatableheight" >
+	    	<h3 class="manaicon table-head">列表<a class="pubspecialty btn-small comBtn fr" href="edit.html" target="blank">添加</a></h3>
+			<div class="tableBox" id="native-list-content">
+			<table style="width:100%" border="0" cellspacing="0"> 
+	        <thead>
+	          <tr class="title"> 
+	            <td width="5%"><input type="checkbox" class="checkall js_check_all"/></td>
+	            <td width="20%">券名称</td>
+	            <td width="5%">类型</td>
+	            <td width="15%">所属商户</td> 
+	            <td width="20%">有效期</td> 
+	            <td width="10%">已售</td>
+	            <td width="10%">状态</td>
+	            <td width="15%">操作</td> 
+	         </tr> 
+	        </thead>
+	        <tbody id="sortable">
+					<tr class="ui-state-default" dataId="{{prodVo.id}}">
+						<td><input type="checkbox" class="checkbox js_check_row"/></td>
+						<td>浙江蝶来酒店双人间￥900代1200券</td>
+						<td>住宿</td>
+						<td>浙江蝶来酒店</td>
+						<td>2107-12-17至2018-03-14</td>
+						<td>400张</td>
+						<td class="onsalestadus">已上架</td>
+						<td class="operate">
+						<span class="onsale"><a href="javascript:void(0)" class="js_on_sale">上架</a> |</span>
+						<span class="edit_article"><a href="edit.html" target="_blank">编辑</a> |</span>
+						<span class="del_article"><a href="javascript:void(0)" class="js_delete_row">删除</a></span>
+						</td>
+					</tr>
+				<tr>
+					<td><input type="checkbox" class="checkbox js_check_row"/></td>
+						<td>浙江蝶来酒店双人间￥200代280券</td>
+						<td>餐饮</td>
+						<td>浙江蝶来酒店</td>
+						<td>2107-12-17至2018-03-14</td>
+						<td>400张</td>
+						<td class="onsalestadus">已上架</td>
+						<td class="operate">
+						<span class="onsale"><a href="javascript:void(0)" class="js_on_sale">上架</a> |</span>
+						<span class="edit_article"><a href="edit.html" target="_blank">编辑</a> |</span>
+						<span class="del_article"><a href="javascript:void(0)" class="js_delete_row">删除</a></span>
+						</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" class="checkbox js_check_row"/></td>
+						<td>浙江蝶来酒店双人间￥900代1200券</td>
+						<td>住宿</td>
+						<td>浙江蝶来酒店</td>
+						<td>2107-12-17至2018-03-14</td>
+						<td>400张</td>
+						<td class="onsalestadus">已上架</td>
+						<td class="operate">
+						<span class="onsale"><a href="javascript:void(0)" class="js_on_sale">上架</a> |</span>
+						<span class="edit_article"><a href="edit.html" target="_blank">编辑</a> |</span>
+						<span class="del_article"><a href="javascript:void(0)" class="js_delete_row">删除</a></span>
+						</td>
+				</tr>
+	        </tbody>
+	  	 	</table>
+	    	</div>
+    	</div>
+    </div> 
+    <script type="text/x-handlebars-template" id="native-list">
+	    <table style="width:100%" border="0" cellspacing="0"> 
+	        <thead>
+	          <tr class="title"> 
+	            <td width="10%"><input type="checkbox" class="checkall js_check_all"/></td>
+	            <td width="25%">券名称</td>
+	            <td width="15%">类型</td>
+	            <td width="10%">所属商户</td> 
+	            <td width="10%">有效期</td> 
+	            <td width="10%">已售</td>
+	            <td width="10%">状态</td>
+	            <td width="10%">操作</td> 
+	         </tr> 
+	        </thead>
+	        <tbody id="sortable">
+					<tr class="ui-state-default" dataId="{{prodVo.id}}">
+						<td><input type="checkbox" class="checkbox js_check_row"/></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="onsalestadus"><span class="style2">上架</span><span class="style1">下架</span></td>
+						<td class="operate"><span class="onsale"><a href="javascript:void(0)" class="js_off_sale"">下架</a>
+						<a href="javascript:void(0)" class="js_on_sale"">上架</a> |</span><span class="edit_article"><a href="edit.html" target="_blank">编辑</a> |</span><span class="del_article"><a href="javascript:void(0)" class="js_delete_row"">删除</a> </span></td>
+					</tr>
+	        </tbody>
+	  	 </table>
+    </script>
+     <!--分页-->
+     <!-- <div class="bottom ">
+		 <div class="tableoperate">
+		 	<input type="button" value="删除" class="btn-small comBtn js_delBtn" id="banchdeleterow">
+		 	<input type="button" value="排序上升" class="btn-big comBtn js_sort_Up"/>
+		 	<input type="button" value="排序下降" class="btn-big comBtn js_sort_Down"/>
+            <input type="button" value="保存排序" class="btn-big comBtn savesort js_saveSort">
+		 </div>
+	     <div class="js_pageDiv"></div>
+	 </div> -->
+<#include "/common/foot.html">                              
+<script type="text/javascript">
+require(['common/head','common/area'],function(head,area){
+	head.init('module007001003');
+	area.init();
+  });
+</script>
+

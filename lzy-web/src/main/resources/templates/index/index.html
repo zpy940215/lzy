@@ -1,0 +1,54 @@
+<#include "/common/head.html">
+<link href="/css/count.css" rel="stylesheet" type="text/css">
+	<!--右侧内容区-->
+	<div class="rightcon">
+		<p class="date_time">HI，现在是2016年08月23日 星期四  10:27</p>
+		<div class="total_count">
+			<div class="commcount">
+				<div class="count_tit" >浏览访问统计</div>
+				<div id="interviewsitemap"> </div>
+			</div>
+			<div class="operatelink">
+				<div class="operatelinklist clear">
+					<div class="operatelinkcon">
+						<a href="../theme/articlemana.html">
+							<span class="pubarticlebg"> </span>
+							<p>发文章</p>
+						</a>
+					</div>
+					<div class="operatelinkcon">
+						<a href="javascript:void(0)">
+							<span class="reviewbg"> </span>
+							<span class="reviewnum">13</span>
+							<p>待审核</p>
+						</a>
+					</div>
+					<div class="operatelinkcon">
+						<a href="javascript:void(0)">
+							<span class="neworderbg"> </span>
+							<p>新订单</p>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="commcount mt">
+				<div class="count_tit">每日会员统计</div>
+				<div id="membertotalmap" style="width:100%;height:100%;">
+				 
+				</div>
+			</div>
+			<div class="operatelink mt">
+				<div class="count_tit">访问来源</div>
+				<div id="interviewmap" style="width:100%;height:100%"> </div>
+			</div>
+		</div>
+	</div>
+<#include "/common/foot.html">      
+<script type="text/javascript">
+	require(['common/head','index/index'],function(head,index){
+		head.init('module001001001');
+		
+		index.init();
+	});
+</script>
+
