@@ -8,8 +8,8 @@ define(['jquery','common','Handlebars','HandlebarExt','cookie'],function($, comm
 		menutop:function(){
 
 			$.ajax({
-		        type: "post",
-		        url: "/module!queryModuleByParams.ajax",
+		        type: "get",
+		        url: "/my/module/menu",
 		        data : {
 					//'uid': $.cookie("uid")
 				},	
@@ -17,11 +17,9 @@ define(['jquery','common','Handlebars','HandlebarExt','cookie'],function($, comm
 		     
 		        dataType: "json",
 		        success: function(resultMap) {
-		        	if(resultMap.code=="success"){
-		        		
-		                var menuList = $("#head-menutop").html();
-		                var menuTempl = Handlebars.compile(menuList);
-		                var _data = resultMap.dataList;
+		        	if(resultMap.code==200){
+		                var menuTempl = Handlebars.compile($("#head-menutop").html());
+		                var _data = resultMap;
 		                $("#head-menutop-content").html(menuTempl(_data));
 		              
 		                head.menuactive();
@@ -63,8 +61,8 @@ define(['jquery','common','Handlebars','HandlebarExt','cookie'],function($, comm
 				menuList:[]
 			};
 		    $.ajax({
-				type: "post",
-				url: "/module!queryModuleListOrderByMark.ajax",
+				type: "get",
+				url: "/my/module/list",
 				async: false,
 				beforeSend: function() {
 					//	 $.blockUI({message: '<img src=\"${base}/js/ajax-loader.gif\" >'});
@@ -75,7 +73,8 @@ define(['jquery','common','Handlebars','HandlebarExt','cookie'],function($, comm
 				dataType: "json",
 
 				success: function(resultMap) {
-					if(resultMap.code=="success"){
+					if(resultMap.code=200){
+						console.log(resultMap);
 						data.menuList = resultMap.dataList;
 						$("#head-menu-content").html(head.menuLeftHtml(data));
 
