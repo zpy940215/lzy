@@ -23,7 +23,7 @@ public class LoginController {
 	
 	@PostMapping("/doLogin")
 	public @ResponseBody UserResp login(@RequestBody UserReq req) {
-		 UserResp resp = AppUtil.post(ActionConstants.doLogin, req, UserResp.class);
+		 UserResp resp = AppUtil.post(ActionConstants.UserdoLogin, req, UserResp.class);
 		 return resp;
 	}
 	

@@ -13,6 +13,6 @@ public class UserController {
 
 	@GetMapping("/user/list")
 	public @ResponseBody UserResp queryUserList() {
-		return AppUtil.get(ActionConstants.queryUserList, UserResp.class);
+		return AppUtil.get(ActionConstants.UserqueryList, UserResp.class);
 	}
 }

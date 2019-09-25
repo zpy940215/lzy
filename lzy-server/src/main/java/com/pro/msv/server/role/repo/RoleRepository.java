@@ -1,4 +1,4 @@
-package com.pro.msv.server.role.mapper;
+package com.pro.msv.server.role.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
