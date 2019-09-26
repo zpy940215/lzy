@@ -1,4 +1,4 @@
-package com.pro.msv.controller;
+package com.pro.msv.action;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
