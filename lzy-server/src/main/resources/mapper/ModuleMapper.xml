@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro.msv.server.role.mapper.ModuleMapper">
+
+	<select id="qeuryListByUid" resultType="com.pro.msv.server.role.domain.ModuleDomain">
+		SELECT m.* FROM s_module m 
+		LEFT JOIN s_rbac_role_module rrm on m.module_id = rrm.module_id 
+		LEFT JOIN s_rbac_user_role rur on rur.role_id = rrm.role_id 
+		where rur.uid = #{uid}
+	</select>
+	
+	<select id="qeuryMenuByUid" resultType="com.pro.msv.server.role.domain.ModuleDomain" >
+		SELECT m.* FROM s_module m 
+		LEFT JOIN s_rbac_role_module rrm on m.module_id = rrm.module_id 
+		LEFT JOIN s_rbac_user_role rur on rur.role_id = rrm.role_id 
+		where rur.uid = #{uid} and m.lvl = 1
+	</select>
+	
+</mapper>

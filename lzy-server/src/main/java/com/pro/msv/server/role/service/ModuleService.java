@@ -38,7 +38,11 @@ public class ModuleService {
 			return resp;
 		}
 		List<ModuleDomain> domains = moduleMapper.qeuryMenuByUid(req.getUid());
-		resp.setModuleVos(BeanUtil.copySamePropertyList(domains, ModuleVo.class));
+		List<ModuleVo> moduleVos = BeanUtil.copySamePropertyList(domains, ModuleVo.class);
+		if(moduleVos != null && moduleVos.size() > 0) {
+			
+		}
+		resp.setModuleVos(moduleVos);
 		return resp;
 	}
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro.msv.server.user.mapper.UserMapper">
+
+	<select id="queryListAll" resultType="com.pro.msv.server.user.domain.UserDomain">
+		select * from t_user
+	</select>
+	
+	<select id="queryById" resultType="com.pro.msv.server.user.domain.UserDomain" >
+		select * from t_user where id = #{id}
+	</select>
+	
+	<select id="queryByAccountAndPasswd" resultType="com.pro.msv.server.user.domain.UserDomain" >
+		select * from t_user where account = #{account} and passwd = #{passwd}
+	</select>
+
+	<!-- <insert id="insert">
+		insert into employee (last_name,gender,email,d_id,dbno) values(#{lastName},#{gender},#{email},#{dId},database());
+	</insert> -->
+	
+	<update id="updateStatus">
+		update t_user set status = #{status},status_date = now(),modify_date = now() where id = #{id}
+	</update>
+	
+</mapper>

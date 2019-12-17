@@ -12,6 +12,7 @@ spring:
   jpa:    show-sql: true
     
 mybatis:
+  mapper-locations:  - mapper/**/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
 
