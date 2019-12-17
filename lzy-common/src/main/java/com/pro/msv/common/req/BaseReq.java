@@ -1,5 +1,6 @@
 package com.pro.msv.common.req;
 
+
 public class BaseReq {
 
 	private String projectId;

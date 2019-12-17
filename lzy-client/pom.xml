@@ -9,4 +9,11 @@
 	</parent>
 	<artifactId>lzy-client</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.pro.msv</groupId>
+			<artifactId>lzy-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

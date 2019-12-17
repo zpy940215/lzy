@@ -21,6 +21,7 @@
 		<module>lzy-server</module>
 		<module>lzy-admin</module>
 		<module>lzy-web</module>
+		<module>lzy-common</module>
 	</modules>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
